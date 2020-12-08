@@ -60,6 +60,10 @@ namespace DeltahedronUI.DataManagement
 
         #endregion selectedItem
 
+        /// <summary>
+        /// Asks the user nicely if he truly wants to remove the selected item.
+        /// Depending on how the user answers, the item gets removed from the datasource
+        /// </summary>
         private void RemoveEntry()
         {
             var selected = SelectedItem;
@@ -68,7 +72,6 @@ namespace DeltahedronUI.DataManagement
                 var dialog = new ComboboxDialog(new[] { "No", "Yes" }, $"Do you want to remove {selected.GetTitle()}");
                 if (dialog.ShowDialogInCenterOfCurrent().GetValueOrDefault() && dialog.SelectedIndex == 1)
                 {
-                    //Step 1: ask if you truly want to remove it.
                     _dataSource.Remove(selected.GetID());
                 }
             }
