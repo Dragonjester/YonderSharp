@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.WPF", "YonderSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp", "YonderSharp\YonderSharp.csproj", "{24E6AAF4-03F7-4378-AB83-9C00695FE458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.Test", "YonderSharp.Test\YonderSharp.Test.csproj", "{D4AA6468-6549-4591-85F5-420F84837A12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.Test", "YonderSharp.Test\YonderSharp.Test.csproj", "{D4AA6468-6549-4591-85F5-420F84837A12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.WPF.Example", "YonderSharp.WPF.Example\YonderSharp.WPF.Example.csproj", "{39706881-803E-44D3-8F6A-94394BCCCAEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D4AA6468-6549-4591-85F5-420F84837A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4AA6468-6549-4591-85F5-420F84837A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4AA6468-6549-4591-85F5-420F84837A12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39706881-803E-44D3-8F6A-94394BCCCAEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39706881-803E-44D3-8F6A-94394BCCCAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39706881-803E-44D3-8F6A-94394BCCCAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39706881-803E-44D3-8F6A-94394BCCCAEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

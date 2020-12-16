@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}">
+        <ListBox Grid.Row="0" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add" Command="{Binding Commands.AddEntry}"/>
@@ -23,16 +23,17 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-        
-        <Grid Grid.Row="0" Grid.Column="1" Name="ContentGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                
-            </Grid.RowDefinitions>
-        </Grid>
+        <ScrollViewer Grid.Row="0" Grid.Column="1">
+            <Grid Name="ContentGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+
+                </Grid.RowDefinitions>
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>
