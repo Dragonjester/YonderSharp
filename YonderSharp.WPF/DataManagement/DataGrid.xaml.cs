@@ -32,30 +32,60 @@ namespace YonderSharp.WPF.DataManagement
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-                //Add RowDefinition
+              
                 ContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                
+
                 //Add Label
                 Label label = new Label();
-                label.Content = item.Item1 + ":";
+                label.Content = _vm.DataSource.GetLabel(item.Item1);
                 Grid.SetRow(label, i);
                 Grid.SetColumn(label, 0);
                 ContentGrid.Children.Add(label);
 
-                //Add Textbox
-                TextBox box = new TextBox();
-                Binding bind = new Binding($"SelectedItem.{item.Item1}");
-                bind.Source = _vm;
-                box.SetBinding(TextBox.TextProperty, bind);
-                Grid.SetRow(box, i);
-                Grid.SetColumn(box, 1);
-                ContentGrid.Children.Add(box);
+                UIElement currentElement;
+                //Add content element
+                if (item.Item2 == typeof(bool))
+                {
+                    CheckBox box = new CheckBox();
+                    box.VerticalAlignment = VerticalAlignment.Center;
+                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    bind.Source = _vm;
+                    box.SetBinding(CheckBox.IsCheckedProperty, bind);
+                    Grid.SetRow(box, i);
+                    Grid.SetColumn(box, 1);
+                    ContentGrid.Children.Add(box);
 
-                //TODO: if(item.Item2 == typeof(bool)) add checkbox
-                //TODO: if(string)  textblock?
-                
-                //TODO: Test if changing data works as expected (Mode? UpdateSource?)
+                    currentElement = box;
+                }
+                else
+                {
+                    TextBox box = new TextBox();
+                    box.VerticalContentAlignment = VerticalAlignment.Center;
+                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    bind.Source = _vm;
+                    box.SetBinding(TextBox.TextProperty, bind);
+                    Grid.SetRow(box, i);
+                    Grid.SetColumn(box, 1);
+                    ContentGrid.Children.Add(box);
+                    
+                    currentElement = box;
+                }
+
+                if(currentElement == null)
+                {
+                    throw new Exception("You forgot to set the current element Ü");
+                }
+
+                if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
+                {
+                    currentElement.LostFocus += RefreshList;
+                }
             }
+        }
+
+        private void RefreshList(object sender, RoutedEventArgs e)
+        {
+            _vm.UpdateList();
         }
 
         public void SetSource(IDataGridSource source)

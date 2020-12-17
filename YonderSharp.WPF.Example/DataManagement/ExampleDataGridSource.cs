@@ -73,5 +73,25 @@ namespace YonderSharp.WPF.DataManagement.Example
         {
             _items.Remove((ExampleDataItem)item);
         }
+
+        public string GetLabel(string fieldName)
+        {
+            return $"{fieldName}: ";
+        }
+
+        public bool IsFieldPartOfListText(string fieldName)
+        {
+            return fieldName == "SomeString";
+        }
+
+        public void Save()
+        {
+           //some xml serialization or whatever Ü
+        }
+
+        public bool IsAllowedToSave()
+        {
+            return false;
+        }
     }
 }

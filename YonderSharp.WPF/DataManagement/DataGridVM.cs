@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Windows;
 using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
@@ -12,14 +13,15 @@ namespace DeltahedronUI.DataManagement
 {
     public class DataGridVM : BaseVM
     {
-        private IDataGridSource _dataSource;
+        public IDataGridSource DataSource { get; private set; }
 
         public DataGridVM(IDataGridSource dataSource)
         {
-            _dataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
+            DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
 
             _commands.AddCommand("AddEntry", x => AddEntry());
             _commands.AddCommand("RemoveEntry", x => RemoveEntry());
+            _commands.AddCommand("Save", x => Save());
 
             UpdateList();
         }
@@ -28,7 +30,7 @@ namespace DeltahedronUI.DataManagement
         {
             List<Tuple<string, Type>> result = new List<Tuple<string, Type>>();
 
-            Type baseType = _dataSource.GetTypeOfObjects();
+            Type baseType = DataSource.GetTypeOfObjects();
 
 
             BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
@@ -36,7 +38,7 @@ namespace DeltahedronUI.DataManagement
                 .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
                          && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).ToList();
 
-            foreach(var member in members)
+            foreach (var member in members)
             {
                 string name = member.Name;
                 Type type = member.PropertyType;
@@ -52,16 +54,17 @@ namespace DeltahedronUI.DataManagement
 
         #region list
         public ObservableCollection<string> ListEntries { get; set; } = new ObservableCollection<string>();
-        private void UpdateList()
+        public void UpdateList()
         {
+            int index = SelectedIndex;
             ListEntries.Clear();
 
-            foreach (var entry in _dataSource.GetShownItems())
+            foreach (var entry in DataSource.GetShownItems())
             {
-                ListEntries.Add(_dataSource.GetShownItemTitle(entry));
+                ListEntries.Add(DataSource.GetShownItemTitle(entry));
             }
 
-            //TODO: OnPropertyChanged() für die generierten Felder
+            SelectedIndex = index;
         }
 
         #endregion list
@@ -72,7 +75,7 @@ namespace DeltahedronUI.DataManagement
         {
             get
             {
-                var items = _dataSource.GetShownItems();
+                var items = DataSource.GetShownItems();
                 if (_selectedIndex >= 0 && _selectedIndex < items?.Length)
                 {
                     return items[_selectedIndex];
@@ -86,14 +89,28 @@ namespace DeltahedronUI.DataManagement
         public int SelectedIndex
         {
             get { return _selectedIndex; }
-            set {
+            set
+            {
                 _selectedIndex = value;
                 OnPropertyChanged(nameof(SelectedItem));
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
 
         #endregion selectedItem
+    
+        public Visibility CanSave
+        {
+            get { return DataSource.IsAllowedToSave() ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        private void Save()
+        {
+            if (DataSource.IsAllowedToSave())
+            {
+                DataSource.Save();
+            }
+        }
 
         /// <summary>
         /// Asks the user nicely if he truly wants to remove the selected item.
@@ -101,7 +118,7 @@ namespace DeltahedronUI.DataManagement
         /// </summary>
         private void RemoveEntry()
         {
-            if (!_dataSource.IsAllowedToRemove())
+            if (!DataSource.IsAllowedToRemove())
             {
                 return;
             }
@@ -109,10 +126,11 @@ namespace DeltahedronUI.DataManagement
             var selected = SelectedItem;
             if (selected != null)
             {
-                var dialog = new ComboboxDialog(new[] { "No", "Yes" }, $"Do you want to remove {_dataSource.GetShownItemTitle(selected)}");
+                var dialog = new ComboboxDialog(new[] { "No", "Yes" }, $"Do you want to remove {DataSource.GetShownItemTitle(selected)}");
                 if (dialog.ShowDialogInCenterOfCurrent().GetValueOrDefault() && dialog.SelectedIndex == 1)
                 {
-                    _dataSource.RemoveShownItem(selected);
+                    DataSource.RemoveShownItem(selected);
+                    UpdateList();
                 }
             }
         }
@@ -120,18 +138,18 @@ namespace DeltahedronUI.DataManagement
 
         private void AddEntry()
         {
-            if (!_dataSource.IsAllowedToAddNew())
+            if (!DataSource.IsAllowedToAddNew())
             {
                 return;
             }
 
-            var toExclude = _dataSource.GetShownItems();
-            var entries = _dataSource.GetAddableItems().Where(x => !toExclude.Contains(x)).ToArray();
+            var toExclude = DataSource.GetShownItems();
+            var entries = DataSource.GetAddableItems().Where(x => !toExclude.Contains(x)).ToArray();
 
-            var dialog = new ComboboxDialog(entries.Select(x => _dataSource.GetShownItemTitle(x)).ToArray(), $"");
+            var dialog = new ComboboxDialog(entries.Select(x => DataSource.GetShownItemTitle(x)).ToArray(), $"");
             if (dialog.ShowDialogInCenterOfCurrent().GetValueOrDefault())
             {
-                _dataSource.AddShownItem(entries[dialog.SelectedIndex]);
+                DataSource.AddShownItem(entries[dialog.SelectedIndex]);
                 UpdateList();
             }
         }

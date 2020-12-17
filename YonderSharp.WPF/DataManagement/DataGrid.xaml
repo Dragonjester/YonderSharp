@@ -13,17 +13,21 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <ListBox Grid.Row="0" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add" Command="{Binding Commands.AddEntry}"/>
-                    <MenuItem Header="Remove"/>
+                    <MenuItem Header="Remove" Command="{Binding Commands.RemoveEntry}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-        <ScrollViewer Grid.Row="0" Grid.Column="1">
+
+        <Button Content="Save" Grid.Column="0" Grid.Row="1" Command="{Binding Commands.Save}" Visibility="{Binding CanSave}"/>
+
+        <ScrollViewer Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
             <Grid Name="ContentGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

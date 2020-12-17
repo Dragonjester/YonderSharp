@@ -5,16 +5,6 @@ namespace YonderSharp.WPF.DataManagement
     public interface IDataGridSource
     {
         /// <summary>
-        /// Can new items be added by the user?
-        /// </summary>
-        public bool IsAllowedToAddNew();
-
-        /// <summary>
-        /// Can shown items be removed by the user?
-        /// </summary>
-        public bool IsAllowedToRemove();
-
-        /// <summary>
         /// Items shown in the ListView
         /// </summary>
         /// <returns></returns>
@@ -29,9 +19,31 @@ namespace YonderSharp.WPF.DataManagement
         public Type GetTypeOfObjects();
 
         /// <summary>
+        /// string shown in the listview
+        /// </summary>
+        public string GetShownItemTitle(object item);
+
+        /// <summary>
+        /// Content shown to the user for the given field
+        /// </summary>
+        public string GetLabel(string fieldName);
+
+        /// <summary>
+        /// Is the field part of the ItemTitle generation? If yes this will result in an update of the list on change of the fieldvalue
+        /// </summary>
+        bool IsFieldPartOfListText(string fieldName);
+
+
+        #region actions
+        /// <summary>
         /// Add an item to the 
         /// </summary>
         public void AddShownItem(object item);
+
+        /// <summary>
+        /// Can new items be added by the user?
+        /// </summary>
+        public bool IsAllowedToAddNew();
 
         /// <summary>
         /// Remove an item from the shown list
@@ -39,8 +51,19 @@ namespace YonderSharp.WPF.DataManagement
         public void RemoveShownItem(object item);
 
         /// <summary>
-        /// string shown in the listview
+        /// Can shown items be removed by the user?
         /// </summary>
-        public string GetShownItemTitle(object item);
+        public bool IsAllowedToRemove();
+
+        /// <summary>
+        /// Save the current list
+        /// </summary>
+        public void Save();
+
+        /// <summary>
+        /// Show Save action?
+        /// </summary>
+        public bool IsAllowedToSave();
+        #endregion actions
     }
 }
