@@ -19,11 +19,19 @@ namespace DeltahedronUI.DataManagement
         {
             DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
 
-            _commands.AddCommand("AddEntry", x => AddEntry());
+            _commands.AddCommand("AddEntryFromList", x => AddEntryFromList());
+            _commands.AddCommand("AddNew", x => AddNewEntry());
             _commands.AddCommand("RemoveEntry", x => RemoveEntry());
             _commands.AddCommand("Save", x => Save());
 
             UpdateList();
+        }
+
+        private void AddNewEntry()
+        {
+            DataSource.AddNewItem();
+            UpdateList();
+            SelectedIndex = ListEntries.Count - 1;
         }
 
         public Tuple<string, Type>[] GetFields()
@@ -65,7 +73,7 @@ namespace DeltahedronUI.DataManagement
             }
 
             SelectedIndex = index;
-            if(SelectedIndex >= ListEntries.Count)
+            if (SelectedIndex >= ListEntries.Count)
             {
                 SelectedIndex = 0;
             }
@@ -102,7 +110,23 @@ namespace DeltahedronUI.DataManagement
         }
 
         #endregion selectedItem
-    
+
+
+        public Visibility ShowOnlyAddNew
+        {
+            get { return DataSource.IsAllowedToAddNew() && !DataSource.IsAllowedToAddFromList() ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public Visibility ShowOnlyAddFromList
+        {
+            get { return DataSource.IsAllowedToAddFromList() && !DataSource.IsAllowedToAddNew() ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public Visibility ShowMergedAdd
+        {
+            get { return DataSource.IsAllowedToAddFromList() && DataSource.IsAllowedToAddNew() ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
         public Visibility CanSave
         {
             get { return DataSource.HasSearch() ? Visibility.Visible : Visibility.Collapsed; }
@@ -158,22 +182,34 @@ namespace DeltahedronUI.DataManagement
             }
         }
 
-
-        private void AddEntry()
+        private void AddEntryFromList()
         {
             if (!DataSource.IsAllowedToAddNew())
             {
                 return;
             }
 
-            var toExclude = DataSource.GetShownItems();
-            var entries = DataSource.GetAddableItems().Where(x => !toExclude.Contains(x)).ToArray();
-
-            var dialog = new ComboboxDialog(entries.Select(x => DataSource.GetShownItemTitle(x)).ToArray(), $"");
-            if (dialog.ShowDialogInCenterOfCurrent().GetValueOrDefault())
+            if (DataSource.IsAllowedToAddFromList())
             {
-                DataSource.AddShownItem(entries[dialog.SelectedIndex]);
-                UpdateList();
+                var toExclude = DataSource.GetShownItems();
+                var entries = DataSource.GetAddableItems().Where(x => !toExclude.Contains(x)).ToArray();
+
+                var dialog = new ComboboxDialog(entries.Select(x => DataSource.GetShownItemTitle(x)).ToArray(), $"");
+                if (dialog.ShowDialogInCenterOfCurrent().GetValueOrDefault())
+                {
+                    DataSource.AddItem(entries[dialog.SelectedIndex]);
+                    string title = DataSource.GetShownItemTitle(entries[dialog.SelectedIndex]);
+                    UpdateList();
+
+                    for(int i = 0; i < ListEntries.Count; i++)
+                    {
+                        if (ListEntries[i] == title)
+                        {
+                            SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

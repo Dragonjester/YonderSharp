@@ -24,7 +24,12 @@
         <ListBox Grid.Row="1" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}">
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add" Command="{Binding Commands.AddEntry}"/>
+                    <MenuItem Header="Add From List" Command="{Binding Commands.AddEntryFromList}" Visibility="{Binding ShowOnlyAddNew}"/>
+                    <MenuItem Header="Add New" Command="{Binding Commands.AddNew}" Visibility="{Binding ShowOnlyAddNew}"/>
+                    <MenuItem Header="Add" Visibility="{Binding ShowMergedAdd}">
+                        <MenuItem Header="Add New" Command="{Binding Commands.AddNew}"/>
+                        <MenuItem Header="Add From List" Command="{Binding Commands.AddEntryFromList}"/>
+                    </MenuItem>
                     <MenuItem Header="Remove" Command="{Binding Commands.RemoveEntry}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>

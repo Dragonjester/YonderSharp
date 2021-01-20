@@ -6,7 +6,11 @@ namespace YonderSharp.WPF.DataManagement.Example
 {
     public class ExampleDataGridSource : IDataGridSource
     {
+
         List<ExampleDataItem> _items = new List<ExampleDataItem>();
+
+        public string _searchText { get; set; }
+
         public ExampleDataGridSource()
         {
             for (int i = 0; i < 100; i++)
@@ -29,7 +33,7 @@ namespace YonderSharp.WPF.DataManagement.Example
             return item;
         }
 
-        public void AddShownItem(object item)
+        public void AddItem(object item)
         {
             _items.Add((ExampleDataItem)item);
         }
@@ -45,17 +49,6 @@ namespace YonderSharp.WPF.DataManagement.Example
             return addable.ToArray();
         }
 
-        public object[] GetShownItems()
-        {
-            if (string.IsNullOrEmpty(searchText)) { 
-            return _items.ToArray();
-            }
-            else
-            {
-                return _items.Where(x => GetShownItemTitle(x).Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToArray();
-            }
-        }
-
         public string GetShownItemTitle(object item)
         {
             return ((ExampleDataItem)item).SomeString;
@@ -66,14 +59,9 @@ namespace YonderSharp.WPF.DataManagement.Example
             return typeof(ExampleDataItem);
         }
 
-        public bool IsAllowedToAddNew()
+        public bool IsFieldPartOfListText(string fieldName)
         {
-            return true;
-        }
-
-        public bool IsAllowedToRemove()
-        {
-            return true;
+            return fieldName == "SomeString";
         }
 
         public void RemoveShownItem(object item)
@@ -81,38 +69,19 @@ namespace YonderSharp.WPF.DataManagement.Example
             _items.Remove((ExampleDataItem)item);
         }
 
-        public string GetLabel(string fieldName)
-        {
-            return $"{fieldName}: ";
-        }
-
-        public bool IsFieldPartOfListText(string fieldName)
-        {
-            return fieldName == "SomeString";
-        }
-
         public void Save()
         {
-           //some xml serialization or whatever Ü
+            throw new NotImplementedException();
         }
 
-        #region search
-        private string searchText;
-
-        public bool HasSearch()
+        public object[] GetAllItems()
         {
-            return true;
+            return _items.ToArray();
         }
 
-        public void SetSearchText(string searchValue)
+        public void AddNewItem()
         {
-            searchText = searchValue;
+            _items.Add(new ExampleDataItem());
         }
-
-        public string GetSearchText()
-        {
-            return searchText;
-        }
-        #endregion search
     }
 }
