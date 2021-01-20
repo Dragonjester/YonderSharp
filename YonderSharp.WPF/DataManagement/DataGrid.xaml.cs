@@ -67,7 +67,9 @@ namespace YonderSharp.WPF.DataManagement
                     Grid.SetRow(box, i);
                     Grid.SetColumn(box, 1);
                     ContentGrid.Children.Add(box);
-                    
+
+                    box.Margin = new Thickness(0, 2, 0, 2);
+
                     currentElement = box;
                 }
 
@@ -75,6 +77,8 @@ namespace YonderSharp.WPF.DataManagement
                 {
                     throw new Exception("You forgot to set the current element Ü");
                 }
+
+                
 
                 if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
                 {

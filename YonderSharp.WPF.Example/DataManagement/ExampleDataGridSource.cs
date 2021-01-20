@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace YonderSharp.WPF.DataManagement.Example
 {
@@ -46,7 +47,13 @@ namespace YonderSharp.WPF.DataManagement.Example
 
         public object[] GetShownItems()
         {
+            if (string.IsNullOrEmpty(searchText)) { 
             return _items.ToArray();
+            }
+            else
+            {
+                return _items.Where(x => GetShownItemTitle(x).Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToArray();
+            }
         }
 
         public string GetShownItemTitle(object item)
@@ -89,9 +96,23 @@ namespace YonderSharp.WPF.DataManagement.Example
            //some xml serialization or whatever Ü
         }
 
-        public bool IsAllowedToSave()
+        #region search
+        private string searchText;
+
+        public bool HasSearch()
         {
-            return false;
+            return true;
         }
+
+        public void SetSearchText(string searchValue)
+        {
+            searchText = searchValue;
+        }
+
+        public string GetSearchText()
+        {
+            return searchText;
+        }
+        #endregion search
     }
 }

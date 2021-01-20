@@ -5,7 +5,7 @@ namespace YonderSharp.WPF.DataManagement
     public interface IDataGridSource
     {
         /// <summary>
-        /// Items shown in the ListView
+        /// Items shown in the ListView, respecting the search (if avaiable)
         /// </summary>
         /// <returns></returns>
         public object[] GetShownItems();
@@ -59,11 +59,21 @@ namespace YonderSharp.WPF.DataManagement
         /// Save the current list
         /// </summary>
         public void Save();
+        #endregion actions
+
+        #region search
+        /// <summary>
+        /// Show the search textbox?
+        /// </summary>
+        public bool HasSearch();
 
         /// <summary>
-        /// Show Save action?
+        /// Sets the search filter. 
+        /// After setting the search filter, the GetShownItems() has to handle the filtering
         /// </summary>
-        public bool IsAllowedToSave();
-        #endregion actions
+        /// <param name="searchValue"></param>
+        public void SetSearchText(string searchValue);
+        public string GetSearchText();
+        #endregion search
     }
 }

@@ -65,6 +65,10 @@ namespace DeltahedronUI.DataManagement
             }
 
             SelectedIndex = index;
+            if(SelectedIndex >= ListEntries.Count)
+            {
+                SelectedIndex = 0;
+            }
         }
 
         #endregion list
@@ -101,12 +105,31 @@ namespace DeltahedronUI.DataManagement
     
         public Visibility CanSave
         {
-            get { return DataSource.IsAllowedToSave() ? Visibility.Visible : Visibility.Collapsed; }
+            get { return DataSource.HasSearch() ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public Visibility CanSearch
+        {
+            get { return DataSource.HasSearch() ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public string SearchText
+        {
+            get
+            {
+                return DataSource.GetSearchText() ?? "";
+            }
+            set
+            {
+                DataSource.SetSearchText(value);
+                OnPropertyChanged();
+                UpdateList();
+            }
         }
 
         private void Save()
         {
-            if (DataSource.IsAllowedToSave())
+            if (DataSource.HasSearch())
             {
                 DataSource.Save();
             }
