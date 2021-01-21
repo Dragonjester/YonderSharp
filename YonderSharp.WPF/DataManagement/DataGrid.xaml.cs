@@ -22,6 +22,7 @@ namespace YonderSharp.WPF.DataManagement
         {
             InitializeComponent();
             SetSource(dataSource);
+            EntryList.SelectionChanged += (s, e) => EntryList.ScrollIntoView(EntryList.SelectedItem);
         }
 
         private void GenerateFields(Tuple<string, Type>[] items)
@@ -63,6 +64,8 @@ namespace YonderSharp.WPF.DataManagement
                     box.VerticalContentAlignment = VerticalAlignment.Center;
                     Binding bind = new Binding($"SelectedItem.{item.Item1}");
                     bind.Source = _vm;
+                    bind.Mode = BindingMode.TwoWay;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                     box.SetBinding(TextBox.TextProperty, bind);
                     Grid.SetRow(box, i);
                     Grid.SetColumn(box, 1);
@@ -72,6 +75,8 @@ namespace YonderSharp.WPF.DataManagement
 
                     currentElement = box;
                 }
+
+                //TODO: Dropdown for Enums
 
                 if(currentElement == null)
                 {

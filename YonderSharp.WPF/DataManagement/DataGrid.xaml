@@ -21,7 +21,7 @@
             <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </GroupBox>
         
-        <ListBox Grid.Row="1" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}">
+        <ListBox  Grid.Row="1" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}" Grid.ColumnSpan="2" Margin="2,0,648,0">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add From List" Command="{Binding Commands.AddEntryFromList}" Visibility="{Binding ShowOnlyAddNew}"/>
