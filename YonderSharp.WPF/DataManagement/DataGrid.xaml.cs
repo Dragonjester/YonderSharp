@@ -78,6 +78,8 @@ namespace YonderSharp.WPF.DataManagement
 
                 //TODO: Dropdown for Enums
 
+                //TODO: Dropdown to source titles based on foreign keys
+
                 if(currentElement == null)
                 {
                     throw new Exception("You forgot to set the current element Ü");
