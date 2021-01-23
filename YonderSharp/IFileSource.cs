@@ -12,7 +12,7 @@ namespace YonderSharp
         private HashSet<T> _list = new HashSet<T>();
         private bool isInitialized;
 
-        public void Remove(T obj)
+        public virtual void Remove(T obj)
         {
             Load();
             _list.Remove(obj);
@@ -21,7 +21,7 @@ namespace YonderSharp
         /// <summary>
         /// Add single element
         /// </summary>
-        public void Add(T obj)
+        public virtual void Add(T obj)
         {
             Load();
             _list.Add(obj);
@@ -30,7 +30,7 @@ namespace YonderSharp
         /// <summary>
         /// Add multiple elements to the list
         /// </summary>
-        public void Add(IList<T> list)
+        public virtual void Add(IList<T> list)
         {
             if (list == null)
             {
@@ -46,7 +46,7 @@ namespace YonderSharp
         /// <summary>
         /// Get all elements known
         /// </summary>
-        public T[] GetAll()
+        public virtual T[] GetAll()
         {
             Load();
             return _list.ToArray();
