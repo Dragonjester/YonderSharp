@@ -70,7 +70,7 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Can a new item be created?
         /// </summary>
-        public bool IsAllowedToCreateNewEntry()
+        public virtual bool IsAllowedToCreateNewEntry()
         {
             return true;
         }
@@ -78,7 +78,7 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Can an item be added from GetAddableItems()?
         /// </summary>
-        public bool IsAllowedToAddFromList()
+        public virtual bool IsAllowedToAddFromList()
         {
             return true;
         }

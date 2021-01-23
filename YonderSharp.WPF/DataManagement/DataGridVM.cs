@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -58,6 +59,16 @@ namespace DeltahedronUI.DataManagement
             }
 
             return result.ToArray();
+        }
+
+        public virtual IEnumerable GetEnumNames(Type enumType)
+        {
+            if (!enumType.IsEnum)
+            {
+                throw new ArgumentException("Not an enum?!");
+            }
+
+            return Enum.GetNames(enumType);
         }
 
         #region list

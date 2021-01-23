@@ -58,6 +58,27 @@ namespace YonderSharp.WPF.DataManagement
 
                     currentElement = box;
                 }
+                //else if (item.Item2.IsEnum)
+                //{
+
+                //    ComboBox box = new ComboBox();
+
+                //    box.ItemsSource = _vm.GetEnumNames(item.Item2);
+
+                //    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                //    bind.Source = _vm;
+                //    bind.Mode = BindingMode.TwoWay;
+                //    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                //    //TODO: BINDING DOESN'T WORK YET!!!
+                //    box.SetBinding(ComboBox.SelectedItemProperty, bind);
+                //    Grid.SetRow(box, i);
+                //    Grid.SetColumn(box, 1);
+                //    ContentGrid.Children.Add(box);
+
+                //    box.Margin = new Thickness(0, 2, 0, 2);
+
+                //    currentElement = box;
+                //}
                 else
                 {
                     TextBox box = new TextBox();
@@ -76,7 +97,7 @@ namespace YonderSharp.WPF.DataManagement
                     currentElement = box;
                 }
 
-                //TODO: Dropdown for Enums
+           
 
                 //TODO: Dropdown to source titles based on foreign keys
 

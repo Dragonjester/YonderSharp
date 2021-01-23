@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace YonderSharp
+namespace YonderSharp.FileSources
 {
     public abstract class IFileSource<T>
     {
@@ -71,7 +72,14 @@ namespace YonderSharp
 
             if (File.Exists(GetPathToJsonFile()))
             {
-                _list = JsonSerializer.Deserialize<HashSet<T>>(File.ReadAllText(GetPathToJsonFile()));
+                try
+                {
+                    _list = JsonSerializer.Deserialize<HashSet<T>>(File.ReadAllText(GetPathToJsonFile()));
+                }
+                catch (Exception e)
+                {
+                    //TODO: LOGGING
+                }
             }
         }
 
