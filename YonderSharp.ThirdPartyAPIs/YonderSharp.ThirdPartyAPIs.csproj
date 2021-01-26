@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ProceduralGeneration\Model\" />
+    <ProjectReference Include="..\YonderSharp\YonderSharp.csproj" />
   </ItemGroup>
 
 </Project>
