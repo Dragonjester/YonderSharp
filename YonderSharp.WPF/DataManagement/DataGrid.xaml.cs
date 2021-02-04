@@ -27,6 +27,10 @@ namespace YonderSharp.WPF.DataManagement
 
         private void GenerateFields(Tuple<string, Type>[] items)
         {
+
+            //TODO: Config objects that tell how to generate a line. 
+            //TODO: Dropdown to source titles based on foreign keys
+
             ContentGrid.RowDefinitions.Clear();
             ContentGrid.Children.Clear();
 
@@ -96,10 +100,6 @@ namespace YonderSharp.WPF.DataManagement
 
                     currentElement = box;
                 }
-
-           
-
-                //TODO: Dropdown to source titles based on foreign keys
 
                 if(currentElement == null)
                 {

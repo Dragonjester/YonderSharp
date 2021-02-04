@@ -37,6 +37,9 @@ namespace DeltahedronUI.DataManagement
 
         public Tuple<string, Type>[] GetFields()
         {
+            //TODO: CONFIG OBJECT, that tells all kind of stuff and can be expanded easily (i.e. readonly)
+            //Also: could be configured via XML/JSON/YAML/Your Grandmother
+
             List<Tuple<string, Type>> result = new List<Tuple<string, Type>>();
 
             Type baseType = DataSource.GetTypeOfObjects();

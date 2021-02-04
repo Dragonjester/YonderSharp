@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YonderSharp</name>
+    </assembly>
+    <members>
+        <member name="M:YonderSharp.Downloads.IUrlDownloader.LoadFromUrl(System.String)">
+            <summary>
+            Download the string content of the url
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Downloads.IUrlDownloader.LoadFromUrl(System.String,System.Boolean)">
+            <summary>
+            Download the string content of the url, without any cache!
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Add(`0)">
+            <summary>
+            Add single element
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Add(System.Collections.Generic.IList{`0})">
+            <summary>
+            Add multiple elements to the list
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetAll">
+            <summary>
+            Get all elements known
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Load">
+            <summary>
+            Deserialize the contents of the file into the list
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Save">
+            <summary>
+            Stores all the objects into the file
+            </summary>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.IPasswordHelper.CreateSalt">
+            <summary>
+            Creates an entirely new salt
+            </summary>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.IPasswordHelper.CreatePasswordHash(System.String,System.String)">
+            <summary>
+            Creates the hash for the combination of the password and salt. 
+            </summary>
+            <param name="pwd">Password as provided by the user</param>
+            <param name="salt">Salt (hopefully) provided by the system (db?)</param>
+            <returns>the string representation of the hash</returns>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.IPasswordHelper.IsPasswordCorrect(System.String,System.String,System.String)">
+            <summary>
+            Checks if a password is valid
+            </summary>
+        </member>
+        <member name="T:YonderSharp.IdentityManagement.PasswordHelper">
+            <inheritdoc cref="T:YonderSharp.IdentityManagement.IPasswordHelper"/>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.PasswordHelper.#ctor(System.Int32)">
+            <param name="saltSize">Length of the salt to use</param>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.PasswordHelper.CreateSalt">
+            <inheritdoc cref="T:YonderSharp.IdentityManagement.IPasswordHelper"/>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.PasswordHelper.CreatePasswordHash(System.String,System.String)">
+            <inheritdoc cref="T:YonderSharp.IdentityManagement.IPasswordHelper"/>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.PasswordHelper.IsPasswordCorrect(System.String,System.String,System.String)">
+            <inheritdoc cref="T:YonderSharp.IdentityManagement.IPasswordHelper"/>
+        </member>
+        <member name="T:YonderSharp.IdentityManagement.Token">
+            <summary>
+            Client-Side Token for server access
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.Token.UserId">
+            <summary>
+            Unique ID of the user
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.Token.EMail">
+            <summary>
+            E-Mail Adress of the user. Most likely unique.
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.Token.Claims">
+            <summary>
+            Roles that the user has
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.Token.CreatedAt">
+            <summary>
+            Registration Date, UTC
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.Token.IsBanned">
+            <summary>
+            Was the user a bad boy?
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.Token.Verification">
+            <summary>
+            Used for verification the integrity of the token. Don't change it, unless really appropiate!
+            </summary>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.Token.#ctor(System.Guid,System.String,System.Collections.Generic.HashSet{System.String},System.DateTime,System.String)">
+            <summary/>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.Token.#ctor">
+            <summary/>
+        </member>
+        <member name="M:YonderSharp.MyRandom.GetInt(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="maxValue">max value that can be returned by this Method (excluding)</param>
+            <returns></returns>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.NoiseConfiguration.Type">
+            <summary>
+            -> NoiseType enum
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.NoiseLayer.Type">
+            <summary>
+            -> NoiseType enum
+            </summary>
+        </member>
+        <member name="M:YonderSharp.ProceduralGeneration.Model.Noise.NoiseLayer.GetConfiguration">
+            <returns>Configuration representation of the Layer</returns>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.RandomPointLayer.MaxDistanceInMeters">
+            <summary>
+            Max distance to location in meters
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.RandomPointLayer.TimeIncrementsInMinutes">
+            <summary>
+            Time increments for new placement, to move the random results around through space AND time
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:YonderSharp.ProceduralGeneration.Model.Noise.RandomPointLayer.ChanceOfSpawn" -->
+        <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.RandomPointLayer.FieldSizeWsg84">
+            <summary>
+            Value that tells the size of a RandomPoint Field in WSG84 floating point units.
+            Positive Numbers only!
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.RandomPointLayer.Seed">
+            <summary>
+            seed used for random generator
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.CityTypeCity">
+            <summary>
+            city = city
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.CityTypeTown">
+            <summary>
+            city = town
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.CityTypeSuburb">
+            <summary>
+            city = suburb
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.CityTypeVillage">
+            <summary>
+            city = village
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.CityTypeNeighbourhood">
+            <summary>
+            city = neighbourhood
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.NodeTags">
+            <summary>
+            i.e. {"concentration_camp", "nazism"}
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:YonderSharp.ProceduralGeneration.NoiseBuilder.DefaultNoiseBuilder.GetValue(FastNoise,YonderSharp.ProceduralGeneration.Model.Noise.NoiseType,System.Double,System.Double)" -->
+        <!-- Badly formed XML comment ignored for member "M:YonderSharp.ProceduralGeneration.NoiseBuilder.DefaultNoiseBuilder.GetValue(FastNoise,YonderSharp.ProceduralGeneration.Model.Noise.NoiseType,System.Single,System.Single)" -->
+        <member name="M:YonderSharp.ProceduralGeneration.NoiseBuilder.INoiseBuilder.GetNoiseValue(YonderSharp.ProceduralGeneration.Model.Noise.NoiseLayer,System.Double,System.Double)">
+            <summary>
+            Gets the Noise value of a layer without any zoom
+            </summary>
+        </member>
+        <member name="M:YonderSharp.ProceduralGeneration.NoiseBuilder.INoiseBuilder.GetNoiseValue(YonderSharp.ProceduralGeneration.Model.Noise.NoiseConfiguration,System.Double,System.Double,System.Double)">
+            <summary>
+            Gets the Noise value of a layer with zoom
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Updater.UpdateChecker.CheckForUpdate(System.String)">
+            <summary>
+            Checks if there is any new release avaiable
+            </summary>
+            <param name="urlOfIndex">Url to the json File </param>
+            <returns>true if there is an update avaible. false if everything is up to date</returns>
+        </member>
+        <member name="M:YonderSharp.WSG84.PointLatLng.#ctor(System.Double,System.Double)">
+            <param name="latitude">Y</param>
+            <param name="longitude">X</param>
+        </member>
+        <member name="P:YonderSharp.WSG84.PointLatLng.Latitude">
+            <summary>
+            Y
+            </summary>
+        </member>
+        <member name="P:YonderSharp.WSG84.PointLatLng.Longitude">
+            <summary>
+            X
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetDistanceInKilometers(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Wicked math that determines the distance between 2 points
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.DegreeToRad(System.Double)">
+            <summary>
+            Go read a math book
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.RadToDegree(System.Double)">
+            <summary>
+            Go read a math book
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetAreaFor(YonderSharp.WSG84.PointLatLng,System.Double)">
+            <summary>
+            Returns an area which contains the circle created by the given parameters
+            </summary>
+            <param name="centerPoint"></param>
+            <param name="maxDistanceInMeters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetAreaFor(System.Double,System.Double,System.Double)">
+            <summary>
+            Returns an area which contains the circle created by the given parameters
+            </summary>
+            <param name="latitudeCenter">Y</param>
+            <param name="longitudeCenter">X</param>
+            <param name="maxDistanceInMeters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetDestinationPoint(YonderSharp.WSG84.PointLatLng,System.Double,System.Double)">
+            <summary>
+            Calculates the end-point from a given source at a given range (meters) and bearing (degrees).
+            This methods uses simple geometry equations to calculate the end-point.
+            </summary>
+            <param name="source">Point of origin</param>
+            <param name="bearing">Bearing in degrees</param>
+            <param name="distance">Range in meters</param>
+            <returns>End-point from the source given the desired range and bearing.</returns>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.IsValidWSG84Point(YonderSharp.WSG84.PointLatLng)">
+            <param name="latitude">Y</param>
+            <param name="longitude">X</param>        
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.IsValidWSG84Point(System.Double,System.Double)">
+            <param name="latitude">Y</param>
+            <param name="longitude">X</param>        
+        </member>
+    </members>
+</doc>

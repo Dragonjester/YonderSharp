@@ -26,7 +26,7 @@ namespace YonderSharp.WSG84
             XEnd = bottomRightCorner.Longitude;
         }
 
-
+        #region datamembers
         [DataMember]
         public double XStart { get; set; }
         [DataMember]
@@ -35,12 +35,14 @@ namespace YonderSharp.WSG84
         public double YStart { get; set; }
         [DataMember]
         public double YEnd { get; set; }
+        #endregion datamembers
 
-
+        #region derived values
         public double XCenter { get { return (XStart + XEnd) / 2; } }
         public double YCenter { get { return (YStart + YEnd) / 2; } }
         public PointLatLng TopLeftCorner { get { return new PointLatLng(YStart, XStart); } }
         public PointLatLng BottomRightCorner { get { return new PointLatLng(YEnd, XEnd); } }
         public PointLatLng Center { get { return new PointLatLng(YCenter, XCenter); } }
+        #endregion derived values
     }
 }
