@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.Modell", "YonderSharp.Modell\YonderSharp.Modell.csproj", "{BFCF339D-0E3B-4787-B0C5-A51123A070E4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.WPF", "YonderSharp.WPF\YonderSharp.WPF.csproj", "{903F6C7F-DE39-4D95-9398-C0BEEF1B2182}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp", "YonderSharp\YonderSharp.csproj", "{24E6AAF4-03F7-4378-AB83-9C00695FE458}"
@@ -13,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.Test", "YonderS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.WPF.Example", "YonderSharp.WPF.Example\YonderSharp.WPF.Example.csproj", "{39706881-803E-44D3-8F6A-94394BCCCAEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.ThirdPartyAPIs", "YonderSharp.ThirdPartyAPIs\YonderSharp.ThirdPartyAPIs.csproj", "{0C10C35E-4946-4D12-B2EB-C8DC539F254B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.ThirdPartyAPIs", "YonderSharp.ThirdPartyAPIs\YonderSharp.ThirdPartyAPIs.csproj", "{0C10C35E-4946-4D12-B2EB-C8DC539F254B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.ThirdPartyAPIs.Tests", "YonderSharp.ThirdPartyAPIs.Tests\YonderSharp.ThirdPartyAPIs.Tests.csproj", "{A277231A-455F-497E-B526-49515EFB00C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.ThirdPartyAPIs.Tests", "YonderSharp.ThirdPartyAPIs.Tests\YonderSharp.ThirdPartyAPIs.Tests.csproj", "{A277231A-455F-497E-B526-49515EFB00C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BFCF339D-0E3B-4787-B0C5-A51123A070E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFCF339D-0E3B-4787-B0C5-A51123A070E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFCF339D-0E3B-4787-B0C5-A51123A070E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFCF339D-0E3B-4787-B0C5-A51123A070E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{903F6C7F-DE39-4D95-9398-C0BEEF1B2182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{903F6C7F-DE39-4D95-9398-C0BEEF1B2182}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{903F6C7F-DE39-4D95-9398-C0BEEF1B2182}.Release|Any CPU.ActiveCfg = Release|Any CPU
