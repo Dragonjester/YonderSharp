@@ -257,7 +257,7 @@
             </summary>
             <param name="source">Point of origin</param>
             <param name="bearing">Bearing in degrees</param>
-            <param name="distance">Range in meters</param>
+            <param name="distanceInMeters">Range in meters</param>
             <returns>End-point from the source given the desired range and bearing.</returns>
         </member>
         <member name="M:YonderSharp.WSG84.WSG84Math.IsValidWSG84Point(YonderSharp.WSG84.PointLatLng)">

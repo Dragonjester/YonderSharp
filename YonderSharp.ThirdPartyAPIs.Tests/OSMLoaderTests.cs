@@ -16,7 +16,7 @@ namespace YonderSharp.ThirdPartyAPIs.Tests
         [Test]
         public void GetOsmNodeTest()
         {
-            var client = new OSMLoader();
+            var client = new OverpassApi();
             var result = client.GetOsmNode(3657889771);
             Assert.IsNotNull(result);
             Assert.AreEqual("Spiegel", result.Name);
@@ -29,7 +29,7 @@ namespace YonderSharp.ThirdPartyAPIs.Tests
         [Test]
         public void TestGetCities()
         {
-            var client = new OSMLoader();
+            var client = new OverpassApi();
 
             OSMPointsLayer layer = new OSMPointsLayer();
             layer.CityTypeNeighbourhood = true;

@@ -93,22 +93,22 @@ namespace YonderSharp.WSG84
         /// </summary>
         /// <param name="source">Point of origin</param>
         /// <param name="bearing">Bearing in degrees</param>
-        /// <param name="distance">Range in meters</param>
+        /// <param name="distanceInMeters">Range in meters</param>
         /// <returns>End-point from the source given the desired range and bearing.</returns>
-        public static PointLatLng GetDestinationPoint(PointLatLng source, double bearing, double distance)
+        public static PointLatLng GetDestinationPoint(PointLatLng source, double bearing, double distanceInMeters)
         {
-            distance = distance / 6371000;
+            distanceInMeters = distanceInMeters / 6371000;
             bearing = DegreeToRad(bearing);
 
             double lat1 = DegreeToRad(source.Latitude);
             double lon1 = DegreeToRad(source.Longitude);
 
-            double lat2 = Math.Asin(Math.Sin(lat1) * Math.Cos(distance) +
-                    Math.Cos(lat1) * Math.Sin(distance) * Math.Cos(bearing));
+            double lat2 = Math.Asin(Math.Sin(lat1) * Math.Cos(distanceInMeters) +
+                    Math.Cos(lat1) * Math.Sin(distanceInMeters) * Math.Cos(bearing));
 
             double dlon = Math.Atan2(
-                   Math.Sin(bearing) * Math.Sin(distance) * Math.Cos(lat1),
-                   Math.Cos(distance) - Math.Sin(lat1) * Math.Sin(lat2));
+                   Math.Sin(bearing) * Math.Sin(distanceInMeters) * Math.Cos(lat1),
+                   Math.Cos(distanceInMeters) - Math.Sin(lat1) * Math.Sin(lat2));
 
             double lon = ((lon1 + dlon + Math.PI) % (Math.PI * 2)) - Math.PI;
 
