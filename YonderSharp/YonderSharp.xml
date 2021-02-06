@@ -14,6 +14,21 @@
             Download the string content of the url, without any cache!
             </summary>
         </member>
+        <member name="T:YonderSharp.FileSources.IFileSource`1">
+            <summary>
+            simple Elementsource form hard disk
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetPathToJsonFile">
+            <summary>
+            Where is the content stored on the hard disk?
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Remove(`0)">
+            <summary>
+            Removes the element from the store
+            </summary>
+        </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Add(`0)">
             <summary>
             Add single element
@@ -37,6 +52,11 @@
         <member name="M:YonderSharp.FileSources.IFileSource`1.Save">
             <summary>
             Stores all the objects into the file
+            </summary>
+        </member>
+        <member name="T:YonderSharp.IdentityManagement.IPasswordHelper">
+            <summary>
+            Helping methods for Password related operations
             </summary>
         </member>
         <member name="M:YonderSharp.IdentityManagement.IPasswordHelper.CreateSalt">
@@ -112,6 +132,41 @@
         </member>
         <member name="M:YonderSharp.IdentityManagement.Token.#ctor">
             <summary/>
+        </member>
+        <member name="T:YonderSharp.IdentityManagement.User">
+            <summary>
+            Representation of a user
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.UserId">
+            <summary>
+            Unique ID of the user
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.EMail">
+            <summary>
+            Maybe (!) unique E-Mail Adress of the user
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.RegistrationDateUtc">
+            <summary>
+            When did the user register?
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.Salt">
+            <summary>
+            Salt of the PasswordHash
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.SaltedPasswordHash">
+            <summary>
+            Salted PasswordHash
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.IsBanned">
+            <summary>
+            Was the user a bad boy?
+            </summary>
         </member>
         <member name="M:YonderSharp.MyRandom.GetInt(System.Int32)">
             <summary>
@@ -218,6 +273,26 @@
             X
             </summary>
         </member>
+        <member name="T:YonderSharp.WSG84.WSG84Math">
+            <summary>
+            WSG84 related mathematical operations
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetDistanceInMeters(YonderSharp.WSG84.PointLatLng,System.Double,System.Double)">
+            <summary>
+            Returns the distance between two points in meters
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetDistanceInMeters(YonderSharp.WSG84.PointLatLng,YonderSharp.WSG84.PointLatLng)">
+            <summary>
+            Returns the distance between two points in meters
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.GetDistanceInMeters(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Returns the distance between two points in meters
+            </summary>
+        </member>
         <member name="M:YonderSharp.WSG84.WSG84Math.GetDistanceInKilometers(System.Double,System.Double,System.Double,System.Double)">
             <summary>
             Wicked math that determines the distance between 2 points
@@ -237,18 +312,11 @@
             <summary>
             Returns an area which contains the circle created by the given parameters
             </summary>
-            <param name="centerPoint"></param>
-            <param name="maxDistanceInMeters"></param>
-            <returns></returns>
         </member>
         <member name="M:YonderSharp.WSG84.WSG84Math.GetAreaFor(System.Double,System.Double,System.Double)">
             <summary>
             Returns an area which contains the circle created by the given parameters
             </summary>
-            <param name="latitudeCenter">Y</param>
-            <param name="longitudeCenter">X</param>
-            <param name="maxDistanceInMeters"></param>
-            <returns></returns>
         </member>
         <member name="M:YonderSharp.WSG84.WSG84Math.GetDestinationPoint(YonderSharp.WSG84.PointLatLng,System.Double,System.Double)">
             <summary>
@@ -261,12 +329,21 @@
             <returns>End-point from the source given the desired range and bearing.</returns>
         </member>
         <member name="M:YonderSharp.WSG84.WSG84Math.IsValidWSG84Point(YonderSharp.WSG84.PointLatLng)">
+            <summary>
+            Checks if the given point is a valid point in the WSG84 coordinate system
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.WSG84Math.IsValidWSG84Point(System.Double,System.Double)">
+            <summary>
+            Checks if the given point is a valid point in the WSG84 coordinate system
+            </summary>
             <param name="latitude">Y</param>
             <param name="longitude">X</param>        
         </member>
-        <member name="M:YonderSharp.WSG84.WSG84Math.IsValidWSG84Point(System.Double,System.Double)">
-            <param name="latitude">Y</param>
-            <param name="longitude">X</param>        
+        <member name="M:YonderSharp.WSG84.WSG84Math.IsPointWithinArea(YonderSharp.WSG84.Area,YonderSharp.WSG84.PointLatLng)">
+            <summary>
+            Checks if a point is inside the given area
+            </summary>
         </member>
     </members>
 </doc>

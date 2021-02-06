@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace YonderSharp.IdentityManagement
+﻿namespace YonderSharp.IdentityManagement
 {
+    /// <summary>
+    /// Helping methods for Password related operations
+    /// </summary>
     public interface IPasswordHelper
     {
         /// <summary>

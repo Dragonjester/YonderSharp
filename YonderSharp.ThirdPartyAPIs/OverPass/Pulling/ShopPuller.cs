@@ -5,16 +5,20 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
 {
     public class ShopPuller : Puller<Shop>
     {
+    
+        /// <inheritdoc cref="Puller<Shop>"/>
         protected override string[] GetNodeTypes()
         {
             return new[] { "shop", "amenity" };
         }
 
+        /// <inheritdoc cref="Puller<Shop>"/>
         protected override string[] GetPropertiesToLoad()
         {
             return new[] { "name", "shop", "amenity" };
         }
 
+        /// <inheritdoc cref="Puller<Shop>"/>
         protected override Shop GetResultOfRow(string row)
         {
             var entry = row.Split(new[] { '\t' }, StringSplitOptions.None);

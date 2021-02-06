@@ -38,6 +38,7 @@ using FN_DECIMAL = System.Single;
 using System;
 using System.Runtime.CompilerServices;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class FastNoise
 {
     private const Int16 FN_INLINE = 256; //(Int16)MethodImplOptions.AggressiveInlining;
@@ -2364,5 +2365,5 @@ public class FastNoise
         x += Lerp(lx0x, lx1x, ys) * perturbAmp;
         y += Lerp(ly0x, ly1x, ys) * perturbAmp;
     }
-
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

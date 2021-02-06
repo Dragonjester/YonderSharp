@@ -5,6 +5,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
 {
     public class CityPuller : Puller<City>
     {
+        /// <inheritdoc cref="Puller<City>"/>
         protected override string[] GetNodeTypes()
         {
             return new[] {
@@ -16,11 +17,13 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
             };
         }
 
+        /// <inheritdoc cref="Puller<City>"/>
         protected override string[] GetPropertiesToLoad()
         {
             return new[] { "name", "place" };
         }
 
+        /// <inheritdoc cref="Puller<City>"/>
         protected override City GetResultOfRow(string row)
         {
             var entry = row.Split(new[] { '\t' }, StringSplitOptions.None);

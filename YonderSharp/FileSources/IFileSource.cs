@@ -6,13 +6,22 @@ using System.Text.Json;
 
 namespace YonderSharp.FileSources
 {
+    /// <summary>
+    /// simple Elementsource form hard disk
+    /// </summary>
     public abstract class IFileSource<T>
     {
+        /// <summary>
+        /// Where is the content stored on the hard disk?
+        /// </summary>
         public abstract string GetPathToJsonFile();
 
         private HashSet<T> _list = new HashSet<T>();
         private bool isInitialized;
 
+        /// <summary>
+        /// Removes the element from the store
+        /// </summary>
         public virtual void Remove(T obj)
         {
             Load();

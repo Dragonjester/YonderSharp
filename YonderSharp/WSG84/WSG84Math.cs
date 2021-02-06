@@ -6,18 +6,30 @@ using System.Threading.Tasks;
 
 namespace YonderSharp.WSG84
 {
+    /// <summary>
+    /// WSG84 related mathematical operations
+    /// </summary>
     public class WSG84Math
     {
+        /// <summary>
+        /// Returns the distance between two points in meters
+        /// </summary>
         public static double GetDistanceInMeters(PointLatLng a, double latitudeB, double longitudeB)
         {
             return GetDistanceInMeters(a.Latitude, a.Longitude, latitudeB, longitudeB);
         }
 
+        /// <summary>
+        /// Returns the distance between two points in meters
+        /// </summary>
         public static double GetDistanceInMeters(PointLatLng a, PointLatLng b)
         {
             return GetDistanceInMeters(a.Latitude, a.Longitude, b.Latitude, b.Longitude);
         }
 
+        /// <summary>
+        /// Returns the distance between two points in meters
+        /// </summary>
         public static double GetDistanceInMeters(double lat1, double lon1, double lat2, double lon2)
         {
             return GetDistanceInKilometers(lat1, lon1, lat2, lon2) * 1000;
@@ -59,9 +71,6 @@ namespace YonderSharp.WSG84
         /// <summary>
         /// Returns an area which contains the circle created by the given parameters
         /// </summary>
-        /// <param name="centerPoint"></param>
-        /// <param name="maxDistanceInMeters"></param>
-        /// <returns></returns>
         public static Area GetAreaFor(PointLatLng centerPoint, double distanceInMeters)
         {
             //increase distance by 12 (picked by trying around), to ensure that the area does contain the given circle in the case of rounding issues
@@ -78,10 +87,6 @@ namespace YonderSharp.WSG84
         /// <summary>
         /// Returns an area which contains the circle created by the given parameters
         /// </summary>
-        /// <param name="latitudeCenter">Y</param>
-        /// <param name="longitudeCenter">X</param>
-        /// <param name="maxDistanceInMeters"></param>
-        /// <returns></returns>
         public static Area GetAreaFor(double latitudeCenter, double longitudeCenter, double distanceInMeters)
         {
             return GetAreaFor(new PointLatLng(latitudeCenter, longitudeCenter), distanceInMeters);
@@ -115,14 +120,18 @@ namespace YonderSharp.WSG84
             return new PointLatLng(RadToDegree(lat2), RadToDegree(lon));
         }
 
-     
-        /// <param name="latitude">Y</param>
-        /// <param name="longitude">X</param>        
+
+        /// <summary>
+        /// Checks if the given point is a valid point in the WSG84 coordinate system
+        /// </summary>
         internal static bool IsValidWSG84Point(PointLatLng point)
         {
             return IsValidWSG84Point(point.Latitude, point.Longitude);
         }
 
+        /// <summary>
+        /// Checks if the given point is a valid point in the WSG84 coordinate system
+        /// </summary>
         /// <param name="latitude">Y</param>
         /// <param name="longitude">X</param>        
         public static bool IsValidWSG84Point(double latitude, double longitude)
@@ -130,7 +139,9 @@ namespace YonderSharp.WSG84
             return Math.Abs(latitude) <= 89.9999 && Math.Abs(longitude) <= 179.9999;
         }
 
-
+        /// <summary>
+        /// Checks if a point is inside the given area
+        /// </summary>
         public static bool IsPointWithinArea(Area area, PointLatLng point)
         {
             bool isAbove = area.TopLeftCorner.Latitude < point.Latitude;
