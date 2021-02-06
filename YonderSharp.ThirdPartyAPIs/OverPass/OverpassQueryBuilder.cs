@@ -55,7 +55,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
                 yield return new Tuple<string, string, int>(nodeTag.Key, nodeTag.Value, maxDistanceToTag);
         }
 
-        public string BuildQuery(OSMPointsLayer osmLayer, double latitudeStart, double latitudeEnd, double longitudeStart, double longitudeEnd)
+        public string BuildQueryForNodes(OSMPointsLayer osmLayer, double latitudeStart, double latitudeEnd, double longitudeStart, double longitudeEnd)
         {
             if (osmLayer == null)
             {
@@ -76,6 +76,32 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         /// </summary>
         /// <param name="nodesToLoad">key, value, fence (meters)</param>
         public string BuildQueryForNodes(Tuple<string, string, int>[] nodesToLoad, double latitude, double longitude)
+        {
+            var properties = new List<string>();
+            properties.AddRange(nodesToLoad?.Select(x => x.Item1).ToList());
+            properties = properties.Distinct().ToList();
+
+            if (properties.Count == 0)
+            {
+                return "";
+            }
+
+            string result = $"[out:csv(::id, ::lat, ::lon, name";
+            if (properties.Count > 0)
+            {
+                result += $", { string.Join(",", properties)}";
+            }
+            result += ")];(";
+
+            if (nodesToLoad?.Count() > 0)
+            {
+                result += BuildNodeQuery(nodesToLoad, latitude, longitude);
+            }
+
+            return result + "); out;";
+        }
+
+        private string BuildNodeQuery(Tuple<string, string, int>[] nodesToLoad, double latitude, double longitude)
         {
             string result = "";
 
@@ -104,6 +130,5 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
 
             return result;
         }
-
     }
 }

@@ -33,7 +33,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         /// <inheritdoc cref="IOverpassApi"/>
         public OsmNode[] GetOsmNodes(OSMPointsLayer osmLayer, Area area)
         {
-            string query = _queryBuilder.BuildQuery(osmLayer, area.YStart, area.YEnd, area.XStart, area.XEnd);
+            string query = _queryBuilder.BuildQueryForNodes(osmLayer, area.YStart, area.YEnd, area.XStart, area.XEnd);
             var nodes = LoadNodesFromOverpass(query);
             return CleanFromToFarAwayEntries(nodes, area.Center, osmLayer.MaxDistanceToCity, osmLayer.MaxDistaToTag).ToArray();
         }
