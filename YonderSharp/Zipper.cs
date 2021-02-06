@@ -6,6 +6,9 @@ using System.Text;
 
 namespace YonderSharp
 {
+    /// <summary>
+    /// Helper class for zipping related operations
+    /// </summary>
     public class Zipper
     {
         private static void CopyTo(Stream src, Stream dest)
@@ -20,12 +23,18 @@ namespace YonderSharp
             }
         }
 
+        /// <summary>
+        /// returns the compressed base64 byte[] representation of the content
+        /// </summary>
         public static string ZipBase64(string sr)
         {
             var data = Zip(sr);
             return Convert.ToBase64String(data);
         }
 
+        /// <summary>
+        /// compresses the content
+        /// </summary>
         public static byte[] Zip(string str)
         {
             var bytes = Encoding.UTF8.GetBytes(str);
@@ -44,6 +53,9 @@ namespace YonderSharp
             }
         }
 
+        /// <summary>
+        /// Transformes the zipped bytes to their content string
+        /// </summary>
         public static string Unzip(byte[] bytes)
         {
             using (var msi = new MemoryStream(bytes))

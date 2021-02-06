@@ -5,8 +5,14 @@ using YonderSharp.ProceduralGeneration.Model.OSM;
 
 namespace YonderSharp.WSG84
 {
+    /// <summary>
+    /// Helper for OSM data operations like sorting
+    /// </summary>
     public class GeoSorter
     {
+        /// <summary>
+        /// removes all dublicates of the key->value pair
+        /// </summary>
         public static OsmNode[] MakeKeyValueUniqueToClosest(OsmNode[] nodes, PointLatLng point, string key, string value = null)
         {
             if (nodes == null)
@@ -46,6 +52,9 @@ namespace YonderSharp.WSG84
             return result.ToArray();
         }
 
+        /// <summary>
+        /// creates an array that starts with the wished key
+        /// </summary>
         public static OsmNode[] BringTagToStart(OsmNode[] nodes, string key)
         {
             if (nodes == null)
@@ -75,6 +84,9 @@ namespace YonderSharp.WSG84
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Sorts the elements based on their distance to the point
+        /// </summary>
         public static OsmNode[] SortByDistance(OsmNode[] nodes, PointLatLng point, bool ascending = true)
         {
             if (nodes == null)

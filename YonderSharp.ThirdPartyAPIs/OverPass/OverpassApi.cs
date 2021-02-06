@@ -29,7 +29,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
 
             return new Uri(uris[_random.Next(0, uris.Length - 1)]);
         }
-        
+
         /// <inheritdoc cref="IOverpassApi"/>
         public OsmNode[] GetOsmNodes(OSMPointsLayer osmLayer, Area area)
         {
@@ -174,18 +174,10 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
 
             using (var wb = new WebClient())
             {
-                try
-                {
-                    var postBody = query;
-                    Uri url = GetOverpassURL();
-                    lastLoadedResult = wb.UploadString(url, postBody);
-                    return lastLoadedResult;
-                }
-                catch (Exception e)
-                {
-                    int trdtrde = 0;
-                    throw e;
-                }
+                var postBody = query;
+                Uri url = GetOverpassURL();
+                lastLoadedResult = wb.UploadString(url, postBody);
+                return lastLoadedResult;
             }
         }
 

@@ -3,10 +3,14 @@ using System.Runtime.Serialization;
 
 namespace YonderSharp.WSG84
 {
+    /// <summary>
+    /// Represents a Point, using the WSG84 float notation
+    /// </summary>
     [DataContract]
     [DebuggerDisplay("N{Latitude} E{Longitude}")]
     public class PointLatLng
     {
+        /// <summary/>
         public PointLatLng()
         {
 
