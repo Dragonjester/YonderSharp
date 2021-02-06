@@ -4,7 +4,7 @@ using YonderSharp.ProceduralGeneration.Model.OSM;
 using YonderSharp.ThirdPartyAPIs.OverPass;
 using YonderSharp.WSG84;
 
-namespace YonderSharp.ThirdPartyAPIs.Tests
+namespace YonderSharp.ThirdPartyAPIs.Tests.OverPass
 {
     public class OSMLoaderTests
     {

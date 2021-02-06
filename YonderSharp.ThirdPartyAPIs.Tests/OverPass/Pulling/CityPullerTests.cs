@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace YonderSharp.ThirdPartyAPIs.Tests.Pulling
+namespace YonderSharp.ThirdPartyAPIs.Tests.OverPass.Pulling
 {
-    public class ShopPullerTests
+    public class CityPullerTests
     {
         [Test]
-        public void ShopPullerTest()
+        public void CityPullerTest()
         {
             throw new NotImplementedException();
         }
