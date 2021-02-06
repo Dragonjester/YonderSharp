@@ -51,9 +51,15 @@ namespace YonderSharp.ProceduralGeneration.Model.OSM
         [DataMember]
         public List<KeyValuePair> NodeTags { get; set; }
 
+        /// <summary>
+        /// max distance that a city-type can be away
+        /// </summary>
         [DataMember]
         public int MaxDistanceToCity { get; set; }
 
+        /// <summary>
+        /// max distance that a tag-type can be away (not a city, but i.e. a shop)
+        /// </summary>
         [DataMember]
         public int MaxDistaToTag { get; set; }
     }

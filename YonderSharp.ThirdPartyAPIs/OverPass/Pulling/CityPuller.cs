@@ -28,7 +28,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
         {
             var entry = row.Split(new[] { '\t' }, StringSplitOptions.None);
 
-            if(entry.Length != 4)
+            if(entry.Length != 5)
             {
                 throw new NotImplementedException($"komische parameterzahl?! DEBUG ME!");
             }

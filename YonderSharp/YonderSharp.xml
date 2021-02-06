@@ -240,6 +240,16 @@
             i.e. {"concentration_camp", "nazism"}
             </summary>
         </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.MaxDistanceToCity">
+            <summary>
+            max distance that a city-type can be away
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.MaxDistaToTag">
+            <summary>
+            max distance that a tag-type can be away (not a city, but i.e. a shop)
+            </summary>
+        </member>
         <!-- Badly formed XML comment ignored for member "M:YonderSharp.ProceduralGeneration.NoiseBuilder.DefaultNoiseBuilder.GetValue(FastNoise,YonderSharp.ProceduralGeneration.Model.Noise.NoiseType,System.Double,System.Double)" -->
         <!-- Badly formed XML comment ignored for member "M:YonderSharp.ProceduralGeneration.NoiseBuilder.DefaultNoiseBuilder.GetValue(FastNoise,YonderSharp.ProceduralGeneration.Model.Noise.NoiseType,System.Single,System.Single)" -->
         <member name="M:YonderSharp.ProceduralGeneration.NoiseBuilder.INoiseBuilder.GetNoiseValue(YonderSharp.ProceduralGeneration.Model.Noise.NoiseLayer,System.Double,System.Double)">
@@ -258,6 +268,50 @@
             </summary>
             <param name="urlOfIndex">Url to the json File </param>
             <returns>true if there is an update avaible. false if everything is up to date</returns>
+        </member>
+        <member name="T:YonderSharp.WSG84.Area">
+            <summary>
+            Represents an rectacle, using the WSG84 floating point notation
+            </summary>
+        </member>
+        <member name="T:YonderSharp.WSG84.GeoSorter">
+            <summary>
+            Helper for OSM data operations like sorting
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.GeoSorter.MakeKeyValueUniqueToClosest(YonderSharp.ProceduralGeneration.Model.OSM.OsmNode[],YonderSharp.WSG84.PointLatLng,System.String,System.String)">
+            <summary>
+            removes all dublicates of the key->value pair
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.GeoSorter.BringTagToStart(YonderSharp.ProceduralGeneration.Model.OSM.OsmNode[],System.String)">
+            <summary>
+            creates an array that starts with the wished key
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.GeoSorter.SortByDistance(YonderSharp.ProceduralGeneration.Model.OSM.OsmNode[],YonderSharp.WSG84.PointLatLng,System.Boolean)">
+            <summary>
+            Sorts the elements based on their distance to the point
+            </summary>
+        </member>
+        <member name="T:YonderSharp.WSG84.NotAValidWsg84PointException">
+            <summary>
+            Either you've done something stupid, or something has gone terrible wrong somewhere...
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.NotAValidWsg84PointException.#ctor(YonderSharp.WSG84.PointLatLng)">
+            <summary/>
+        </member>
+        <member name="M:YonderSharp.WSG84.NotAValidWsg84PointException.#ctor(System.Double,System.Double)">
+            <summary/>
+        </member>
+        <member name="T:YonderSharp.WSG84.PointLatLng">
+            <summary>
+            Represents a Point, using the WSG84 float notation
+            </summary>
+        </member>
+        <member name="M:YonderSharp.WSG84.PointLatLng.#ctor">
+            <summary/>
         </member>
         <member name="M:YonderSharp.WSG84.PointLatLng.#ctor(System.Double,System.Double)">
             <param name="latitude">Y</param>
@@ -343,6 +397,26 @@
         <member name="M:YonderSharp.WSG84.WSG84Math.IsPointWithinArea(YonderSharp.WSG84.Area,YonderSharp.WSG84.PointLatLng)">
             <summary>
             Checks if a point is inside the given area
+            </summary>
+        </member>
+        <member name="T:YonderSharp.Zipper">
+            <summary>
+            Helper class for zipping related operations
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Zipper.ZipBase64(System.String)">
+            <summary>
+            returns the compressed base64 byte[] representation of the content
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Zipper.Zip(System.String)">
+            <summary>
+            compresses the content
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Zipper.Unzip(System.Byte[])">
+            <summary>
+            Transformes the zipped bytes to their content string
             </summary>
         </member>
     </members>

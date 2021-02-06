@@ -32,7 +32,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
         /// returns the node types that are to be loaded
         /// </summary>
         protected abstract string[] GetNodeTypes();
-      
+
         /// <summary>
         /// Pulls the required data from the overpass api for the given rectangle
         /// </summary>
@@ -58,11 +58,15 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
             {
                 for (int longitude = longitudeStart; longitude <= longitudeEnd; longitude += LongitudeStepSize)
                 {
-                    foreach(string row in _api.GetCvsOverPassData(GetOverPassPostBody(latitude, longitude)))
+                    foreach (string row in _api.GetCvsOverPassData(GetOverPassPostBody(latitude, longitude)))
                     {
-                        yield return GetResultOfRow(row);
+                        var result = GetResultOfRow(row);
+                        if (result != null)
+                        {
+                            yield return result;
+                        }
                     }
-                    
+
                 }
             }
         }

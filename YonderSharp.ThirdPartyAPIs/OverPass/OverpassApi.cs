@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using YonderSharp.ProceduralGeneration.Model.OSM;
 using YonderSharp.WSG84;
 using KeyValuePair = YonderSharp.ProceduralGeneration.Model.OSM.KeyValuePair;
@@ -20,11 +21,13 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         }
         private Uri GetOverpassURL()
         {
+            //lets not DDOS any server...
+            Thread.Sleep(500);
+
             string[] uris = new[]
             {
-       //         "https://overpass.kumi.systems/api/interpreter",
-          //      "http://overpass.openstreetmap.fr/api/interpreter",
-                "https://overpass-api.de/api/interpreter",
+                "https://overpass.kumi.systems/api/interpreter",  
+          //       "https://overpass-api.de/api/interpreter",
             };
 
             return new Uri(uris[_random.Next(0, uris.Length - 1)]);
@@ -191,11 +194,23 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             foreach (var node in nodes)
             {
                 double distance = WSG84Math.GetDistanceInMeters(centerPoint, node.Latitude, node.Longitude);
-                if (distance <= maxDistanceTags || distance <= maxDistanceCities && node.Tags.Any(x => x.Key == "place"))
+                if (distance <= maxDistanceTags || distance <= maxDistanceCities && IsTown(node))
                 {
                     yield return node;
                 }
             }
+        }
+
+        string[] cityKeys = new[] { "town", "village", "suburb", "city" };
+
+        private bool IsTown(OsmNode node)
+        {
+            if (node == null)
+            {
+                return false;
+            }
+
+            return node.Tags.Any(x => cityKeys.Any(y => y.Equals(x.Key, StringComparison.OrdinalIgnoreCase)));
         }
 
         /// <inheritdoc cref="IOverpassApi"/>
@@ -207,7 +222,10 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
                 return null;
             }
 
-            return content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var result = content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            result.RemoveAt(0); //headerrow
+
+            return result.ToArray();
         }
     }
 }
