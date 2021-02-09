@@ -34,7 +34,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Model
             StreetName = street;
             Latitude = latitude;
             Longitude = longitude;
-            StreetSize = StreetSize;
+            StreetSize = streetSize;
         }
     }
 }
