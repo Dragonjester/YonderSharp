@@ -168,6 +168,13 @@
             Was the user a bad boy?
             </summary>
         </member>
+        <member name="M:YonderSharp.IProgressTracker.Progress(System.Int32,System.Int32)">
+            <summary>
+            Notify about some progress. i.e. 5/100
+            </summary>
+            <param name="currentStep">Which step was just finish?</param>
+            <param name="totalStepCount">Total steps to finish</param>
+        </member>
         <member name="M:YonderSharp.MyRandom.GetInt(System.Int32)">
             <summary>
             

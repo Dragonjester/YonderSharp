@@ -125,6 +125,10 @@ namespace DeltahedronUI.DataManagement
 
         #endregion selectedItem
 
+        public Visibility ShowRemove
+        {
+            get { return DataSource.IsAllowedToRemove() ? Visibility.Visible : Visibility.Collapsed; }
+        }
 
         public Visibility ShowOnlyAddNew
         {

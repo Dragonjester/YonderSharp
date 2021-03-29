@@ -30,7 +30,7 @@ namespace YonderSharp.Downloads
             stopWatch.Start();
             string result;
 
-            var hash = MD5Helper.GetHash(Url);
+            var hash = GetUrlHash(Url);
 
             var fullPath = path + hash;
             if (!forceDownload)
@@ -78,6 +78,11 @@ namespace YonderSharp.Downloads
             {
                 return "";
             }
+        }
+
+        private string GetUrlHash(string url)
+        {
+            return url.Replace("/", " ").Replace("_", " ").Replace("\\", " ").Replace(":", " ").Replace(".", " ").Replace("-", " ").Replace("  ", " ") + ".zip";
         }
     }
 }

@@ -23,6 +23,7 @@ namespace YonderSharp.WPF.DataManagement
             InitializeComponent();
             SetSource(dataSource);
             EntryList.SelectionChanged += (s, e) => EntryList.ScrollIntoView(EntryList.SelectedItem);
+            dataSource.GetIDPropertyInfo();
         }
 
         private void GenerateFields(Tuple<string, Type>[] items)
@@ -37,7 +38,7 @@ namespace YonderSharp.WPF.DataManagement
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-              
+
                 ContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
                 //Add Label
@@ -101,12 +102,12 @@ namespace YonderSharp.WPF.DataManagement
                     currentElement = box;
                 }
 
-                if(currentElement == null)
+                if (currentElement == null)
                 {
                     throw new Exception("You forgot to set the current element Ü");
                 }
 
-                
+
 
                 if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
                 {
@@ -124,10 +125,14 @@ namespace YonderSharp.WPF.DataManagement
         {
             _vm = new DataGridVM(source);
             DataContext = _vm;
-
             GenerateFields(_vm.GetFields());
+
+            //verify that the ID is avaiable
+            var id = source.GetIDPropertyInfo();
+            if(id == null)
+            {
+                throw new Exception("ID not identified!");
+            }
         }
-
-
     }
 }

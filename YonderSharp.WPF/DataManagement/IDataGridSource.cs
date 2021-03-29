@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -34,6 +36,17 @@ namespace YonderSharp.WPF.DataManagement
 
         public Type GetTypeOfObjects();
 
+        public PropertyInfo GetIDPropertyInfo()
+        {
+
+            BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
+            return GetTypeOfObjects().GetProperties(instancePublic)
+                     .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
+                              && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
+        }
+
+        public string GetNameOfIdProperty();
+
         /// <summary>
         /// string shown in the listview
         /// </summary>
@@ -51,7 +64,6 @@ namespace YonderSharp.WPF.DataManagement
         /// Is the field part of the ItemTitle generation? If yes this will result in an update of the list on change of the fieldvalue
         /// </summary>
         public abstract bool IsFieldPartOfListText(string fieldName);
-
 
         #region actions
         /// <summary>

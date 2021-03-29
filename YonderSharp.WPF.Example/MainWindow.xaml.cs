@@ -11,7 +11,8 @@ namespace YonderSharp.WPF.Example
         public MainWindow()
         {
             InitializeComponent();
-            dataGrid.SetSource(new ExampleDataGridSource());
+            dataGrid.SetSource(new ExampleDataGridSource("Entry"));
+            SourceGrid.SetSource(new SourceDataGridSource("Source"));
         }
     }
 }

@@ -1,10 +1,14 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace YonderSharp.WPF.DataManagement.Example
 {
     [DataContract]
     public class ExampleDataItem
     {
+        [DataMember]
+        public Guid ID { get; set; } = Guid.NewGuid();
+
         [DataMember]
         public int SomeInt { get; set; }
 
