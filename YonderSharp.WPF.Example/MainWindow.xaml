@@ -7,12 +7,17 @@
         xmlns:local="clr-namespace:YonderSharp.WPF.Example"
         mc:Ignorable="d"
         Title="YonderSharp Examples" Height="450" Width="800">
-    <TabControl>
-        <TabItem Header="DataGrid">
-            <data:DataGrid Name="dataGrid"/>
-        </TabItem>
-        <TabItem Header="SourceGrid">
-            <data:DataGrid Name="SourceGrid"/>
-        </TabItem>
-    </TabControl>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Configuration" Click="OpenConfiguration"/>
+        </Menu>
+        <TabControl>
+            <TabItem Header="DataGrid">
+                <data:DataGrid Name="dataGrid"/>
+            </TabItem>
+            <TabItem Header="SourceGrid">
+                <data:DataGrid Name="SourceGrid"/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>

@@ -4,6 +4,11 @@
         <name>YonderSharp</name>
     </assembly>
     <members>
+        <member name="M:YonderSharp.Config.IConfigManager.Clear">
+            <summary>
+            Deletes all Entries
+            </summary>
+        </member>
         <member name="M:YonderSharp.Downloads.IUrlDownloader.LoadFromUrl(System.String)">
             <summary>
             Download the string content of the url
