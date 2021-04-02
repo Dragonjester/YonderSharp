@@ -4,6 +4,33 @@
         <name>YonderSharp</name>
     </assembly>
     <members>
+        <member name="M:YonderSharp.Config.ConfigManager.GetAllKeys">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.ConfigManager.GetValue(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.ConfigManager.SetValue(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.ConfigManager.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.ConfigManager.Save">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.ConfigManager.Clear">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.ConfigManager.SetDefaultConfig(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.Config.IConfigManager.SetDefaultConfig(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Sets all key/value pairs for unknown keys.
+            If the key is allready known, the existing configuration does not get overwritten!
+            </summary>
+        </member>
         <member name="M:YonderSharp.Config.IConfigManager.Clear">
             <summary>
             Deletes all Entries

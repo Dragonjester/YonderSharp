@@ -10,6 +10,7 @@ namespace YonderSharp.WPF.Configuration
         private List<ConfigurationEntry> _entries { get; set; } = new List<ConfigurationEntry>();
         public string _searchText { get; set; }
         private IConfigManager _dataSource { get; set; }
+
         public ConfigurationDataGridSource(IConfigManager dataSource)
         {
             _dataSource = dataSource;

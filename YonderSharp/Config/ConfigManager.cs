@@ -17,6 +17,7 @@ namespace YonderSharp.Config
             pathToJson = AppDomain.CurrentDomain.BaseDirectory + "\\configmanager.json";
         }
 
+        /// <inheritdoc/>
         public string[] GetAllKeys()
         {
             lock (_locker)
@@ -25,6 +26,7 @@ namespace YonderSharp.Config
             }
         }
 
+        /// <inheritdoc/>
         public string GetValue(string key)
         {
             lock (_locker)
@@ -40,6 +42,7 @@ namespace YonderSharp.Config
             }
         }
 
+        /// <inheritdoc/>
         public void SetValue(string key, string value)
         {
             lock (_locker)
@@ -48,6 +51,7 @@ namespace YonderSharp.Config
             }
         }
 
+        /// <inheritdoc/>
         public void Load()
         {
             lock (_locker)
@@ -66,6 +70,7 @@ namespace YonderSharp.Config
             }
         }
 
+        /// <inheritdoc/>
         public void Save()
         {
             lock (_locker)
@@ -74,11 +79,21 @@ namespace YonderSharp.Config
             }
         }
 
+        /// <inheritdoc/>
         public void Clear()
         {
             lock (_locker)
             {
                 _configEntries.Clear();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetDefaultConfig(Dictionary<string, string> defaultConfig)
+        {
+            foreach(string key in defaultConfig.Keys.Where(x => !_configEntries.ContainsKey(x)))
+            {
+                _configEntries.Add(key, defaultConfig[key]);
             }
         }
     }
