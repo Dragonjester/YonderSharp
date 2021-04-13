@@ -96,6 +96,20 @@ namespace YonderSharp.WPF.DataManagement
                 else
                 {
                     //TODO: Dropbox for ForeignKey
+                    TextBox box = new TextBox();
+                    box.VerticalContentAlignment = VerticalAlignment.Center;
+                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    bind.Source = _vm;
+                    bind.Mode = BindingMode.TwoWay;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    box.SetBinding(TextBox.TextProperty, bind);
+                    Grid.SetRow(box, i);
+                    Grid.SetColumn(box, 1);
+                    ContentGrid.Children.Add(box);
+
+                    box.Margin = new Thickness(0, 2, 0, 2);
+
+                    contentElement = box;
                 }
 
                 if (contentElement == null)
