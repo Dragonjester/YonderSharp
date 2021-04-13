@@ -71,6 +71,20 @@
             Download the string content of the url, without any cache!
             </summary>
         </member>
+        <member name="M:YonderSharp.Downloads.UrlDownloader.LoadFromUrl(System.String)">
+            <summary>
+            Load the htmlbody from the web
+            </summary>
+            <param name="url">url of the ressource</param>
+        </member>
+        <member name="M:YonderSharp.Downloads.UrlDownloader.LoadFromUrl(System.String,System.Boolean)">
+            <summary>
+            Load the htmlbody from the web
+            </summary>
+            <param name="url">url of the ressource</param>
+            <param name="forceDownload">Doesnt try to read from the local cache if <b>TRUE</b></param>
+            <returns>the string represenation of the htmlBody that has been downloaded</returns>
+        </member>
         <member name="T:YonderSharp.FileSources.IFileSource`1">
             <summary>
             simple Elementsource form hard disk
@@ -287,6 +301,31 @@
         <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.RandomPointLayer.Seed">
             <summary>
             seed used for random generator
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.ID">
+            <summary>
+            Unique ID of the Node
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.Latitude">
+            <summary>
+            North (Y) component of the coordinate
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.Longitude">
+            <summary>
+            West (X) component of the coordinate
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.Name">
+            <summary>
+            Human readable name of the Node
+            </summary>
+        </member>
+        <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.Tags">
+            <summary>
+            K/V tags of the Node
             </summary>
         </member>
         <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OSMPointsLayer.CityTypeCity">

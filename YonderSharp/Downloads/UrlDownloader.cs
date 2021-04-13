@@ -18,20 +18,30 @@ namespace YonderSharp.Downloads
                 Directory.CreateDirectory(path);
             }
         }
-
-        public string LoadFromUrl(string Url)
+        /// <summary>
+        /// Load the htmlbody from the web
+        /// </summary>
+        /// <param name="url">url of the ressource</param>
+        public string LoadFromUrl(string url)
         {
-            return LoadFromUrl(Url, false);
+            return LoadFromUrl(url, false);
         }
 
         Random rnd = new Random();
-        public string LoadFromUrl(string Url, bool forceDownload)
+
+        /// <summary>
+        /// Load the htmlbody from the web
+        /// </summary>
+        /// <param name="url">url of the ressource</param>
+        /// <param name="forceDownload">Doesnt try to read from the local cache if <b>TRUE</b></param>
+        /// <returns>the string represenation of the htmlBody that has been downloaded</returns>
+        public string LoadFromUrl(string url, bool forceDownload)
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             string result;
 
-            var hash = GetUrlHash(Url);
+            var hash = GetUrlHash(url);
 
             var fullPath = path + hash;
             if (!forceDownload)
@@ -49,7 +59,7 @@ namespace YonderSharp.Downloads
                 }
             }
 
-            var myRequest = (HttpWebRequest)WebRequest.Create(Url);
+            var myRequest = (HttpWebRequest)WebRequest.Create(url);
             myRequest.Method = "GET";
 
             try
