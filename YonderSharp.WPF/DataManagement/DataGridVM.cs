@@ -135,6 +135,15 @@ namespace DeltahedronUI.DataManagement
             get { return DataSource.IsAllowedToAddNew() && !DataSource.IsAllowedToAddFromList() ? Visibility.Visible : Visibility.Collapsed; }
         }
 
+
+        /// <summary>
+        /// Should the textbox for the primary field key be disabled?
+        /// </summary>
+        public bool IsPrimaryKeyDisabled
+        {
+            get { return DataSource.IsPrimaryKeyDisabled(); }
+        }
+
         public Visibility ShowOnlyAddFromList
         {
             get { return DataSource.IsAllowedToAddFromList() && !DataSource.IsAllowedToAddNew() ? Visibility.Visible : Visibility.Collapsed; }

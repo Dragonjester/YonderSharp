@@ -1,8 +1,12 @@
 ﻿using DeltahedronUI.DataManagement;
 using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using YonderSharp.Attributes;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -26,10 +30,10 @@ namespace YonderSharp.WPF.DataManagement
             dataSource.GetIDPropertyInfo();
         }
 
-        private void GenerateFields(Tuple<string, Type>[] items)
+        private void GenerateFields(Type itemType, Tuple<string, Type>[] items)
         {
+            //Maybe TODO: V2.0: Config objects that tell how to generate a line for even more flexibility....
 
-            //TODO: Config objects that tell how to generate a line. 
             //TODO: Dropdown to source titles based on foreign keys
 
             ContentGrid.RowDefinitions.Clear();
@@ -38,7 +42,7 @@ namespace YonderSharp.WPF.DataManagement
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-
+                PropertyInfo property = itemType.GetProperties().Where(x => x.Name == item.Item1).First();
                 ContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
                 //Add Label
@@ -48,70 +52,60 @@ namespace YonderSharp.WPF.DataManagement
                 Grid.SetColumn(label, 0);
                 ContentGrid.Children.Add(label);
 
-                UIElement currentElement;
-                //Add content element
-                if (item.Item2 == typeof(bool))
+                UIElement contentElement = null;
+
+                if (property.GetCustomAttribute(typeof(ForeignKey)) == null)
                 {
-                    CheckBox box = new CheckBox();
-                    box.VerticalAlignment = VerticalAlignment.Center;
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
-                    bind.Source = _vm;
-                    box.SetBinding(CheckBox.IsCheckedProperty, bind);
-                    Grid.SetRow(box, i);
-                    Grid.SetColumn(box, 1);
-                    ContentGrid.Children.Add(box);
+                    //Add content element
+                    if (item.Item2 == typeof(bool))
+                    {
+                        CheckBox box = new CheckBox();
+                        box.VerticalAlignment = VerticalAlignment.Center;
+                        Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                        bind.Source = _vm;
+                        box.SetBinding(CheckBox.IsCheckedProperty, bind);
+                        Grid.SetRow(box, i);
+                        Grid.SetColumn(box, 1);
+                        ContentGrid.Children.Add(box);
 
-                    currentElement = box;
+                        contentElement = box;
+                    }
+                    else
+                    {
+                        TextBox box = new TextBox();
+                        box.VerticalContentAlignment = VerticalAlignment.Center;
+                        Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                        bind.Source = _vm;
+                        bind.Mode = BindingMode.TwoWay;
+                        bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                        box.SetBinding(TextBox.TextProperty, bind);
+                        Grid.SetRow(box, i);
+                        Grid.SetColumn(box, 1);
+                        ContentGrid.Children.Add(box);
+
+                        box.Margin = new Thickness(0, 2, 0, 2);
+
+                        contentElement = box;
+                    }
+
+                    if (_vm.IsPrimaryKeyDisabled && property.GetCustomAttribute(typeof(PrimaryKey)) != null)
+                    {
+                        contentElement.IsEnabled = false;
+                    }
                 }
-                //else if (item.Item2.IsEnum)
-                //{
-
-                //    ComboBox box = new ComboBox();
-
-                //    box.ItemsSource = _vm.GetEnumNames(item.Item2);
-
-                //    Binding bind = new Binding($"SelectedItem.{item.Item1}");
-                //    bind.Source = _vm;
-                //    bind.Mode = BindingMode.TwoWay;
-                //    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                //    //TODO: BINDING DOESN'T WORK YET!!!
-                //    box.SetBinding(ComboBox.SelectedItemProperty, bind);
-                //    Grid.SetRow(box, i);
-                //    Grid.SetColumn(box, 1);
-                //    ContentGrid.Children.Add(box);
-
-                //    box.Margin = new Thickness(0, 2, 0, 2);
-
-                //    currentElement = box;
-                //}
                 else
                 {
-                    TextBox box = new TextBox();
-                    box.VerticalContentAlignment = VerticalAlignment.Center;
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
-                    bind.Source = _vm;
-                    bind.Mode = BindingMode.TwoWay;
-                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    box.SetBinding(TextBox.TextProperty, bind);
-                    Grid.SetRow(box, i);
-                    Grid.SetColumn(box, 1);
-                    ContentGrid.Children.Add(box);
-
-                    box.Margin = new Thickness(0, 2, 0, 2);
-
-                    currentElement = box;
+                    //TODO: Dropbox for ForeignKey
                 }
 
-                if (currentElement == null)
+                if (contentElement == null)
                 {
-                    throw new Exception("You forgot to set the current element Ü");
+                    throw new Exception("You somehow forgot to set the current element Ü");
                 }
-
-
 
                 if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
                 {
-                    currentElement.LostFocus += RefreshList;
+                    contentElement.LostFocus += RefreshList;
                 }
             }
         }
@@ -125,11 +119,11 @@ namespace YonderSharp.WPF.DataManagement
         {
             _vm = new DataGridVM(source);
             DataContext = _vm;
-            GenerateFields(_vm.GetFields());
+            GenerateFields(_vm.DataSource.GetTypeOfObjects(), _vm.GetFields());
 
             //verify that the ID is avaiable
             var id = source.GetIDPropertyInfo();
-            if(id == null)
+            if (id == null)
             {
                 throw new Exception("ID not identified!");
             }

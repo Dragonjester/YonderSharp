@@ -143,6 +143,14 @@ namespace YonderSharp.WPF.DataManagement
         {
             return _searchText;
         }
+
+        /// <summary>
+        /// Should the textbox for the primary field key be disabled?
+        /// </summary>
+        public virtual bool IsPrimaryKeyDisabled()
+        {
+            return true;
+        }
         #endregion search
     }
 }

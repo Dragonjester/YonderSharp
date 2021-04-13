@@ -9,6 +9,16 @@
             A Foreign-Key that points to some <see cref="T:YonderSharp.Attributes.PrimaryKey"/>
             </summary>
         </member>
+        <member name="P:YonderSharp.Attributes.ForeignKey.TargetClass">
+            <summary>
+            Type to which this ForeignKey points to
+            </summary>
+        </member>
+        <member name="P:YonderSharp.Attributes.ForeignKey.TargetField">
+            <summary>
+            Field of the TargetClass to which the ForeignKey points to
+            </summary>
+        </member>
         <member name="M:YonderSharp.Attributes.ForeignKey.#ctor(System.Type,System.String)">
             <param name="targetClass">Class to which this FK points to</param>
             <param name="fieldName">Property of this class, to where the FK points to</param>
