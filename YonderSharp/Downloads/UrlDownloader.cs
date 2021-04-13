@@ -13,7 +13,8 @@ namespace YonderSharp.Downloads
         public UrlDownloader(string pathToCacheIn)
         {
             path = pathToCacheIn;
-            if (!Directory.Exists(path)) { 
+            if (!Directory.Exists(path))
+            {
                 Directory.CreateDirectory(path);
             }
         }
@@ -41,9 +42,9 @@ namespace YonderSharp.Downloads
                     {
                         return Zipper.Unzip(File.ReadAllBytes(fullPath));
                     }
-                    catch (Exception e)
+                    catch
                     {
-                        int i = 0;
+                        Debugger.Break();
                     }
                 }
             }
@@ -63,7 +64,7 @@ namespace YonderSharp.Downloads
                 {
                     File.WriteAllBytes(fullPath, Zipper.Zip(result));
                 }
-                catch (Exception e)
+                catch
                 {
                     //TODO: fullPath ist u.U. bullshit, weil im Konstruktur bullshit übergeben wurde...
                 }
@@ -74,7 +75,7 @@ namespace YonderSharp.Downloads
                 Thread.Sleep(25 + rnd.Next(1, 50));
                 return result;
             }
-            catch (Exception e)
+            catch 
             {
                 return "";
             }

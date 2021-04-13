@@ -35,7 +35,7 @@ namespace YonderSharp.Config
                 {
                     return _configEntries[key];
                 }
-                catch (KeyNotFoundException knfe)
+                catch (KeyNotFoundException)
                 {
                     return "";
                 }

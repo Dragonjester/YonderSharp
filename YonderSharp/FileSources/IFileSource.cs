@@ -85,7 +85,7 @@ namespace YonderSharp.FileSources
                 {
                     _list = JsonSerializer.Deserialize<HashSet<T>>(File.ReadAllText(GetPathToJsonFile()));
                 }
-                catch (Exception e)
+                catch
                 {
                     //TODO: LOGGING
                 }

@@ -43,7 +43,7 @@ namespace YonderSharp.Updater
                 {
                     loadedVersions.AddRange(JsonConvert.DeserializeObject<List<FileVersionInfo>>(knownVersions));
                 }
-                catch (Exception e)
+                catch
                 {
                     loadedVersions.Add(JsonConvert.DeserializeObject<FileVersionInfo>(knownVersions));
                 }
@@ -51,7 +51,7 @@ namespace YonderSharp.Updater
                 FileVersionInfo newestVersion = loadedVersions.FirstOrDefault(x => x.FileName.Equals(info.FileName, StringComparison.OrdinalIgnoreCase));
                 return newestVersion != null && newestVersion.Release != info.Release;
             }
-            catch (Exception e)
+            catch 
             {
                 //maybe some logging in the future
             }
