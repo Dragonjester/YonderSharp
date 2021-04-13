@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 
 namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
 {
@@ -36,7 +37,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
         /// <summary>
         /// Pulls the required data from the overpass api for the given rectangle
         /// </summary>
-        public IEnumerable<T> Pull(int latitudeStart, int longitudeStart, int latitudeEnd, int longitudeEnd)
+        public IEnumerable<T> Pull(int latitudeStart, int longitudeStart, int latitudeEnd, int longitudeEnd, int sleepBetweenPullsInMs)
         {
             //ensure that start > end...
             if (latitudeEnd < latitudeStart)
@@ -64,6 +65,11 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
                         if (result != null)
                         {
                             yield return result;
+                        }
+
+                        if(sleepBetweenPullsInMs > 0)
+                        {
+                            Thread.Sleep(sleepBetweenPullsInMs);
                         }
                     }
 

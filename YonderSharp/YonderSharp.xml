@@ -4,6 +4,21 @@
         <name>YonderSharp</name>
     </assembly>
     <members>
+        <member name="T:YonderSharp.Attributes.ForeignKey">
+            <summary>
+            A Foreign-Key that points to some <see cref="T:YonderSharp.Attributes.PrimaryKey"/>
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Attributes.ForeignKey.#ctor(System.Type,System.String)">
+            <param name="targetClass">Class to which this FK points to</param>
+            <param name="fieldName">Property of this class, to where the FK points to</param>
+            <exception cref="T:System.ArgumentNullException">For the params className and fieldName</exception>
+        </member>
+        <member name="T:YonderSharp.Attributes.PrimaryKey">
+            <summary>
+            Identifies something as the unique primary key. Usually, but not necessarily a <see cref="T:System.Guid"/>
+            </summary>
+        </member>
         <member name="M:YonderSharp.Config.ConfigManager.GetAllKeys">
             <inheritdoc/>
         </member>
