@@ -1,5 +1,6 @@
 ﻿using DeltahedronUI.DataManagement;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -34,8 +35,6 @@ namespace YonderSharp.WPF.DataManagement
         {
             //Maybe TODO: V2.0: Config objects that tell how to generate a line for even more flexibility....
 
-            //TODO: Dropdown to source titles based on foreign keys
-
             ContentGrid.RowDefinitions.Clear();
             ContentGrid.Children.Clear();
 
@@ -53,8 +52,8 @@ namespace YonderSharp.WPF.DataManagement
                 ContentGrid.Children.Add(label);
 
                 UIElement contentElement = null;
-
-                if (property.GetCustomAttribute(typeof(ForeignKey)) == null)
+                ForeignKey fkProperty = (ForeignKey) property.GetCustomAttribute(typeof(ForeignKey));
+                if (fkProperty == null)
                 {
                     //Add content element
                     if (item.Item2 == typeof(bool))
@@ -95,21 +94,25 @@ namespace YonderSharp.WPF.DataManagement
                 }
                 else
                 {
-                    //TODO: Dropbox for ForeignKey
-                    TextBox box = new TextBox();
-                    box.VerticalContentAlignment = VerticalAlignment.Center;
+                    //TODO: Show Title of Items instead of value of Key
+                    //TODO: Update on new FK Item being avaiable
+
+                    ComboBox cBox = new ComboBox();
+                    IDataGridSource fkSource = DataGridSourceManager.GetSource(fkProperty.TargetClass);
+
+                    cBox.ItemsSource = fkSource.GetAllItems().Select(x => fkProperty.TargetField.GetValue(x));
+
                     Binding bind = new Binding($"SelectedItem.{item.Item1}");
                     bind.Source = _vm;
-                    bind.Mode = BindingMode.TwoWay;
-                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    box.SetBinding(TextBox.TextProperty, bind);
-                    Grid.SetRow(box, i);
-                    Grid.SetColumn(box, 1);
-                    ContentGrid.Children.Add(box);
+                    cBox.SetBinding(ComboBox.SelectedItemProperty, bind);
+                    cBox.SetBinding(ComboBox.SelectedValueProperty, bind);
+                    Grid.SetRow(cBox, i);
+                    Grid.SetColumn(cBox, 1);
+                    ContentGrid.Children.Add(cBox);
 
-                    box.Margin = new Thickness(0, 2, 0, 2);
+                    cBox.Margin = new Thickness(0, 2, 0, 2);
 
-                    contentElement = box;
+                    contentElement = cBox;
                 }
 
                 if (contentElement == null)

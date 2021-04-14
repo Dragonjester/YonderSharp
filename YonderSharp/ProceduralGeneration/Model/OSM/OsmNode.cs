@@ -5,16 +5,28 @@ using YonderSharp.Attributes;
 
 namespace YonderSharp.ProceduralGeneration.Model.OSM
 {
+    /// <summary>
+    /// OpenStreetMapNode
+    /// </summary>
     [DataContract]
     [DebuggerDisplay("{Name} N{Latitude} E{Longitude}")]
     public class OsmNode
     {
-
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public OsmNode()
         {
             Tags = new List<KeyValuePair>();
         }
-
+        /// <summary>
+        /// Detailed constructor
+        /// </summary>
+        /// <param name="iD">Unique ID</param>
+        /// <param name="latitude">North (Y) compenet of the WSG84 coordinate</param>
+        /// <param name="longitude">East (X) compoinent of the WSG84 coordinate</param>
+        /// <param name="name">Humanfriendly name of node</param>
+        /// <param name="tags">tags that descripe the node in detail</param>
         public OsmNode(long iD, double latitude, double longitude, string name, List<KeyValuePair> tags)
         {
             ID = iD;

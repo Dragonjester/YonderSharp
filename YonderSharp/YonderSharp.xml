@@ -303,6 +303,26 @@
             seed used for random generator
             </summary>
         </member>
+        <member name="T:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode">
+            <summary>
+            OpenStreetMapNode
+            </summary>
+        </member>
+        <member name="M:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.#ctor(System.Int64,System.Double,System.Double,System.String,System.Collections.Generic.List{YonderSharp.ProceduralGeneration.Model.OSM.KeyValuePair})">
+            <summary>
+            Detailed constructor
+            </summary>
+            <param name="iD">Unique ID</param>
+            <param name="latitude">North (Y) compenet of the WSG84 coordinate</param>
+            <param name="longitude">East (X) compoinent of the WSG84 coordinate</param>
+            <param name="name">Humanfriendly name of node</param>
+            <param name="tags">tags that descripe the node in detail</param>
+        </member>
         <member name="P:YonderSharp.ProceduralGeneration.Model.OSM.OsmNode.ID">
             <summary>
             Unique ID of the Node

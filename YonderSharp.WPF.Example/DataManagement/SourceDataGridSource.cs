@@ -36,7 +36,7 @@ namespace YonderSharp.WPF.DataManagement.Example
 
         public void AddNewItem()
         {
-            throw new NotImplementedException();
+            _items.Add(CreateItem(_prefix, _items.Count));
         }
 
         public object[] GetAddableItems()
@@ -45,7 +45,7 @@ namespace YonderSharp.WPF.DataManagement.Example
         }
         public bool IsAllowedToAddNew()
         {
-            return false;
+            return true;
         }
         #endregion add items
         public object[] GetAllItems()
@@ -80,7 +80,7 @@ namespace YonderSharp.WPF.DataManagement.Example
         /// <inheritdoc/>
         public virtual bool IsAllowedToCreateNewEntry()
         {
-            return false;
+            return true;
         }
 
         /// <inheritdoc/>

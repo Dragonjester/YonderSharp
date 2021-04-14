@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using YonderSharp.Config;
 using YonderSharp.WPF.Configuration;
+using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.DataManagement.Example;
 
 namespace YonderSharp.WPF.Example
@@ -14,9 +15,16 @@ namespace YonderSharp.WPF.Example
         public MainWindow()
         {
             InitializeComponent();
-            dataGrid.SetSource(new ExampleDataGridSource("Entry"));
-            SourceGrid.SetSource(new SourceDataGridSource("Source"));
 
+            var source = new SourceDataGridSource("Source");
+            var entries = new ExampleDataGridSource("Entry");
+
+            DataGridSourceManager.RegisterDataSource(source);
+            DataGridSourceManager.RegisterDataSource(entries);
+
+            SourceGrid.SetSource(source);
+            dataGrid.SetSource(entries);
+          
             _configManager = new ConfigManager();
             _configManager.Load();
         }
