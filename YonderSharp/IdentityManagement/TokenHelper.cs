@@ -9,7 +9,7 @@ namespace YonderSharp.IdentityManagement
     {
         public bool IsValid(Token token, string secret)
         {
-            if (secret == null)
+            if (string.IsNullOrWhiteSpace(secret))
             {
                 return false;
             }
@@ -20,7 +20,6 @@ namespace YonderSharp.IdentityManagement
             }
 
             return token.Verification == CreateVerification(token, secret);
-
         }
 
         public void SetVerification(Token token, string secret)

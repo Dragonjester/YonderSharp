@@ -44,5 +44,11 @@ namespace YonderSharp.IdentityManagement
         /// </summary>
         [DataMember]
         public bool IsBanned { get; set; }
+
+        /// <summary>
+        /// As long as this is != null, the user is not fully registered!
+        /// </summary>
+        [DataMember]
+        public Guid VerificationId { get; set; } = Guid.NewGuid();
     }
 }
