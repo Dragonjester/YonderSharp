@@ -30,7 +30,7 @@ namespace YonderSharp
         {
             JwtSecurityToken unvalidatedToken = new JwtSecurityToken(token);
 
-            if (unvalidatedToken.ValidTo < DateTime.UtcNow)
+            if (unvalidatedToken.ValidTo > DateTime.UtcNow)
             {
                 if (config == null)
                 {
@@ -57,10 +57,8 @@ namespace YonderSharp
 
                 return validatedGuidCach[token];
             }
-            else
-            {
-                validatedGuidCach.Remove(token);
-            }
+
+            validatedGuidCach.Remove(token);
 
             return Guid.Empty;
         }

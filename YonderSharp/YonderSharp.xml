@@ -125,6 +125,16 @@
             Stores all the objects into the file
             </summary>
         </member>
+        <member name="M:YonderSharp.IdentityManagement.ILoginMailHelper.SendPasswordForgottenMail(System.String,System.Guid)">
+            <summary>
+            The user forgot his password. Send him a mail that resets the password
+            </summary>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.ILoginMailHelper.SendRegistrationVerification(YonderSharp.IdentityManagement.User)">
+            <summary>
+            Sends the mail that allows the verification of the ownership of the user of the used mail
+            </summary>
+        </member>
         <member name="T:YonderSharp.IdentityManagement.IPasswordHelper">
             <summary>
             Helping methods for Password related operations
@@ -239,12 +249,27 @@
             Was the user a bad boy?
             </summary>
         </member>
+        <member name="P:YonderSharp.IdentityManagement.User.VerificationId">
+            <summary>
+            As long as this is != null, the user is not fully registered!
+            </summary>
+        </member>
         <member name="M:YonderSharp.IProgressTracker.Progress(System.Int32,System.Int32)">
             <summary>
             Notify about some progress. i.e. 5/100
             </summary>
             <param name="currentStep">Which step was just finish?</param>
             <param name="totalStepCount">Total steps to finish</param>
+        </member>
+        <member name="T:YonderSharp.MicrosoftIdentityPlattform">
+            <summary>
+            Helper-class for the Microsoft identity Plattform
+            https://docs.microsoft.com/de-de/azure/active-directory/develop/
+            </summary>
+        </member>
+        <member name="M:YonderSharp.MicrosoftIdentityPlattform.GetValidatedUserId(System.String)">
+            <param name="token">JWT that might or might not represent a valid user</param>
+            <returns>The Guid of the user. If the JWT is invalid: Guid.Empty</returns>
         </member>
         <member name="M:YonderSharp.MyRandom.GetInt(System.Int32)">
             <summary>
