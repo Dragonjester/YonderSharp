@@ -16,7 +16,7 @@ namespace YonderSharp.IdentityManagement
         public Guid UserId { get; set; } = Guid.NewGuid();
 
         /// <summary>
-        /// Maybe (!) unique E-Mail Adress of the user
+        /// Unique E-Mail Adress of the user
         /// </summary>
         [DataMember]
         public string EMail { get; set; }
@@ -46,9 +46,12 @@ namespace YonderSharp.IdentityManagement
         public bool IsBanned { get; set; }
 
         /// <summary>
-        /// As long as this is != null, the user is not fully registered!
+        /// Used for links from mails. Reset everytime it was successfully used!
         /// </summary>
         [DataMember]
         public Guid VerificationId { get; set; } = Guid.NewGuid();
+
+        [DataMember]
+        public bool IsActivated { get; set; } = false;
     }
 }

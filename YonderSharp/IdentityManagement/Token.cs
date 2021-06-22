@@ -36,6 +36,7 @@ namespace YonderSharp.IdentityManagement
 
         /// <summary>
         /// Was the user a bad boy?
+        /// Everything but DSGVO is forbidden!
         /// </summary>
         [DataMember]
         public bool IsBanned { get; set; }

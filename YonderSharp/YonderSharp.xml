@@ -125,7 +125,12 @@
             Stores all the objects into the file
             </summary>
         </member>
-        <member name="M:YonderSharp.IdentityManagement.ILoginMailHelper.SendPasswordForgottenMail(System.String,System.Guid)">
+        <member name="T:YonderSharp.IdentityManagement.ILoginMailHelper">
+            <summary>
+            Methods for sending mails
+            </summary>
+        </member>
+        <member name="M:YonderSharp.IdentityManagement.ILoginMailHelper.SendPasswordForgottenMail(YonderSharp.IdentityManagement.User)">
             <summary>
             The user forgot his password. Send him a mail that resets the password
             </summary>
@@ -201,6 +206,7 @@
         <member name="P:YonderSharp.IdentityManagement.Token.IsBanned">
             <summary>
             Was the user a bad boy?
+            Everything but DSGVO is forbidden!
             </summary>
         </member>
         <member name="P:YonderSharp.IdentityManagement.Token.Verification">
@@ -226,7 +232,7 @@
         </member>
         <member name="P:YonderSharp.IdentityManagement.User.EMail">
             <summary>
-            Maybe (!) unique E-Mail Adress of the user
+            Unique E-Mail Adress of the user
             </summary>
         </member>
         <member name="P:YonderSharp.IdentityManagement.User.RegistrationDateUtc">
@@ -251,7 +257,7 @@
         </member>
         <member name="P:YonderSharp.IdentityManagement.User.VerificationId">
             <summary>
-            As long as this is != null, the user is not fully registered!
+            Used for links from mails. Reset everytime it was successfully used!
             </summary>
         </member>
         <member name="M:YonderSharp.IProgressTracker.Progress(System.Int32,System.Int32)">
