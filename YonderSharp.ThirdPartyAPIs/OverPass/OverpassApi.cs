@@ -115,7 +115,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             //0 -> id, 1 -> latutide, 2 -> longitude, 3 till whatever -> keys
             string[] firstRow = data[0].Split('\t');
 
-            for (int i = 1; i < data.Length; i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 string[] row = data[i].Split('\t');
 
@@ -126,8 +126,8 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
 
                 OsmNode rowNode = new OsmNode();
                 rowNode.ID = long.Parse(row[0]);
-                rowNode.Latitude = ParsingHelper.ParseDouble(row[1]);
-                rowNode.Longitude = ParsingHelper.ParseDouble(row[2]);
+                rowNode.Latitude = ParsingHelper.StringToDouble(row[1]);
+                rowNode.Longitude = ParsingHelper.StringToDouble(row[2]);
                 rowNode.Name = row[3];
                 for (int y = 4; y < row.Length; y++)
                 {

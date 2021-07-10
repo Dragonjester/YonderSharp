@@ -66,13 +66,12 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
                         {
                             yield return result;
                         }
-
-                        if(sleepBetweenPullsInMs > 0)
-                        {
-                            Thread.Sleep(sleepBetweenPullsInMs);
-                        }
                     }
 
+                    if (sleepBetweenPullsInMs > 0)
+                    {
+                        Thread.Sleep(sleepBetweenPullsInMs);
+                    }
                 }
             }
         }

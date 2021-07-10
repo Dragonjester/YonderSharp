@@ -289,14 +289,15 @@
             Helperclass for parsing stuff
             </summary>
         </member>
-        <member name="M:YonderSharp.ParsingHelper.ParseDouble(System.String)">
-            <summary>
-            Transforms a string into a double
-            </summary>
-        </member>
         <member name="M:YonderSharp.ParsingHelper.DoubleToString(System.Double)">
             <summary>
             Transforms the string into a double, with a precession of 5
+            </summary>
+        </member>
+        <member name="M:YonderSharp.ParsingHelper.StringToDouble(System.String)">
+            <summary>
+            Transforms the string into a double, with a precession of 5
+            Expecting american numberstyle
             </summary>
         </member>
         <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.NoiseConfiguration.Type">
