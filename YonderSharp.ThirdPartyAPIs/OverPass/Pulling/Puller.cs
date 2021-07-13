@@ -37,7 +37,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
         /// <summary>
         /// Pulls the required data from the overpass api for the given rectangle
         /// </summary>
-        public IEnumerable<T> Pull(int latitudeStart, int longitudeStart, int latitudeEnd, int longitudeEnd, int sleepBetweenPullsInMs = 5000)
+        public virtual IEnumerable<T> Pull(int latitudeStart, int longitudeStart, int latitudeEnd, int longitudeEnd, int sleepBetweenPullsInMs = 5000)
         {
             //ensure that start > end...
             if (latitudeEnd < latitudeStart)
