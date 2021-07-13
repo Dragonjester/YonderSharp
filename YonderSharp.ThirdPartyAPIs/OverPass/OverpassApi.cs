@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using YonderSharp.ProceduralGeneration.Model.OSM;
 using YonderSharp.WSG84;
@@ -221,6 +222,13 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             {
                 return null;
             }
+            //TODO: "name": "Otto's family store\noutdoor - fashion - shoes"
+            /*
+             [out:csv(::id, ::lat, ::lon, name,shop,amenity)];(node(id:3218808445);); out;
+            @id	@lat	@lon	name	shop	amenity
+            3218808445	51.7262334	10.6099491	"Otto's family store
+            outdoor - fashion - shoes"	clothes	
+             */
 
             var result = content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             result.RemoveAt(0); //headerrow

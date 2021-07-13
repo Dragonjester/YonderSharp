@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using YonderSharp.ThirdPartyAPIs.OverPass.Model;
 
@@ -53,9 +54,11 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
         {
             var entry = row.Split(new[] { '\t' }, StringSplitOptions.None);
 
+            //TODO: Fix row splitting in the OverpassApi.GetCvsOverPassData
             if (entry.Length != 6)
             {
-                throw new NotImplementedException($"komische parameterzahl?! DEBUG ME!");
+                Debugger.Break();
+                return null;
             }
 
             var result = new Shop(long.Parse(entry[0]), double.Parse(entry[1].Replace('.', ',')), double.Parse(entry[2].Replace('.', ',')), entry[3], entry[4], entry[5]);
@@ -65,6 +68,6 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
             }
 
             return result;
-        }        
+        }
     }
 }
