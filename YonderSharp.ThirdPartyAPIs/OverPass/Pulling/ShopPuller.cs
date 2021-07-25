@@ -57,7 +57,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
             //TODO: Fix row splitting in the OverpassApi.GetCvsOverPassData
             if (entry.Length != 6)
             {
-                Debugger.Break();
+               // Debugger.Break();
                 return null;
             }
 

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -16,9 +17,14 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         Random _random = new Random(DateTime.Now.Millisecond * DateTime.Now.Day * DateTime.Now.Year * DateTime.Now.Minute * DateTime.Now.Hour * DateTime.Now.Second);
         private OverpassQueryBuilder _queryBuilder;
 
-        public OverpassApi(OverpassQueryBuilder queryBuilder = null)
+        private bool _useFileCaching;
+        private string _pathToCacheFolder;
+
+        public OverpassApi(OverpassQueryBuilder queryBuilder = null, bool useFileCaching = true, string pathToCacheFolder = "D:\\overpasscache")
         {
             _queryBuilder = queryBuilder ?? new OverpassQueryBuilder();
+            _useFileCaching = useFileCaching;
+            _pathToCacheFolder = pathToCacheFolder;
         }
         private Uri GetOverpassURL()
         {
@@ -166,22 +172,55 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         string lastLoadedResult;
 
         /// <inheritdoc cref="IOverpassApi"/>
-        public string GetOverPassData(string query)
+        public string GetOverPassData(string query, string cacheFilePrefix = "")
         {
             if (query == lastLoadedQuery && lastLoadedResult != null)
             {
                 return lastLoadedResult;
             }
 
+            string fileName = cacheFilePrefix + MD5Helper.GetHash(query) + ".csv";
+            string totalPath = Path.Combine(_pathToCacheFolder, fileName);
+            FileInfo file = new FileInfo(totalPath);
+
+            if (_useFileCaching)
+            {
+                if (file.Exists)
+                {
+                    if (DateTime.UtcNow.Subtract(file.CreationTimeUtc).TotalDays > 365)
+                    {
+                        file.Delete();
+                    }
+                    else
+                    {
+                        return File.ReadAllText(file.FullName);
+                    }
+                }
+
+
+            }
             lastLoadedQuery = query;
             lastLoadedResult = null;
-
-            using (var wb = new WebClient())
+            try
             {
-                var postBody = query;
-                Uri url = GetOverpassURL();
-                lastLoadedResult = wb.UploadString(url, postBody);
-                return lastLoadedResult;
+                using (var wb = new WebClient())
+                {
+                    var postBody = query;
+                    Uri url = GetOverpassURL();
+                    lastLoadedResult = wb.UploadString(url, postBody);
+
+                    if (_useFileCaching)
+                    {
+                        File.WriteAllText(totalPath, lastLoadedResult);
+                    }
+
+                    return lastLoadedResult;
+                }
+            }
+            catch (Exception e)
+            {
+                int i = 0;
+                return string.Empty;
             }
         }
 
@@ -215,9 +254,9 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         }
 
         /// <inheritdoc cref="IOverpassApi"/>
-        public string[] GetCvsOverPassData(string query)
+        public string[] GetCvsOverPassData(string query, string cacheFilePrefix = "")
         {
-            string content = GetOverPassData(query);
+            string content = GetOverPassData(query, cacheFilePrefix);
             if (content == null)
             {
                 return null;
@@ -229,6 +268,12 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             3218808445	51.7262334	10.6099491	"Otto's family store
             outdoor - fashion - shoes"	clothes	
              */
+
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                List<string> empty = new List<string>();
+                return empty.ToArray();
+            }
 
             var result = content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             result.RemoveAt(0); //headerrow

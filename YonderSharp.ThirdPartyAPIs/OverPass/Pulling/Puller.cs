@@ -59,7 +59,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
             {
                 for (int longitude = longitudeStart; longitude <= longitudeEnd; longitude += LongitudeStepSize)
                 {
-                    foreach (string row in _api.GetCvsOverPassData(GetOverPassPostBody(latitude, longitude)))
+                    foreach (string row in _api.GetCvsOverPassData(GetOverPassPostBody(latitude, longitude), this.GetType().Name +  " N" + latitude + " E" + longitude + " "  ))
                     {
                         var result = GetResultOfRow(row);
                         if (result != null)

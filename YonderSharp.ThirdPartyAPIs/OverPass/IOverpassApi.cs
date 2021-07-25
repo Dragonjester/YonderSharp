@@ -10,12 +10,12 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
         /// <summary>
         /// Loads data from Overpass
         /// </summary>
-        public string GetOverPassData(string query);
+        public string GetOverPassData(string query, string cacheFilenamePrefix);
 
         /// <summary>
         /// Assumes that the query is for CSV values. Returns the result as a row array.
         /// </summary>
-        public string[] GetCvsOverPassData(string query);
+        public string[] GetCvsOverPassData(string query, string cacheFilenamePrefix = "");
         #endregion
 
         #region OsmNode methods
