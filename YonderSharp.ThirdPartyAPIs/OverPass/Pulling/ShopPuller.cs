@@ -62,7 +62,9 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass.Pulling
             }
 
             var result = new Shop(long.Parse(entry[0]), double.Parse(entry[1].Replace('.', ',')), double.Parse(entry[2].Replace('.', ',')), entry[3], entry[4], entry[5]);
-            if (string.IsNullOrEmpty(result.Name) || forbiddenAmenities.Any(x => string.Equals(x, result.Amenity, StringComparison.OrdinalIgnoreCase)))
+            if (string.IsNullOrEmpty(result.Name) 
+                || forbiddenAmenities.Any(x => string.Equals(x, result.Amenity, StringComparison.OrdinalIgnoreCase))
+                || forbiddenAmenities.Any(x => string.Equals(x, result.ShopType, StringComparison.OrdinalIgnoreCase)))
             {
                 return null;
             }

@@ -225,14 +225,14 @@
             Representation of a user
             </summary>
         </member>
-        <member name="P:YonderSharp.IdentityManagement.User.UserId">
-            <summary>
-            Unique ID of the user
-            </summary>
-        </member>
         <member name="P:YonderSharp.IdentityManagement.User.EMail">
             <summary>
             Unique E-Mail Adress of the user
+            </summary>
+        </member>
+        <member name="P:YonderSharp.IdentityManagement.User.UserId">
+            <summary>
+            Unique ID of the user
             </summary>
         </member>
         <member name="P:YonderSharp.IdentityManagement.User.RegistrationDateUtc">
@@ -253,11 +253,6 @@
         <member name="P:YonderSharp.IdentityManagement.User.IsBanned">
             <summary>
             Was the user a bad boy?
-            </summary>
-        </member>
-        <member name="P:YonderSharp.IdentityManagement.User.VerificationId">
-            <summary>
-            Used for links from mails. Reset everytime it was successfully used!
             </summary>
         </member>
         <member name="M:YonderSharp.IProgressTracker.Progress(System.Int32,System.Int32)">

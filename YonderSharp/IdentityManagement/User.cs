@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace YonderSharp.IdentityManagement
@@ -10,16 +11,17 @@ namespace YonderSharp.IdentityManagement
     public class User
     {
         /// <summary>
+        /// Unique E-Mail Adress of the user
+        /// </summary>
+        [Key]
+        [DataMember]
+        public string EMail { get; set; }
+
+        /// <summary>
         /// Unique ID of the user
         /// </summary>
         [DataMember]
         public Guid UserId { get; set; } = Guid.NewGuid();
-
-        /// <summary>
-        /// Unique E-Mail Adress of the user
-        /// </summary>
-        [DataMember]
-        public string EMail { get; set; }
 
         /// <summary>
         /// When did the user register?
@@ -45,13 +47,10 @@ namespace YonderSharp.IdentityManagement
         [DataMember]
         public bool IsBanned { get; set; }
 
-        /// <summary>
-        /// Used for links from mails. Reset everytime it was successfully used!
-        /// </summary>
         [DataMember]
-        public Guid VerificationId { get; set; } = Guid.NewGuid();
+        public DateTime? BannedOnUtc { get; set; }
 
         [DataMember]
-        public bool IsActivated { get; set; } = false;
+        public string BanReason { get; set; }
     }
 }
