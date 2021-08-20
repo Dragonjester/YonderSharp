@@ -28,6 +28,12 @@ namespace YonderSharp.WPF.DataManagement
             }
         }
 
+        public object GetById(object v)
+        {
+            PropertyInfo pk = GetIDPropertyInfo();
+            return GetAllItems().FirstOrDefault(x => pk.GetValue(x).Equals(v));
+        }
+
         /// <summary>
         /// Items that can be added to the shown list
         /// </summary>
@@ -36,17 +42,23 @@ namespace YonderSharp.WPF.DataManagement
 
         public Type GetTypeOfObjects();
 
+        private static PropertyInfo iDPropertyInfo;
         public PropertyInfo GetIDPropertyInfo()
         {
+            if (iDPropertyInfo == null)
+            {
+                BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
+                iDPropertyInfo = GetTypeOfObjects().GetProperties(instancePublic)
+                         .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
+                                  && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
+            }
 
-            BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
-            return GetTypeOfObjects().GetProperties(instancePublic)
-                     .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
-                              && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
+            return iDPropertyInfo;
         }
 
         public string GetNameOfIdProperty();
-
+        HIER WEITERMACHEN!
+        //TODO: JUST RETURN [TITLE] field
         /// <summary>
         /// string shown in the listview
         /// </summary>
@@ -57,6 +69,8 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         public virtual string GetLabel(string fieldName)
         {
+            //Currently just the fieldname
+            //TODO: Add some translation stuff. LOW PRIORITY
             return fieldName;
         }
 

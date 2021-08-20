@@ -13,7 +13,7 @@ namespace YonderSharp.WPF.DataManagement.Example
 
         [ForeignKey(typeof(SourceDataItem), "ID")]
         [DataMember]
-        public Guid SourceDataItemRef { get; set; }
+        public Guid SourceDataItemRef { get; set; } = Guid.Empty;
 
         [DataMember]
         public int SomeInt { get; set; }

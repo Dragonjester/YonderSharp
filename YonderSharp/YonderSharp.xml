@@ -29,6 +29,11 @@
             Identifies something as the unique primary key. Usually, but not necessarily a <see cref="T:System.Guid"/>
             </summary>
         </member>
+        <member name="T:YonderSharp.Attributes.Title">
+            <summary>
+            used to mark the member that is shown in the UI for FKs
+            </summary>
+        </member>
         <member name="M:YonderSharp.Config.ConfigManager.GetAllKeys">
             <inheritdoc/>
         </member>

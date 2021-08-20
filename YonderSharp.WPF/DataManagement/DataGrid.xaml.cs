@@ -41,7 +41,6 @@ namespace YonderSharp.WPF.DataManagement
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-                PropertyInfo property = itemType.GetProperties().Where(x => x.Name == item.Item1).First();
                 ContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
                 //Add Label
@@ -52,7 +51,8 @@ namespace YonderSharp.WPF.DataManagement
                 ContentGrid.Children.Add(label);
 
                 UIElement contentElement = null;
-                ForeignKey fkProperty = (ForeignKey) property.GetCustomAttribute(typeof(ForeignKey));
+                PropertyInfo fkPropertyInfo = itemType.GetProperties().Where(x => x.Name == item.Item1).First();
+                ForeignKey fkProperty = (ForeignKey) fkPropertyInfo.GetCustomAttribute(typeof(ForeignKey));
                 if (fkProperty == null)
                 {
                     //Add content element
@@ -87,25 +87,30 @@ namespace YonderSharp.WPF.DataManagement
                         contentElement = box;
                     }
 
-                    if (_vm.IsPrimaryKeyDisabled && property.GetCustomAttribute(typeof(PrimaryKey)) != null)
+                    if (_vm.IsPrimaryKeyDisabled && fkPropertyInfo.GetCustomAttribute(typeof(PrimaryKey)) != null)
                     {
                         contentElement.IsEnabled = false;
                     }
                 }
                 else
                 {
-                    //TODO: Show Title of Items instead of value of Key
-                    //TODO: Update on new FK Item being avaiable
-
+                    //TODO: Update on new FK Source change (new item, removed item)
                     ComboBox cBox = new ComboBox();
-                    IDataGridSource fkSource = DataGridSourceManager.GetSource(fkProperty.TargetClass);
+                    
+                    cBox.ItemsSource = DataGridSourceManager.GetSource(fkProperty.TargetClass).GetAllItems();
 
-                    cBox.ItemsSource = fkSource.GetAllItems().Select(x => fkProperty.TargetField.GetValue(x));
+                    PropertyInfo fkTitleProperty = fkProperty.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
+                    cBox.DisplayMemberPath = fkTitleProperty.Name;
 
                     Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    bind.Mode = BindingMode.TwoWay;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    
+                    bind.Converter = new ForeignKeyConverter(DataGridSourceManager.GetSource(fkProperty.TargetClass));
                     bind.Source = _vm;
+
                     cBox.SetBinding(ComboBox.SelectedItemProperty, bind);
-                    cBox.SetBinding(ComboBox.SelectedValueProperty, bind);
+                    
                     Grid.SetRow(cBox, i);
                     Grid.SetColumn(cBox, 1);
                     ContentGrid.Children.Add(cBox);
@@ -120,6 +125,7 @@ namespace YonderSharp.WPF.DataManagement
                     throw new Exception("You somehow forgot to set the current element Ü");
                 }
 
+                //TODO: check if [TITLE]
                 if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
                 {
                     contentElement.LostFocus += RefreshList;

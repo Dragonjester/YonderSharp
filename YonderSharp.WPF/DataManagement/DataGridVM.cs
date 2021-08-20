@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows;
+using YonderSharp.Attributes;
 using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
@@ -118,8 +119,8 @@ namespace DeltahedronUI.DataManagement
             set
             {
                 _selectedIndex = value;
-                OnPropertyChanged(nameof(SelectedItem));
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedItem));
             }
         }
 
@@ -228,7 +229,7 @@ namespace DeltahedronUI.DataManagement
                     string title = DataSource.GetShownItemTitle(entries[dialog.SelectedIndex]);
                     UpdateList();
 
-                    for(int i = 0; i < ListEntries.Count; i++)
+                    for (int i = 0; i < ListEntries.Count; i++)
                     {
                         if (ListEntries[i] == title)
                         {

@@ -12,6 +12,7 @@ namespace YonderSharp.WPF.DataManagement.Example
         public Guid ID { get; set; } = Guid.NewGuid();
 
         [DataMember]
+        [Title]
         public string Title { get; set; }
     }
 }
