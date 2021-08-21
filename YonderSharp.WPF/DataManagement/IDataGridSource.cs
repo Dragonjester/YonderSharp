@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using YonderSharp.Attributes;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -42,27 +43,30 @@ namespace YonderSharp.WPF.DataManagement
 
         public Type GetTypeOfObjects();
 
-        private static PropertyInfo iDPropertyInfo;
+
         public PropertyInfo GetIDPropertyInfo()
         {
-            if (iDPropertyInfo == null)
-            {
-                BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
-                iDPropertyInfo = GetTypeOfObjects().GetProperties(instancePublic)
+            BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
+            return GetTypeOfObjects().GetProperties(instancePublic)
                          .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
-                                  && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
-            }
-
-            return iDPropertyInfo;
+                                 && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
         }
 
         public string GetNameOfIdProperty();
-        HIER WEITERMACHEN!
-        //TODO: JUST RETURN [TITLE] field
+       
+        public PropertyInfo GetTitlePropertyInfo()
+        {
+            BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
+            return GetTypeOfObjects().GetProperties(instancePublic).First(x => x.GetCustomAttribute<Title>() != null);
+        }
+        
         /// <summary>
         /// string shown in the listview
         /// </summary>
-        public string GetShownItemTitle(object item);
+        public string GetShownItemTitle(object item)
+        {
+            return GetTitlePropertyInfo().GetValue(item).ToString();
+        }
 
         /// <summary>
         /// Content shown to the user for the given field

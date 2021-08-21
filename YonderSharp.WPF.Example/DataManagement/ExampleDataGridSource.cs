@@ -49,10 +49,10 @@ namespace YonderSharp.WPF.DataManagement.Example
             return addable.ToArray();
         }
 
-        public string GetShownItemTitle(object item)
-        {
-            return ((ExampleDataItem)item).SomeString;
-        }
+        //public string GetShownItemTitle(object item)
+        //{
+        //    return ((ExampleDataItem)item).SomeString;
+        //}
 
         public Type GetTypeOfObjects()
         {

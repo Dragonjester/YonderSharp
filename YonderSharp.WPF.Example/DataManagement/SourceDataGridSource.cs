@@ -53,11 +53,6 @@ namespace YonderSharp.WPF.DataManagement.Example
             return _items.ToArray();
         }
 
-        public string GetShownItemTitle(object item)
-        {
-            return ((SourceDataItem)item).Title;
-        }
-
         public Type GetTypeOfObjects()
         {
             return typeof(SourceDataItem);

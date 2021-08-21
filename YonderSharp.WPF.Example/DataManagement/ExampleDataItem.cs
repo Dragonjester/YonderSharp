@@ -20,6 +20,7 @@ namespace YonderSharp.WPF.DataManagement.Example
 
 
         [DataMember]
+        [Title]
         public string SomeString { get; set; }
 
 
