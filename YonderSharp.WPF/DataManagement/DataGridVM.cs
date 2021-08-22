@@ -39,27 +39,20 @@ namespace DeltahedronUI.DataManagement
         public Tuple<string, Type>[] GetFields()
         {
             //TODO: CONFIG OBJECT, that tells all kind of stuff and can be expanded easily (i.e. readonly)
-            //Also: could be configured via XML/JSON/YAML/Your Grandmother
+            //Also: could be configured via XML/JSON/YAML -> and your Grandmother
 
             List<Tuple<string, Type>> result = new List<Tuple<string, Type>>();
 
             Type baseType = DataSource.GetTypeOfObjects();
 
-
             BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
-            var members = baseType.GetProperties(instancePublic)
-                .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
-                         && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).ToList();
 
-            foreach (var member in members)
+            foreach (var member in baseType.GetProperties(instancePublic))
             {
                 string name = member.Name;
                 Type type = member.PropertyType;
-                //Todo: thing of something to handle non simple datatye classes... which might also be a list, sooooo.... something for version 2  ¯\_(ツ)_/¯
-                if (type.IsValueType || type == typeof(string))
-                {
-                    result.Add(new Tuple<string, Type>(name, type));
-                }
+
+                result.Add(new Tuple<string, Type>(name, type));
             }
 
             return result.ToArray();
@@ -220,7 +213,7 @@ namespace DeltahedronUI.DataManagement
             if (DataSource.IsAllowedToAddFromList())
             {
                 var toExclude = DataSource.GetShownItems();
-                var entries = DataSource.GetAddableItems().Where(x => !toExclude.Contains(x)).ToArray();
+                var entries = DataSource.GetAddableItems(toExclude);
 
                 var dialog = new ComboboxDialog(entries.Select(x => DataSource.GetShownItemTitle(x)).ToArray(), $"");
                 if (dialog.ShowDialogInCenterOfCurrent().GetValueOrDefault())

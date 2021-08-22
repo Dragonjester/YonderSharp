@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -39,7 +40,7 @@ namespace YonderSharp.WPF.DataManagement
         /// Items that can be added to the shown list
         /// </summary>
         /// <returns></returns>
-        public abstract object[] GetAddableItems();
+        public object[] GetAddableItems(IList<object> notAddableItems);
 
         public Type GetTypeOfObjects();
 

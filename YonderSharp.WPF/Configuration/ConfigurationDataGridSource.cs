@@ -33,7 +33,7 @@ namespace YonderSharp.WPF.Configuration
         }
 
         /// <inheritdoc/>
-        public object[] GetAddableItems()
+        public object[] GetAddableItems(IList<object> notAddableItems)
         {
             return null;
         }

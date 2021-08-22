@@ -1,13 +1,15 @@
 ﻿using DeltahedronUI.DataManagement;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using YonderSharp.Attributes;
+using YonderSharp.WPF.Helper;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -37,6 +39,7 @@ namespace YonderSharp.WPF.DataManagement
 
             ContentGrid.RowDefinitions.Clear();
             ContentGrid.Children.Clear();
+            var margin = new Thickness(2, 2, 2, 2);
 
             for (int i = 0; i < items.Length; i++)
             {
@@ -52,7 +55,7 @@ namespace YonderSharp.WPF.DataManagement
 
                 UIElement contentElement = null;
                 PropertyInfo fkPropertyInfo = itemType.GetProperties().Where(x => x.Name == item.Item1).First();
-                ForeignKey fkProperty = (ForeignKey) fkPropertyInfo.GetCustomAttribute(typeof(ForeignKey));
+                ForeignKey fkProperty = (ForeignKey)fkPropertyInfo.GetCustomAttribute(typeof(ForeignKey));
                 if (fkProperty == null)
                 {
                     //Add content element
@@ -63,9 +66,6 @@ namespace YonderSharp.WPF.DataManagement
                         Binding bind = new Binding($"SelectedItem.{item.Item1}");
                         bind.Source = _vm;
                         box.SetBinding(CheckBox.IsCheckedProperty, bind);
-                        Grid.SetRow(box, i);
-                        Grid.SetColumn(box, 1);
-                        ContentGrid.Children.Add(box);
 
                         contentElement = box;
                     }
@@ -78,11 +78,8 @@ namespace YonderSharp.WPF.DataManagement
                         bind.Mode = BindingMode.TwoWay;
                         bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                         box.SetBinding(TextBox.TextProperty, bind);
-                        Grid.SetRow(box, i);
-                        Grid.SetColumn(box, 1);
-                        ContentGrid.Children.Add(box);
 
-                        box.Margin = new Thickness(0, 2, 0, 2);
+                        box.Margin = margin;
 
                         contentElement = box;
                     }
@@ -92,32 +89,89 @@ namespace YonderSharp.WPF.DataManagement
                         contentElement.IsEnabled = false;
                     }
                 }
-                else
+                else if (!IsList(fkPropertyInfo))
                 {
                     //TODO: Update on new FK Source change (new item, removed item)
                     ComboBox cBox = new ComboBox();
-                    
+
                     cBox.ItemsSource = DataGridSourceManager.GetSource(fkProperty.TargetClass).GetAllItems();
 
+                    #region binding
                     PropertyInfo fkTitleProperty = fkProperty.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
                     cBox.DisplayMemberPath = fkTitleProperty.Name;
 
                     Binding bind = new Binding($"SelectedItem.{item.Item1}");
                     bind.Mode = BindingMode.TwoWay;
                     bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    
+
                     bind.Converter = new ForeignKeyConverter(DataGridSourceManager.GetSource(fkProperty.TargetClass));
                     bind.Source = _vm;
 
                     cBox.SetBinding(ComboBox.SelectedItemProperty, bind);
-                    
-                    Grid.SetRow(cBox, i);
-                    Grid.SetColumn(cBox, 1);
-                    ContentGrid.Children.Add(cBox);
+                    #endregion binding
 
-                    cBox.Margin = new Thickness(0, 2, 0, 2);
-
+                    cBox.Margin = margin;
                     contentElement = cBox;
+                }
+                else if (IsList(fkPropertyInfo))
+                {
+                    ListView lView = new ListView();
+                    lView.Margin = margin;
+                    lView.Height = 150;
+
+                    #region contextmenu
+                    ContextMenu contextMenu = new ContextMenu();
+
+                    MenuItem addNewItem = new MenuItem();
+                    addNewItem.Header = "Hinzufügen"; //TODO: Translation
+                    addNewItem.Command = new RelayCommand(param =>
+                    {
+                        //var items = DataGridSourceManager.GetSource(fkPropertyInfo.GetCustomAttribute<ForeignKey>().TargetClass).GetAddableItems((IList<object>)fkPropertyInfo.GetValue(_vm.SelectedItem));
+                        var dataSource = DataGridSourceManager.GetSource(fkPropertyInfo.GetCustomAttribute<ForeignKey>().TargetClass);
+                        ForeignKeyConverter converter = new ForeignKeyConverter(dataSource);
+
+                        dynamic entryList = fkPropertyInfo.GetValue(_vm.SelectedItem);
+                        //var bla = converter.Convert(dataSource.GetAllItems()[0].);
+
+                        _vm.OnPropertyChanged(fkPropertyInfo.Name);
+                    });
+
+                    MenuItem removeItem = new MenuItem();
+                    removeItem.Header = "Entfernen"; //TODO: Translation
+                    removeItem.Command = new RelayCommand(param =>
+                    {
+                        if (lView.SelectedIndex == -1)
+                        {
+                            return;
+                        }
+
+                        //dynamic is expected to be IList<?>
+                        dynamic entryList = fkPropertyInfo.GetValue(_vm.SelectedItem);
+                        entryList.RemoveAt(lView.SelectedIndex);
+
+                        _vm.OnPropertyChanged(fkPropertyInfo.Name);
+                    });
+
+                    contextMenu.Items.Add(addNewItem);
+                    contextMenu.Items.Add(removeItem);
+
+                    lView.ContextMenu = contextMenu;
+                    #endregion contextmenu
+
+                    #region binding
+                    PropertyInfo fkTitleProperty = fkProperty.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
+                    lView.DisplayMemberPath = fkTitleProperty.Name;
+
+                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    bind.Mode = BindingMode.TwoWay;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+
+                    bind.Converter = new ForeignKeyConverter(DataGridSourceManager.GetSource(fkProperty.TargetClass));
+                    bind.Source = _vm;
+
+                    lView.SetBinding(ListView.ItemsSourceProperty, bind);
+                    #endregion binding
+                    contentElement = lView;
                 }
 
                 if (contentElement == null)
@@ -125,12 +179,20 @@ namespace YonderSharp.WPF.DataManagement
                     throw new Exception("You somehow forgot to set the current element Ü");
                 }
 
-                //TODO: check if [TITLE]
+                Grid.SetRow(contentElement, i);
+                Grid.SetColumn(contentElement, 1);
+                ContentGrid.Children.Add(contentElement);
+
                 if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
                 {
                     contentElement.LostFocus += RefreshList;
                 }
             }
+        }
+
+        private bool IsList(PropertyInfo fkPropertyInfo)
+        {
+            return fkPropertyInfo.PropertyType.IsGenericType && (fkPropertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(List<>));
         }
 
         private void RefreshList(object sender, RoutedEventArgs e)

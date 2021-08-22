@@ -38,7 +38,7 @@ namespace YonderSharp.WPF.DataManagement.Example
             _items.Add((ExampleDataItem)item);
         }
 
-        public object[] GetAddableItems()
+        public object[] GetAddableItems(IList<object> notAddableItems)
         {
             List<object> addable = new List<object>();
             for (int i = _items.Count + 1; i < 200; i++)

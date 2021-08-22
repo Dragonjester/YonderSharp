@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace YonderSharp.WPF.DataManagement.Example
 {
@@ -39,10 +40,16 @@ namespace YonderSharp.WPF.DataManagement.Example
             _items.Add(CreateItem(_prefix, _items.Count));
         }
 
-        public object[] GetAddableItems()
+        public object[] GetAddableItems(IList<object> notAddableItems)
         {
-            throw new NotImplementedException();
+            if (notAddableItems == null || notAddableItems.Count == 0)
+            {
+                return GetAllItems();
+            }
+
+            return GetAllItems().Where(x => !notAddableItems.Contains(x)).ToArray();
         }
+
         public bool IsAllowedToAddNew()
         {
             return true;
