@@ -105,6 +105,22 @@ namespace YonderSharp.WPF.DataManagement {
                     lView.Margin = margin;
                     lView.Height = 150;
 
+
+                    #region binding
+                    PropertyInfo fkTitleProperty = fkProperty.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
+                    lView.DisplayMemberPath = fkTitleProperty.Name;
+
+                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    bind.Mode = BindingMode.TwoWay;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+
+                    bind.Converter = new ForeignKeyConverter(DataGridSourceManager.GetSource(fkProperty.TargetClass));
+                    bind.Source = _vm;
+
+                    lView.SetBinding(ListView.ItemsSourceProperty, bind);
+                    #endregion binding
+
+
                     #region contextmenu
                     ContextMenu contextMenu = new ContextMenu();
 
@@ -124,15 +140,14 @@ namespace YonderSharp.WPF.DataManagement {
                             ComboboxDialog dialog = new ComboboxDialog(titles);
                             if(dialog.ShowDialogInCenterOfCurrent()) {
                                 object toAdd = addableItems[dialog.SelectedIndex];
-                                
+
                                 //don't add the object itself, add it's PK to the list
                                 entryList.Add(converter.ConvertBack(toAdd, toAdd.GetType(), null, null));
-                                
+
                             }
                         }
 
-                        //TODO: LIST DOESN'T UPDATE YET :'(
-                        _vm.OnPropertyChanged($"SelectedItem.{ fkPropertyInfo.Name}");
+                        _vm.OnPropertyChanged("SelectedItem");
                     });
 
                     MenuItem removeItem = new MenuItem();
@@ -146,7 +161,7 @@ namespace YonderSharp.WPF.DataManagement {
                         dynamic entryList = fkPropertyInfo.GetValue(_vm.SelectedItem);
                         entryList.RemoveAt(lView.SelectedIndex);
 
-                        _vm.OnPropertyChanged(fkPropertyInfo.Name);
+                        _vm.OnPropertyChanged("SelectedItem");
                     });
 
                     contextMenu.Items.Add(addNewItem);
@@ -154,20 +169,6 @@ namespace YonderSharp.WPF.DataManagement {
 
                     lView.ContextMenu = contextMenu;
                     #endregion contextmenu
-
-                    #region binding
-                    PropertyInfo fkTitleProperty = fkProperty.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
-                    lView.DisplayMemberPath = fkTitleProperty.Name;
-
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
-                    bind.Mode = BindingMode.TwoWay;
-                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-
-                    bind.Converter = new ForeignKeyConverter(DataGridSourceManager.GetSource(fkProperty.TargetClass));
-                    bind.Source = _vm;
-
-                    lView.SetBinding(ListView.ItemsSourceProperty, bind);
-                    #endregion binding
                     contentElement = lView;
                 }
 

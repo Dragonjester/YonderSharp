@@ -148,9 +148,6 @@
             <returns>The Guid of the user. If the JWT is invalid: Guid.Empty</returns>
         </member>
         <member name="M:YonderSharp.MyRandom.GetInt(System.Int32)">
-            <summary>
-            
-            </summary>
             <param name="maxValue">max value that can be returned by this Method (excluding)</param>
             <returns></returns>
         </member>
