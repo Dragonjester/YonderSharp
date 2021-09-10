@@ -3,16 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
-namespace YonderSharp.WPF.Helper.CustomDialogs
-{
+namespace YonderSharp.WPF.Helper.CustomDialogs {
     /// <summary>
     /// Interaction logic for ComboboxDialog.xaml
     /// </summary>
-    public partial class ComboboxDialog : Window, INotifyPropertyChanged
-    {
+    public partial class ComboboxDialog : Window, INotifyPropertyChanged {
         private string[] _items;
-        public string[] Items
-        {
+        public string[] Items {
             get { return _items; }
             set { _items = value; NotifyPropertyChanged(); }
         }
@@ -25,18 +22,14 @@ namespace YonderSharp.WPF.Helper.CustomDialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged([CallerMemberName] string info = null)
-        {
+        protected void NotifyPropertyChanged([CallerMemberName] string info = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
         private RelayCommand _okCmd;
-        public ICommand OkCmd
-        {
-            get
-            {
-                return _okCmd ?? (_okCmd = new RelayCommand(param =>
-                {
+        public ICommand OkCmd {
+            get {
+                return _okCmd ?? (_okCmd = new RelayCommand(param => {
                     DialogResult = true;
                     Close();
                 }));
@@ -44,12 +37,9 @@ namespace YonderSharp.WPF.Helper.CustomDialogs
         }
 
         private RelayCommand _cancelCmd;
-        public ICommand CancelCmd
-        {
-            get
-            {
-                return _cancelCmd ?? (_cancelCmd = new RelayCommand(param =>
-                {
+        public ICommand CancelCmd {
+            get {
+                return _cancelCmd ?? (_cancelCmd = new RelayCommand(param => {
 
                     DialogResult = false;
                     Close();
@@ -57,19 +47,17 @@ namespace YonderSharp.WPF.Helper.CustomDialogs
             }
         }
 
-        public ComboboxDialog(string[] items, string title = "")
-        {
+        public ComboboxDialog(string[] items, string title = "") {
             DataContext = this;
             Items = items;
             WindowTitle = title;
             InitializeComponent();
         }
 
-        public bool? ShowDialogInCenterOfCurrent()
-        {
+        public bool ShowDialogInCenterOfCurrent() {
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-            return ShowDialog();
+            var result = ShowDialog();
+            return result != null && result.Value;
         }
     }
 }

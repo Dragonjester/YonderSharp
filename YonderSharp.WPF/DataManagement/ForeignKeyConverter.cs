@@ -19,9 +19,14 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Return entry by id
         /// </summary>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object id, Type targetType, object parameter, CultureInfo culture)
         {
-            return _dataSource.GetById(value);
+            return _dataSource.GetById(id);
+        }
+
+        public object GetId(object element)
+        {
+            return _pkPropertyInfo.GetValue(element);
         }
 
         /// <summary>
