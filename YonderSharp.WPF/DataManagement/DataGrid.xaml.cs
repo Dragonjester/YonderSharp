@@ -143,7 +143,6 @@ namespace YonderSharp.WPF.DataManagement {
 
                                 //don't add the object itself, add it's PK to the list
                                 entryList.Add(converter.ConvertBack(toAdd, toAdd.GetType(), null, null));
-
                             }
                         }
 
