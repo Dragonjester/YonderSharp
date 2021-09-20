@@ -167,6 +167,11 @@
             Expecting american numberstyle
             </summary>
         </member>
+        <member name="M:YonderSharp.ParsingHelper.ReplaceUmlauteWithXmlEncoding(System.String)">
+            <summary>
+            Fuck Umlaute
+            </summary>
+        </member>
         <member name="P:YonderSharp.ProceduralGeneration.Model.Noise.NoiseConfiguration.Type">
             <summary>
             -> NoiseType enum
