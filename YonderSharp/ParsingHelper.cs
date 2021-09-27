@@ -42,6 +42,7 @@ namespace YonderSharp {
             replacements.Add("Ô", "&Ocirc");
             replacements.Add("°", "&deg;");
             replacements.Add("ß","&szlig;");
+            replacements.Add("–", "-"); //langes - wird zu kurzem -
 
             string result = value;
 
