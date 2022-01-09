@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace YonderSharp.WPF.Helper {
@@ -32,6 +33,19 @@ namespace YonderSharp.WPF.Helper {
         /// that support <see cref="CallerMemberNameAttribute"/>.</param>
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Calls the OnPropertyChanged for all Properties
+        /// </summary>
+        public virtual void OnSelectionChanged()
+        {
+            PropertyInfo[] myPropertyInfos = this.GetType().GetProperties();
+            
+            foreach(var propertyInfo in myPropertyInfos)
+            {
+                OnPropertyChanged(propertyInfo.Name);
+            }
         }
         #endregion
     }

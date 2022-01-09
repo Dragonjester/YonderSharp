@@ -456,6 +456,21 @@
             compresses the content
             </summary>
         </member>
+        <member name="M:YonderSharp.Zipper.Zip(System.Object,System.String)">
+            <summary>
+            Turns the object into a JSON, zips it and stores it into a file
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Zipper.Zip(System.String,System.String)">
+            <summary>
+            Zips the string and stores it into a file
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Zipper.Unzip``1(System.String)">
+            <summary>
+            Unzips a file created by the Zip(object, path) method
+            </summary>
+        </member>
         <member name="M:YonderSharp.Zipper.Unzip(System.Byte[])">
             <summary>
             Transformes the zipped bytes to their content string
