@@ -304,6 +304,11 @@
             Gets the Noise value of a layer with zoom
             </summary>
         </member>
+        <member name="T:YonderSharp.ScreenCapture">
+            <summary>
+            https://stackoverflow.com/a/24879511/1171328
+            </summary>
+        </member>
         <member name="M:YonderSharp.Updater.UpdateChecker.CheckForUpdate(System.String)">
             <summary>
             Checks if there is any new release avaiable
