@@ -31,7 +31,6 @@ namespace YonderSharp.WPF.Example
 
         private void OpenConfiguration(object sender, RoutedEventArgs e)
         {
-
             ConfigurationWindow configWindow = new ConfigurationWindow(_configManager);
             configWindow.ShowDialog();
         }

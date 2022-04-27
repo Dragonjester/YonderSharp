@@ -100,6 +100,11 @@
             Where is the content stored on the hard disk?
             </summary>
         </member>
+        <member name="F:YonderSharp.FileSources.IFileSource`1.EntriesHaveChangedEvent">
+            <summary>
+            Raised when the list of known entries has changed
+            </summary>
+        </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Remove(`0)">
             <summary>
             Removes the element from the store
@@ -120,7 +125,7 @@
             Get all elements known
             </summary>
         </member>
-        <member name="M:YonderSharp.FileSources.IFileSource`1.Load">
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Load(System.Boolean)">
             <summary>
             Deserialize the contents of the file into the list
             </summary>

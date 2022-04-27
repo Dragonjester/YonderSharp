@@ -19,6 +19,12 @@ namespace YonderSharp.FileSources
         private HashSet<T> _list = new HashSet<T>();
         private bool isInitialized;
 
+
+        /// <summary>
+        /// Raised when the list of known entries has changed
+        /// </summary>
+        public Action EntriesHaveChangedEvent;
+
         /// <summary>
         /// Removes the element from the store
         /// </summary>
@@ -26,21 +32,31 @@ namespace YonderSharp.FileSources
         {
             Load();
             _list.Remove(obj);
+            RaiseChangedEvent();
         }
 
         /// <summary>
         /// Add single element
         /// </summary>
-        public virtual void Add(T obj)
+        public void Add(T obj)
         {
             Load();
             _list.Add(obj);
+            RaiseChangedEvent();
+        }
+
+        private void RaiseChangedEvent()
+        {
+            if (EntriesHaveChangedEvent != null)
+            {
+                EntriesHaveChangedEvent.Invoke();
+            }
         }
 
         /// <summary>
         /// Add multiple elements to the list
         /// </summary>
-        public virtual void Add(IList<T> list)
+        public void Add(IList<T> list)
         {
             if (list == null)
             {
@@ -53,10 +69,11 @@ namespace YonderSharp.FileSources
             }
         }
 
+
         /// <summary>
         /// Get all elements known
         /// </summary>
-        public virtual T[] GetAll()
+        public T[] GetAll()
         {
             Load();
             return _list.ToArray();
@@ -67,17 +84,18 @@ namespace YonderSharp.FileSources
         /// <summary>
         /// Deserialize the contents of the file into the list
         /// </summary>
-        private void Load()
+        public void Load(bool manualLoad = false)
         {
             lock (locker)
             {
-                if (isInitialized)
+                if (isInitialized && !manualLoad)
                 {
                     return;
                 }
                 isInitialized = true;
             }
 
+            _list = new HashSet<T>();
 
             if (File.Exists(GetPathToJsonFile()))
             {
@@ -89,6 +107,8 @@ namespace YonderSharp.FileSources
                 {
                     //TODO: LOGGING
                 }
+
+                RaiseChangedEvent();
             }
         }
 
