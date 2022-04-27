@@ -25,6 +25,28 @@ namespace YonderSharp.ThirdPartyAPIs.Tests.OverPass
             Assert.AreEqual("bar", result.Tags[0].Value);
         }
 
+        [Test]
+        public void GetSpecificCity()
+        {
+
+            var client = new OverpassApi();
+
+            string query = @"[out:csv(::id, ::lat, ::lon, name);
+            // gather results
+
+            node[place=city][""name""=""Calden""];
+            node[place=town][""name""=""Calden""];
+            node[place=village][""name""=""Calden""];
+
+            // print results
+            out body;";
+
+            string result = client.GetOverPassData(query);
+
+            Assert.IsTrue(result.Contains("51.4081597"));
+            Assert.IsTrue(result.Contains("9.4023531"));
+        }
+
 
         [Test]
         public void TestGetCities()

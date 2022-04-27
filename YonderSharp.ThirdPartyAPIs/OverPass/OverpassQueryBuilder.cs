@@ -17,12 +17,12 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             {
                 return "";
             }
-            var nodesToLoad = GetNodesToLoad(osmLayer, maxDistance);
+            var nodesToLoad = GetCityNodesToLoad(osmLayer, maxDistance);
 
             return BuildQueryForNodes(nodesToLoad.ToArray(), latitude, longitude);
         }
 
-        private IEnumerable<Tuple<string, string, int>> GetNodesToLoad(OSMPointsLayer osmLayer, double maxDistanceInMeters = 0)
+        private IEnumerable<Tuple<string, string, int>> GetCityNodesToLoad(OSMPointsLayer osmLayer, double maxDistanceInMeters = 0)
         {
             int maxDistanceToCity = (int)maxDistanceInMeters;
             if (osmLayer.MaxDistanceToCity > 0)
@@ -66,7 +66,7 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             double longitude = longitudeStart + (longitudeEnd - longitudeStart) / 2;
             double maxDistanceInMeters = WSG84Math.GetDistanceInMeters(latitudeStart, longitudeStart, latitudeEnd, longitudeEnd);
 
-            var nodesToLoad = GetNodesToLoad(osmLayer, maxDistanceInMeters);
+            var nodesToLoad = GetCityNodesToLoad(osmLayer, maxDistanceInMeters);
 
             return BuildQueryForNodes(nodesToLoad.ToArray(), latitude, longitude);
         }
