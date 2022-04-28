@@ -18,13 +18,16 @@ namespace YonderSharp.WPF.Example
 
             var source = new SourceDataGridSource("Source");
             var entries = new ExampleDataGridSource("Entry");
+            var fileSourceEntries = new DataManagement.ExampleFileSourceDataGridSource();
 
             DataGridSourceManager.RegisterDataSource(source);
             DataGridSourceManager.RegisterDataSource(entries);
+            DataGridSourceManager.RegisterDataSource(fileSourceEntries);
 
             SourceGrid.SetSource(source);
             dataGrid.SetSource(entries);
-          
+            FileSourceGrid.SetSource(fileSourceEntries);
+
             _configManager = new ConfigManager();
             _configManager.Load();
         }

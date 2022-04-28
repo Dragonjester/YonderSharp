@@ -58,7 +58,8 @@ namespace YonderSharp.WPF.DataManagement
         public PropertyInfo GetTitlePropertyInfo()
         {
             BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
-            return GetTypeOfObjects().GetProperties(instancePublic).First(x => x.GetCustomAttribute<Title>() != null);
+            var x = GetTypeOfObjects().GetProperties(instancePublic).First(x => x.GetCustomAttribute<Title>() != null);
+            return x;
         }
         
         /// <summary>
@@ -66,7 +67,12 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         public string GetShownItemTitle(object item)
         {
-            return GetTitlePropertyInfo().GetValue(item).ToString();
+            var x = GetTitlePropertyInfo().GetValue(item);
+            if(x == null)
+            {
+                return "EMPTY";
+            }
+            return x.ToString();
         }
 
         /// <summary>

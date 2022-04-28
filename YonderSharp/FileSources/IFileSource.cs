@@ -69,6 +69,10 @@ namespace YonderSharp.FileSources
             }
         }
 
+        public Type GetGenericType()
+        {
+            return typeof(T);
+        }
 
         /// <summary>
         /// Get all elements known
@@ -124,6 +128,12 @@ namespace YonderSharp.FileSources
 
             lock (locker)
             {
+                FileInfo file = new FileInfo(GetPathToJsonFile());
+                if (!file.Directory.Exists)
+                {
+                    file.Directory.Create();
+                }
+              
                 File.WriteAllText(GetPathToJsonFile(), JsonSerializer.Serialize(_list));
             }
         }

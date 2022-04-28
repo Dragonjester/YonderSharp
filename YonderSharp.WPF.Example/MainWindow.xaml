@@ -18,6 +18,9 @@
             <TabItem Header="SourceGrid">
                 <data:DataGrid Name="SourceGrid"/>
             </TabItem>
+            <TabItem Header="IFileSourceGrid">
+                <data:DataGrid Name="FileSourceGrid"/>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>

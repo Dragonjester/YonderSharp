@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30523.141
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.WPF", "YonderSharp.WPF\YonderSharp.WPF.csproj", "{903F6C7F-DE39-4D95-9398-C0BEEF1B2182}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.ThirdPartyAPIs", "YonderSharp.ThirdPartyAPIs\YonderSharp.ThirdPartyAPIs.csproj", "{0C10C35E-4946-4D12-B2EB-C8DC539F254B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.ThirdPartyAPIs.Tests", "YonderSharp.ThirdPartyAPIs.Tests\YonderSharp.ThirdPartyAPIs.Tests.csproj", "{A277231A-455F-497E-B526-49515EFB00C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.WPF.Test", "YonderSharp.WPF.Test\YonderSharp.WPF.Test.csproj", "{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A277231A-455F-497E-B526-49515EFB00C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A277231A-455F-497E-B526-49515EFB00C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A277231A-455F-497E-B526-49515EFB00C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
