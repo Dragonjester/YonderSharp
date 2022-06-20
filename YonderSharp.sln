@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.ThirdPartyAPIs"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.ThirdPartyAPIs.Tests", "YonderSharp.ThirdPartyAPIs.Tests\YonderSharp.ThirdPartyAPIs.Tests.csproj", "{A277231A-455F-497E-B526-49515EFB00C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.WPF.Test", "YonderSharp.WPF.Test\YonderSharp.WPF.Test.csproj", "{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YonderSharp.WPF.Test", "YonderSharp.WPF.Test\YonderSharp.WPF.Test.csproj", "{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YonderSharp.Geocaching", "YonderSharp.Geocaching\YonderSharp.Geocaching.csproj", "{AB857AC4-B0FE-48D4-9BE7-8B81737165FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D77F4C-FA3B-44FB-BFA5-FF3F027607DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB857AC4-B0FE-48D4-9BE7-8B81737165FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB857AC4-B0FE-48D4-9BE7-8B81737165FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB857AC4-B0FE-48D4-9BE7-8B81737165FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB857AC4-B0FE-48D4-9BE7-8B81737165FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
