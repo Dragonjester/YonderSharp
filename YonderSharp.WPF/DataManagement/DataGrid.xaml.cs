@@ -1,5 +1,4 @@
-﻿using DeltahedronUI.DataManagement;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,8 @@ using YonderSharp.Attributes;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
 
-namespace YonderSharp.WPF.DataManagement {
+namespace YonderSharp.WPF.DataManagement
+{
     /// <summary>
     /// Interaction logic for DataGrid.xaml
     /// </summary>
