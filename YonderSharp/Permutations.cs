@@ -15,6 +15,20 @@ namespace YonderSharp
     /// </summary>
     public class Permutations
     {
+        public string[] GetAllStringPermutations(string item){
+            if (string.IsNullOrEmpty(item))
+            {
+                return new string[0];
+            }
+            HashSet<string> result = new HashSet<string>();
+            foreach(var permutation in GetAllPermutation<char>(item.ToCharArray()))
+            {
+                result.Add(string.Join("", permutation));
+            }
+
+            return result.ToArray();
+        }
+
         public string[] GetAllPermutation<T>(T[] items)
         {
             HashSet<string> result = new HashSet<string>();

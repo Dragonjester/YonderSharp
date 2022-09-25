@@ -135,6 +135,11 @@
             Stores all the objects into the file
             </summary>
         </member>
+        <member name="M:YonderSharp.Geocaching.EhemaligerLandkreisWaldeck.CoordReplace(System.String,System.String,System.Int32)">
+            <summary>
+            Replace {a} with {b} in the context of the whitespaced string
+            </summary>
+        </member>
         <member name="M:YonderSharp.IProgressTracker.Progress(System.Int32,System.Int32)">
             <summary>
             Notify about some progress. i.e. 5/100
