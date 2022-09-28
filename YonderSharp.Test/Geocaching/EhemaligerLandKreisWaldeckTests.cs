@@ -28,9 +28,10 @@ namespace YonderSharp.Test.Geocaching
         }
 
         [Test]
-        public void KeyBoardTest()
+        [TestCase("N  % !°   \"(.   / ! $ O  = )°   = \".   § ($", ExpectedResult = "N51° 28.714 E09° 02.384", TestName = "ShiftNumber - GC7H9VR")]
+        public string KeyBoardTest(string text)
         {
-            Assert.AreEqual("N51° 28.714 E09° 02.384", solver.Solve("N  % !°   \"(.   / ! $ O  = )°   = \".   § ($"));
+            return solver.Solve(text);
         }
 
         [Test]
@@ -47,6 +48,13 @@ namespace YonderSharp.Test.Geocaching
         [TestCase("N afgcd bc°  abgcd abcdef.  abgcd abcdefg bc O  afedbc afgbc° afedcb afgcd. bc abged abgde", ExpectedResult = "N51° 30.381 E09° 05.122", TestName = "7Segment - GC7HH1M")]
         [TestCase("N afgcd bc° abged afgbc. abgcd abgcd fedcg O afedcb afgbc° afedcb fgbc. afgcdeb abgcd afgbc", ExpectedResult = "N51° 29.336 E09° 04.839", TestName = "7Segment - GC7HNB0")]
         public string SevenSegment(string text)
+        {
+            return solver.Solve(text);
+        }
+
+        [Test]
+        [TestCase("N  7,4,8,9,6,1,0,3.2.  9,0,3,2,7,5,8,6,4.°  5,8,4,0,1,6,7,9,2.  6,5,8,4,2,7,1,3,9..  4,7,3,0,5,9,2,8,6.  2,6,5,8,4,3,9,0,1.  1,2,9,6,3,8,0,4,7.\r\n\r\nO  4,2,1,7,9,6,8,3,5.  0,4,8,2,5,3,1,6,7.°  1,5,9,7,8,2,3,4,6.  3,9,1,7,5,2,4,8,0..  2,6,0,8,1,7,5,9,4.  6,1,0,3,8,4,5,7,9.  4,5,1,8,3,0,7,6,2.", ExpectedResult = "N51° 30.175' E09° 06.329' ", TestName ="MissingNumber - GC7HMZP")]
+        public string MissingNumber(string text)
         {
             return solver.Solve(text);
         }
