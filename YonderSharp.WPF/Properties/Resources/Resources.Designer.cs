@@ -77,5 +77,32 @@ namespace YonderSharp.WPF.Properties.Resources {
                 return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully saved.
+        /// </summary>
+        public static string SavedDialogMessage {
+            get {
+                return ResourceManager.GetString("SavedDialogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YonderSharp DataGrid.
+        /// </summary>
+        public static string SavedDialogTitle {
+            get {
+                return ResourceManager.GetString("SavedDialogTitle", resourceCulture);
+            }
+        }
     }
 }

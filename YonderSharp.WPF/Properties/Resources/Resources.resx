@@ -123,4 +123,13 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SavedDialogMessage" xml:space="preserve">
+    <value>Successfully saved</value>
+  </data>
+  <data name="SavedDialogTitle" xml:space="preserve">
+    <value>YonderSharp DataGrid</value>
+  </data>
 </root>

@@ -173,10 +173,15 @@ namespace YonderSharp.WPF.DataManagement
 
         private void Save()
         {
-            if (DataSource.HasSearch())
-            {
-                DataSource.Save();
-            }
+
+            DataSource.Save();
+
+            string messageBoxText = Properties.Resources.Resources.SavedDialogMessage;
+            string caption = Properties.Resources.Resources.SavedDialogTitle;
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Information;
+
+            MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
         }
 
         /// <summary>
