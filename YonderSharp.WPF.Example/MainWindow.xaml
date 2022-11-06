@@ -6,7 +6,7 @@
         xmlns:data="clr-namespace:YonderSharp.WPF.DataManagement;assembly=YonderSharp.WPF"
         xmlns:local="clr-namespace:YonderSharp.WPF.Example"
         mc:Ignorable="d"
-        Title="YonderSharp Examples" Height="450" Width="800">
+        Title="YonderSharp Examples" Height="1000" Width="1500">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Configuration" Click="OpenConfiguration"/>

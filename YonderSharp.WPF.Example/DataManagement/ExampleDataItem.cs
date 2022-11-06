@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using YonderSharp.Attributes;
+using YonderSharp.WPF.Example.DataManagement;
 
 namespace YonderSharp.WPF.DataManagement.Example
 {
@@ -45,5 +46,11 @@ namespace YonderSharp.WPF.DataManagement.Example
         [ForeignKey(typeof(SourceDataItem), "ID")]
         [DataMember]
         public List<Guid> SourceDataItemRefs { get; set; } = new List<Guid>();
+
+        [DataMember]
+        public SomeEnum SomeEnum { get; set; }
+
+        [DataMember]
+        public HashSet<SomeEnum> HashsetEnum { get; set; } = new HashSet<SomeEnum>();
     }
 }

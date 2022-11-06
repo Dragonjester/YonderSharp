@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -95,9 +95,9 @@ namespace YonderSharp.WPF.DataManagement
             get
             {
                 var items = DataSource.GetShownItems();
-                if (_selectedIndex >= 0 && _selectedIndex < items?.Length)
+                if (SelectedIndex >= 0 && SelectedIndex < items?.Length)
                 {
-                    return items[_selectedIndex];
+                    return items[SelectedIndex];
                 }
 
                 return null;
