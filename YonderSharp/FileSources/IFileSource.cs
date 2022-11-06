@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 
 namespace YonderSharp.FileSources
 {
@@ -105,7 +105,7 @@ namespace YonderSharp.FileSources
             {
                 try
                 {
-                    _list = JsonSerializer.Deserialize<HashSet<T>>(File.ReadAllText(GetPathToJsonFile()));
+                    _list = JsonConvert.DeserializeObject<HashSet<T>>(File.ReadAllText(GetPathToJsonFile()));
                 }
                 catch
                 {
@@ -134,7 +134,7 @@ namespace YonderSharp.FileSources
                     file.Directory.Create();
                 }
               
-                File.WriteAllText(GetPathToJsonFile(), JsonSerializer.Serialize(_list));
+                File.WriteAllText(GetPathToJsonFile(), JsonConvert.SerializeObject(_list, Formatting.Indented));
             }
         }
     }
