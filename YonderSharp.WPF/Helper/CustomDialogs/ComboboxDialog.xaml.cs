@@ -80,11 +80,21 @@ namespace YonderSharp.WPF.Helper.CustomDialogs
             InitializeComponent();
         }
 
-        public bool ShowDialogInCenterOfCurrent()
+        /// <summary>
+        /// Opens the dialog in the center of the parent
+        /// </summary
+        public bool? ShowDialog(Window parent)
         {
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            var result = ShowDialog();
-            return result != null && result.Value;
+            if(parent == null)
+            {
+                return ShowDialog();
+            }
+            else
+            {
+                this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                this.Owner = parent;
+                return ShowDialog();
+            }
         }
     }
 }

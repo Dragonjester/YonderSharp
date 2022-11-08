@@ -6,9 +6,8 @@
         mc:Ignorable="d" 
         Height="Auto"
         MinWidth="250"
-       Title="{Binding WindowTitle}"
-        SizeToContent="WidthAndHeight"
-           >
+        Title="{Binding WindowTitle}"
+        SizeToContent="WidthAndHeight">
 
     <StackPanel  Margin="5,5,5,5">
         <ComboBox ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

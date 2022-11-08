@@ -199,7 +199,7 @@ namespace YonderSharp.WPF.DataManagement
             if (selected != null)
             {
                 var dialog = new ComboboxDialog(new[] { "No", "Yes" }, $"Do you want to remove {DataSource.GetShownItemTitle(selected)}");
-                if (dialog.ShowDialogInCenterOfCurrent() && dialog.SelectedIndex == 1)
+                if (dialog.SelectedIndex == 1 && dialog.ShowDialog().HasValue && dialog.ShowDialog().Value)
                 {
                     DataSource.RemoveShownItem(selected);
                     UpdateList();
@@ -220,7 +220,7 @@ namespace YonderSharp.WPF.DataManagement
                 var entries = DataSource.GetAddableItems(toExclude);
 
                 var dialog = new ComboboxDialog(entries.Select(x => DataSource.GetShownItemTitle(x)).ToArray(), $"");
-                if (dialog.ShowDialogInCenterOfCurrent())
+                if (dialog.ShowDialog() == true)
                 {
                     DataSource.AddItem(entries[dialog.SelectedIndex]);
                     string title = DataSource.GetShownItemTitle(entries[dialog.SelectedIndex]);

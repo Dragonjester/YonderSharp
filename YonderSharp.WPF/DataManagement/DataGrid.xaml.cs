@@ -94,7 +94,7 @@ namespace YonderSharp.WPF.DataManagement
 
 
                             ComboboxDialog dialog = new ComboboxDialog(addableItems, item.Item1);
-                            if (dialog.ShowDialogInCenterOfCurrent())
+                            if (dialog.ShowDialog(Application.Current.MainWindow) == true)
                             {
                                 var toAdd = values.GetValue(dialog.SelectedIndex);
 
@@ -249,8 +249,8 @@ namespace YonderSharp.WPF.DataManagement
                             PropertyInfo fkTitleProperty = fkProperty.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
                             string[] titles = addableItems.Select(x => fkTitleProperty.GetValue(x).ToString()).ToArray();
 
-                            ComboboxDialog dialog = new ComboboxDialog(titles);
-                            if (dialog.ShowDialogInCenterOfCurrent())
+                            ComboboxDialog dialog = new ComboboxDialog(titles, item.Item1);
+                            if (dialog.ShowDialog(Application.Current.MainWindow) == true)
                             {
                                 object toAdd = addableItems[dialog.SelectedIndex];
 

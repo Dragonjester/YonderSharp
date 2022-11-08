@@ -43,7 +43,7 @@ namespace YonderSharp.WPF.Example
         private void ComboBoxDialog(object sender, RoutedEventArgs e)
         {
             ComboboxDialog dialog = new ComboboxDialog(new[] { "1", "2", "3" }, "Title");
-            if (dialog.ShowDialogInCenterOfCurrent())
+            if (dialog.ShowDialog() == true)
             {
                 int selectedItem = dialog.SelectedIndex;
             }
