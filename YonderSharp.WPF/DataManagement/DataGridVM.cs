@@ -16,7 +16,9 @@ namespace YonderSharp.WPF.DataManagement
     {
         public IDataGridSource DataSource { get; private set; }
 
-        public DataGridVM(IDataGridSource dataSource)
+        private Action _scrollContentIntoNewPositions;
+
+        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection)
         {
             DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
 
@@ -24,6 +26,8 @@ namespace YonderSharp.WPF.DataManagement
             _commands.AddCommand("AddNew", x => AddNewEntry());
             _commands.AddCommand("RemoveEntry", x => RemoveEntry());
             _commands.AddCommand("Save", x => Save());
+
+            _scrollContentIntoNewPositions = scrollContentToNewSelection;
 
             UpdateList();
         }
@@ -113,6 +117,7 @@ namespace YonderSharp.WPF.DataManagement
                 _selectedIndex = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedItem));
+                _scrollContentIntoNewPositions?.Invoke();
             }
         }
 

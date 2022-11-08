@@ -20,7 +20,7 @@
             <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </GroupBox>
 
-        <ListBox Grid.Row="1" Grid.Column="0" Name="EntryList" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}" Margin="2,2,2,2">
+        <ListBox Name="EntryList" Grid.Row="1" Grid.Column="0" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding ListEntries}" Margin="2,2,2,2">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add From List" Command="{Binding Commands.AddEntryFromList}" Visibility="{Binding ShowOnlyAddFromList}"/>
@@ -36,7 +36,7 @@
 
         <Button Content="Save" Grid.Column="0" Grid.Row="2" Command="{Binding Commands.Save}" Visibility="{Binding CanSave}" Margin="2,2,2,2"/>
 
-        <ScrollViewer Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+        <ScrollViewer Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Name="ContentScroller">
             <Grid Name="ContentGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
