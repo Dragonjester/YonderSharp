@@ -39,26 +39,30 @@ namespace YonderSharp.WPF.DataManagement
             SelectedIndex = ListEntries.Count - 1;
         }
 
+        public Tuple<string, Type>[] GetFields(Type type)
+        {
+
+            List<Tuple<string, Type>> result = new List<Tuple<string, Type>>();
+
+
+            BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
+
+            foreach (var member in type.GetProperties(instancePublic))
+            {
+                string name = member.Name;
+                Type memberType = member.PropertyType;
+
+                result.Add(new Tuple<string, Type>(name, memberType));
+            }
+
+            return result.ToArray();
+        }
+
         public Tuple<string, Type>[] GetFields()
         {
             //TODO: CONFIG OBJECT, that tells all kind of stuff and can be expanded easily (i.e. readonly)
             //Also: could be configured via XML/JSON/YAML -> and your Grandmother
-
-            List<Tuple<string, Type>> result = new List<Tuple<string, Type>>();
-
-            Type baseType = DataSource.GetTypeOfObjects();
-
-            BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
-
-            foreach (var member in baseType.GetProperties(instancePublic))
-            {
-                string name = member.Name;
-                Type type = member.PropertyType;
-
-                result.Add(new Tuple<string, Type>(name, type));
-            }
-
-            return result.ToArray();
+            return GetFields(DataSource.GetTypeOfObjects());
         }
 
         public virtual IEnumerable GetEnumNames(Type enumType)

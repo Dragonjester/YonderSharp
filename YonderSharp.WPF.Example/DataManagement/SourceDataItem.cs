@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using YonderSharp.Attributes;
+using YonderSharp.WPF.Example.DataManagement;
 
 namespace YonderSharp.WPF.DataManagement.Example
 {
@@ -14,5 +15,8 @@ namespace YonderSharp.WPF.DataManagement.Example
         [DataMember]
         [Title]
         public string Title { get; set; }
+
+        [DataMember]
+        public SubItem SomeSubItem { get; set; } = new SubItem();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
@@ -35,21 +36,20 @@ namespace YonderSharp.WPF.DataManagement
             dataSource.GetIDPropertyInfo();
         }
 
-        private void GenerateFields(Type itemType, Tuple<string, Type>[] items)
+        private void GenerateFields(Grid grid, Type itemType, Tuple<string, Type>[] items, string baseBindingPath)
         {
             //Maybe TODO: V2.0: Config objects that tell how to generate a line for even more flexibility....
-            ContentGrid.RowDefinitions.Clear();
-            ContentGrid.Children.Clear();
+            grid.RowDefinitions.Clear();
+            grid.Children.Clear();
 
             var handledPositions = new List<int>();
-
             for (int i = 0; i < items.Length; i++)
             {
                 PropertyInfo currentPropertyInfo = itemType.GetProperties().Where(x => x.Name == items[i].Item1).First();
                 PrimaryKey primaryKeyAttribute = (PrimaryKey)currentPropertyInfo.GetCustomAttribute(typeof(PrimaryKey));
                 if (primaryKeyAttribute != null)
                 {
-                    GenerateRow(itemType, items[i]);
+                    GenerateRow(grid, itemType, items[i], $"{baseBindingPath}.{items[i].Item1}");
                     handledPositions.Add(i);
                 }
             }
@@ -65,7 +65,7 @@ namespace YonderSharp.WPF.DataManagement
                 Title titleAttribute = (Title)currentPropertyInfo.GetCustomAttribute(typeof(Title));
                 if (titleAttribute != null)
                 {
-                    GenerateRow(itemType, items[i]);
+                    GenerateRow(grid, itemType, items[i], $"{baseBindingPath}.{items[i].Item1}");
                     handledPositions.Add(i);
                 }
             }
@@ -77,28 +77,77 @@ namespace YonderSharp.WPF.DataManagement
                     continue;
                 }
 
-                GenerateRow(itemType, items[i]);
+                if (CanBeHandledAsSimpleEntry(items[i])) { 
+                    GenerateRow(grid, itemType, items[i], $"{baseBindingPath}.{items[i].Item1}");
+                }
+                else
+                {
+                    GenerateComplexRow(grid, itemType, items[i], $"{baseBindingPath}.{items[i].Item1}");
+                }
             }
+        }
+
+        private void GenerateComplexRow(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string bindingPath)
+        {
+            var margin = new Thickness(2, 2, 2, 2);
+            parentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+            //Add Label
+            Label label = new Label();
+            label.Content = _vm.DataSource.GetLabel(tuple.Item1);
+
+            int parentRow = parentGrid.RowDefinitions.Count - 1;
+
+            Grid.SetRow(label, parentRow);
+            Grid.SetColumn(label, 0);
+            parentGrid.Children.Add(label);
+
+            //create new Grid
+            Grid childGrid = new Grid();
+            childGrid.Margin = margin;
+            childGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = parentGrid.ColumnDefinitions[0].Width });
+            childGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = parentGrid.ColumnDefinitions[1].Width });
+
+            Grid.SetRow(childGrid, parentRow);
+            Grid.SetColumn(childGrid, 1);
+            parentGrid.Children.Add(childGrid);
+
+            //call GenerateFields() with new grid to create the fields
+            var subTypes = _vm.GetFields(tuple.Item2);
+            GenerateFields(childGrid, tuple.Item2, subTypes, bindingPath);
+
+        }
+
+        private bool CanBeHandledAsSimpleEntry(Tuple<string, Type> item)
+        {
+            var result = item.Item2.IsEnum || !item.Item2.IsClass || IsHashsetEnum(item.Item2) || item.Item2.Name.Equals("String", StringComparison.OrdinalIgnoreCase);
+
+            if (!result)
+            {
+                result = item.Item2.GenericTypeArguments?.Length > 0 && !item.Item2.GenericTypeArguments[0].IsClass;
+            }
+
+            return result;
         }
 
         /// <param name="itemType">The datatype of this grid</param>
         /// <param name="item">Property of the row</param>
         /// <param name="row">0 based index of row to create</param>
-        private void GenerateRow(Type itemType, Tuple<string, Type> item)
+        private void GenerateRow(Grid grid, Type itemType, Tuple<string, Type> item, string bindingPath)
         {
             var margin = new Thickness(2, 2, 2, 2);
-            ContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             //Add Label
             Label label = new Label();
             label.Content = _vm.DataSource.GetLabel(item.Item1);
 
-            int row = ContentGrid.RowDefinitions.Count - 1;
+            int row = grid.RowDefinitions.Count - 1;
 
 
             Grid.SetRow(label, row);
             Grid.SetColumn(label, 0);
-            ContentGrid.Children.Add(label);
+            grid.Children.Add(label);
 
             UIElement contentElement = null;
             PropertyInfo currentPropertyInfo = itemType.GetProperties().Where(x => x.Name == item.Item1).First();
@@ -115,7 +164,7 @@ namespace YonderSharp.WPF.DataManagement
 
                     #region binding
 
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    Binding bind = new Binding(bindingPath);
                     bind.Mode = BindingMode.TwoWay;
                     bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                     bind.Source = _vm;
@@ -177,9 +226,6 @@ namespace YonderSharp.WPF.DataManagement
                     #endregion contextmenu
                     contentElement = lView;
 
-
-
-
                 }
                 else if (item.Item2.IsEnum)
                 {
@@ -189,7 +235,7 @@ namespace YonderSharp.WPF.DataManagement
                     //TODO: if the value of the current item is 0 (= no value has been selected yet), the combobox doesn't clear
                     //      on change of the selected item
                     #region binding
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    Binding bind = new Binding(bindingPath);
                     bind.Mode = BindingMode.TwoWay;
                     bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 
@@ -205,7 +251,7 @@ namespace YonderSharp.WPF.DataManagement
                 {
                     CheckBox box = new CheckBox();
                     box.VerticalAlignment = VerticalAlignment.Center;
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    Binding bind = new Binding(bindingPath);
                     bind.Source = _vm;
                     box.SetBinding(CheckBox.IsCheckedProperty, bind);
 
@@ -215,7 +261,7 @@ namespace YonderSharp.WPF.DataManagement
                 {
                     TextBox box = new TextBox();
                     box.VerticalContentAlignment = VerticalAlignment.Center;
-                    Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                    Binding bind = new Binding(bindingPath);
                     bind.Source = _vm;
                     bind.Mode = BindingMode.TwoWay;
                     bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
@@ -242,7 +288,7 @@ namespace YonderSharp.WPF.DataManagement
                 PropertyInfo fkTitleProperty = currentPropertyFkAttribute.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
                 cBox.DisplayMemberPath = fkTitleProperty.Name;
 
-                Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                Binding bind = new Binding(bindingPath);
                 bind.Mode = BindingMode.TwoWay;
                 bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 
@@ -266,7 +312,7 @@ namespace YonderSharp.WPF.DataManagement
                 PropertyInfo fkTitleProperty = currentPropertyFkAttribute.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
                 lView.DisplayMemberPath = fkTitleProperty.Name;
 
-                Binding bind = new Binding($"SelectedItem.{item.Item1}");
+                Binding bind = new Binding(bindingPath);
                 bind.Mode = BindingMode.TwoWay;
                 bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 
@@ -340,7 +386,7 @@ namespace YonderSharp.WPF.DataManagement
             Grid.SetRow(contentElement, row);
             Grid.SetColumn(contentElement, 1);
 
-            ContentGrid.Children.Add(contentElement);
+            grid.Children.Add(contentElement);
 
             if (_vm.DataSource.IsFieldPartOfListText(item.Item1))
             {
@@ -376,7 +422,7 @@ namespace YonderSharp.WPF.DataManagement
         {
             _vm = new DataGridVM(source, ScrollToChangedEntry);
             DataContext = _vm;
-            GenerateFields(_vm.DataSource.GetTypeOfObjects(), _vm.GetFields());
+            GenerateFields(ContentGrid, _vm.DataSource.GetTypeOfObjects(), _vm.GetFields(), "SelectedItem");
 
             //verify that the ID is avaiable
             var id = source.GetIDPropertyInfo();
