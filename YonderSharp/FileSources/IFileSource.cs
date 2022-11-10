@@ -9,7 +9,7 @@ namespace YonderSharp.FileSources
     /// <summary>
     /// simple Elementsource form hard disk
     /// </summary>
-    public abstract class IFileSource<T>
+    public abstract class IFileSource<T> : ItemSource<T>
     {
         /// <summary>
         /// Where is the content stored on the hard disk?
@@ -25,19 +25,15 @@ namespace YonderSharp.FileSources
         /// </summary>
         public Action EntriesHaveChangedEvent;
 
-        /// <summary>
-        /// Removes the element from the store
-        /// </summary>
-        public virtual void Remove(T obj)
+        /// <inheritdoc/>
+        public void Remove(T obj)
         {
             Load();
             _list.Remove(obj);
             RaiseChangedEvent();
         }
 
-        /// <summary>
-        /// Add single element
-        /// </summary>
+        /// <inheritdoc/>
         public void Add(T obj)
         {
             Load();
@@ -53,9 +49,7 @@ namespace YonderSharp.FileSources
             }
         }
 
-        /// <summary>
-        /// Add multiple elements to the list
-        /// </summary>
+        /// <inheritdoc/>
         public void Add(IList<T> list)
         {
             if (list == null)
@@ -69,14 +63,13 @@ namespace YonderSharp.FileSources
             }
         }
 
+        /// <inheritdoc/>
         public Type GetGenericType()
         {
             return typeof(T);
         }
 
-        /// <summary>
-        /// Get all elements known
-        /// </summary>
+        /// <inheritdoc/>
         public T[] GetAll()
         {
             Load();
@@ -133,7 +126,7 @@ namespace YonderSharp.FileSources
                 {
                     file.Directory.Create();
                 }
-              
+
                 File.WriteAllText(GetPathToJsonFile(), JsonConvert.SerializeObject(_list, Formatting.Indented));
             }
         }
