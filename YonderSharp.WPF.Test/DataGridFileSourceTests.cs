@@ -60,11 +60,11 @@ namespace YonderSharp.WPF.Test
         [Test]
         public void IsFieldPartOfListTextTest()
         {
-            Assert.IsTrue(testObject.IsFieldPartOfListText("SomeString"));
-            Assert.IsFalse(testObject.IsFieldPartOfListText("SomeLong"));
+            Assert.IsTrue(((IDataGridSource)testObject).IsFieldPartOfListText("SomeString"));
+            Assert.IsFalse(((IDataGridSource)testObject).IsFieldPartOfListText("SomeLong"));
 
             //Some none-sense
-            Assert.IsFalse(testObject.IsFieldPartOfListText("Ente"));
+            Assert.IsFalse(((IDataGridSource)testObject).IsFieldPartOfListText("Ente"));
         }
 
         [Test]

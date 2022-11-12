@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using YonderSharp.Attributes;
 using YonderSharp.FileSources;
 
 namespace YonderSharp.WPF.DataManagement
