@@ -18,7 +18,7 @@ namespace YonderSharp.WPF.DataManagement
 
         private Action _scrollContentIntoNewPositions;
 
-        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection)
+        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection, bool canSave = true)
         {
             DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
 
@@ -28,6 +28,8 @@ namespace YonderSharp.WPF.DataManagement
             _commands.AddCommand("Save", x => Save());
 
             _scrollContentIntoNewPositions = scrollContentToNewSelection;
+
+            _canSave = canSave;
 
             UpdateList();
         }
@@ -156,9 +158,10 @@ namespace YonderSharp.WPF.DataManagement
             get { return DataSource.IsAllowedToAddFromList() && DataSource.IsAllowedToAddNew() ? Visibility.Visible : Visibility.Collapsed; }
         }
 
+        private bool _canSave = true;
         public Visibility CanSave
         {
-            get { return DataSource.HasSearch() ? Visibility.Visible : Visibility.Collapsed; }
+            get { return _canSave ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         public Visibility CanSearch
