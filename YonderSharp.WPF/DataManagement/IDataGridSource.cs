@@ -114,7 +114,36 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Is the field part of the ItemTitle generation? If yes this will result in an update of the list on change of the fieldvalue
         /// </summary>
-        public abstract bool IsFieldPartOfListText(string fieldName);
+        private static Dictionary<string, bool> _fieldPartOfListTexts = new Dictionary<string, bool>();
+        /// <inheritdoc/>
+        public bool IsFieldPartOfListText(string fieldName)
+        {
+            string cashKey = $"{GetTypeOfObjects().FullName} {fieldName}";
+
+            if (_fieldPartOfListTexts.ContainsKey(cashKey))
+            {
+                return _fieldPartOfListTexts[cashKey];
+            }
+
+            var property = GetTypeOfObjects().GetProperty(cashKey);
+            if (property == null)
+            {
+                _fieldPartOfListTexts.Add(cashKey, false);
+                return false;
+            }
+
+            foreach (var attribute in property.GetCustomAttributes(false))
+            {
+                if (attribute is Title key)
+                {
+                    _fieldPartOfListTexts.Add(cashKey, true);
+                    return true;
+                }
+            }
+
+            _fieldPartOfListTexts.Add(cashKey, false);
+            return false;
+        }
 
         #region actions
         /// <summary>

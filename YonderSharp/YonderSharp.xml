@@ -106,24 +106,19 @@
             </summary>
         </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Remove(`0)">
-            <summary>
-            Removes the element from the store
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Add(`0)">
-            <summary>
-            Add single element
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Add(System.Collections.Generic.IList{`0})">
-            <summary>
-            Add multiple elements to the list
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetGenericType">
+            <inheritdoc/>
         </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.GetAll">
-            <summary>
-            Get all elements known
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Load(System.Boolean)">
             <summary>
@@ -133,6 +128,36 @@
         <member name="M:YonderSharp.FileSources.IFileSource`1.Save">
             <summary>
             Stores all the objects into the file
+            </summary>
+        </member>
+        <member name="T:YonderSharp.FileSources.ItemSource`1">
+            <summary>
+            A source for items. 
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.Remove(`0)">
+            <summary>
+            Remove the given element from the Source
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.Add(`0)">
+            <summary>
+            Add single element
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.Add(System.Collections.Generic.IList{`0})">
+            <summary>
+            Add multiple items to the list
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.GetGenericType">
+            <summary>
+            Helper Method for reflection purposes
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.GetAll">
+            <summary>
+            Get All known Elements
             </summary>
         </member>
         <member name="M:YonderSharp.Geocaching.EhemaligerLandkreisWaldeck.CoordReplace(System.String,System.String,System.Int32)">

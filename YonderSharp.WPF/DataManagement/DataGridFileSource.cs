@@ -93,36 +93,6 @@ namespace YonderSharp.WPF.DataManagement
             return _fileSource.GetGenericType();
         }
 
-        Dictionary<string, bool> _fieldPartOfListTexts = new Dictionary<string, bool>();
-        /// <inheritdoc/>
-        public bool IsFieldPartOfListText(string fieldName)
-        {
-            if (_fieldPartOfListTexts.ContainsKey(fieldName))
-            {
-                return _fieldPartOfListTexts[fieldName];
-            }
-
-            var property = GetTypeOfObjects().GetProperty(fieldName);
-            if(property == null)
-            {
-                _fieldPartOfListTexts.Add(fieldName, false);
-                return false;
-            }
-
-            foreach (var attribute in property.GetCustomAttributes(false))
-            {
-                if (attribute is Title key)
-                {
-                    _fieldPartOfListTexts.Add(fieldName, true);
-                    return true;
-                }
-            }
-
-            _fieldPartOfListTexts.Add(fieldName, false);
-            return false;
-
-        }
-
         /// <inheritdoc/>
         public void Save()
         {

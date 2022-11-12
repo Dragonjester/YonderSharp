@@ -70,6 +70,7 @@ namespace YonderSharp.WPF.DataManagement
                 }
             }
 
+            string itemBindingPath;
             for (int i = 0; i < items.Length; i++)
             {
                 if (handledPositions.Contains(i))
@@ -77,15 +78,59 @@ namespace YonderSharp.WPF.DataManagement
                     continue;
                 }
 
-                if (CanBeHandledAsSimpleEntry(items[i])) { 
-                    GenerateRow(grid, itemType, items[i], $"{baseBindingPath}.{items[i].Item1}");
+                itemBindingPath = $"{baseBindingPath}.{items[i].Item1}";
+                //simple datatype
+                if (CanBeHandledAsSimpleEntry(items[i].Item2))
+                {
+                    GenerateRow(grid, itemType, items[i], itemBindingPath);
                 }
+                //List of Class 
+                else if (items[i].Item2.GenericTypeArguments?.Length > 0 && items[i].Item2.GetInterfaces().Any(x => x == typeof(IEnumerable)))
+                {
+                    GenerateComplexList(grid, itemType, items[i], itemBindingPath);
+                }
+                //Class property
                 else
                 {
-                    GenerateComplexRow(grid, itemType, items[i], $"{baseBindingPath}.{items[i].Item1}");
+                    GenerateComplexRow(grid, itemType, items[i], itemBindingPath);
                 }
             }
         }
+
+        private void GenerateComplexList(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string itemBindingPath)
+        {
+            var margin = new Thickness(2, 2, 2, 2);
+            parentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+            //Add Label
+            Label label = new Label();
+            label.Content = _vm.DataSource.GetLabel(tuple.Item1);
+
+            int parentRow = parentGrid.RowDefinitions.Count - 1;
+
+            Grid.SetRow(label, parentRow);
+            Grid.SetColumn(label, 0);
+            parentGrid.Children.Add(label);
+
+            //create expander
+            Expander expander = new Expander();
+            expander.Margin = margin;
+            Grid.SetRow(expander, parentRow);
+            Grid.SetColumn(expander, 1);
+            parentGrid.Children.Add(expander);
+
+            //create SubGrid
+            //TODO: map to the itemList insetad of dummy
+            //List<object> dummyItems = new List<object>();
+
+
+            //SubItemDataGridSource subItemGridSource = new SubItemDataGridSource(dummyItems);
+            //DataGrid subGrid = new DataGrid(subItemGridSource);
+            //subGrid.Margin = margin;
+            //expander.Content = subGrid;
+            
+        }
+
 
         private void GenerateComplexRow(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string bindingPath)
         {
@@ -118,13 +163,23 @@ namespace YonderSharp.WPF.DataManagement
 
         }
 
-        private bool CanBeHandledAsSimpleEntry(Tuple<string, Type> item)
+        private bool CanBeHandledAsSimpleEntry(Type item)
         {
-            var result = item.Item2.IsEnum || !item.Item2.IsClass || IsHashsetEnum(item.Item2) || item.Item2.Name.Equals("String", StringComparison.OrdinalIgnoreCase);
+            bool result = false;
 
-            if (!result)
+            if (item.GenericTypeArguments?.Length > 0 && item.GetInterfaces().Any(x => x == typeof(IEnumerable)))
             {
-                result = item.Item2.GenericTypeArguments?.Length > 0 && !item.Item2.GenericTypeArguments[0].IsClass;
+                return CanBeHandledAsSimpleEntry(item.GenericTypeArguments[0]);
+            }
+            else
+            {
+
+                result = item.IsEnum || !item.IsClass || IsHashsetEnum(item) || item.Name.Equals("String", StringComparison.OrdinalIgnoreCase);
+
+                if (!result)
+                {
+                    result = item.GenericTypeArguments?.Length > 0 && !item.GenericTypeArguments[0].IsClass;
+                }
             }
 
             return result;
