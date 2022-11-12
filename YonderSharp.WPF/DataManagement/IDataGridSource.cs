@@ -53,22 +53,48 @@ namespace YonderSharp.WPF.DataManagement
                                  && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
         }
 
-        public string GetNameOfIdProperty();
-       
+
+        private static Dictionary<Type, string> NamesOfIdProperties = new Dictionary<Type, string>();
+        /// <summary>
+        /// returns the name of the [PrimaryKey] property
+        /// </summary>
+        public string GetNameOfIdProperty()
+        {
+            if (NamesOfIdProperties.TryGetValue(GetTypeOfObjects(), out string name))
+            {
+                return name;
+            }
+
+            foreach (var property in GetTypeOfObjects().GetProperties())
+            {
+                foreach (var attribute in property.GetCustomAttributes(false))
+                {
+                    if (attribute is PrimaryKey key)
+                    {
+                        NamesOfIdProperties.Add(GetTypeOfObjects(), property.Name);
+                        return property.Name;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+
         public PropertyInfo GetTitlePropertyInfo()
         {
             BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
             var x = GetTypeOfObjects().GetProperties(instancePublic).First(x => x.GetCustomAttribute<Title>() != null);
             return x;
         }
-        
+
         /// <summary>
         /// string shown in the listview
         /// </summary>
         public string GetShownItemTitle(object item)
         {
             var x = GetTitlePropertyInfo().GetValue(item);
-            if(x == null)
+            if (x == null)
             {
                 return "EMPTY";
             }

@@ -83,10 +83,5 @@ namespace YonderSharp.WPF.DataManagement.Example
         {
             _items.Add(new ExampleDataItem());
         }
-
-        public string GetNameOfIdProperty()
-        {
-            return "ID";
-        }
     }
 }

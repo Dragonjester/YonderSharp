@@ -54,6 +54,9 @@ namespace YonderSharp.WPF.DataManagement.Example
         public HashSet<SomeEnum> HashsetEnum { get; set; } = new HashSet<SomeEnum>();
 
         [DataMember]
-        public SourceDataItem SomeRef { get; set; } = new SourceDataItem();
+        public SourceDataItem SomeSubItem { get; set; } = new SourceDataItem();
+
+        [DataMember]
+        public IList<SourceDataItem> SomeSubItemList { get; set; } = new List<SourceDataItem>();
     }
 }

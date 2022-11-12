@@ -44,11 +44,6 @@ namespace YonderSharp.WPF.Configuration
             return _entries.ToArray();
         }
 
-        /// <inheritdoc/>
-        public string GetNameOfIdProperty()
-        {
-            return "Key";
-        }
 
         /// <inheritdoc/>
         public string GetShownItemTitle(object item)

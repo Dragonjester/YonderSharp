@@ -86,28 +86,7 @@ namespace YonderSharp.WPF.DataManagement
             return _fileSource.GetAll();
         }
 
-        private string _nameOfIdProperty;
-        /// <inheritdoc/>
-        public string GetNameOfIdProperty()
-        {
-            if (string.IsNullOrWhiteSpace(_nameOfIdProperty))
-            {
-                foreach (var property in GetTypeOfObjects().GetProperties())
-                {
-                    foreach (var attribute in property.GetCustomAttributes(false))
-                    {
-                        if (attribute is PrimaryKey key)
-                        {
-                            _nameOfIdProperty = property.Name;
-                            return _nameOfIdProperty;
-                        }
-                    }
-                }
-            }
-
-            return _nameOfIdProperty;
-        }
-
+     
         /// <inheritdoc/>
         public Type GetTypeOfObjects()
         {

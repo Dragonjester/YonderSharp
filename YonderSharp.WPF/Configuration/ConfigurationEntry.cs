@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using YonderSharp.Attributes;
 
 namespace YonderSharp.WPF.Configuration
 {
@@ -17,7 +18,9 @@ namespace YonderSharp.WPF.Configuration
         }
 
         [DataMember]
+        [PrimaryKey]
         public string Key { get; set; }
+
         [DataMember]
         public string Value { get; set; }
     }
