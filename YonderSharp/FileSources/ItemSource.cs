@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace YonderSharp.FileSources
 {
     /// <summary>
     /// A source for items. 
     /// </summary>
-    public interface ItemSource<T>
+    public interface ItemSource<T> : ItemSourceForLists
     {
 
         /// <summary>
@@ -24,10 +23,7 @@ namespace YonderSharp.FileSources
         /// </summary>
         public void Add(IList<T> list);
 
-        /// <summary>
-        /// Helper Method for reflection purposes
-        /// </summary>
-        public Type GetGenericType();
+   
 
         /// <summary>
         /// Get All known Elements

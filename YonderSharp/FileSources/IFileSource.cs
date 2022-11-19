@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using YonderSharp.Attributes;
 
 namespace YonderSharp.FileSources
 {
@@ -129,6 +131,28 @@ namespace YonderSharp.FileSources
 
                 File.WriteAllText(GetPathToJsonFile(), JsonConvert.SerializeObject(_list, Formatting.Indented));
             }
+        }
+
+        public string[] GetTitles()
+        {
+            var allItems = GetAll();
+            if (allItems == null)
+            {
+                return null;
+            }
+
+            var propertyInfoOfTitle = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(Title)));
+
+            var result = new List<string>();
+            foreach (var item in allItems)
+            {
+                var title = (propertyInfoOfTitle.GetValue(item) ?? string.Empty).ToString();
+                result.Add(title);
+
+            }
+
+            return result.ToArray();
+
         }
     }
 }

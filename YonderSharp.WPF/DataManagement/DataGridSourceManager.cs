@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using YonderSharp.FileSources;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -12,14 +15,16 @@ namespace YonderSharp.WPF.DataManagement
             KnownSources.Add(dataSource.GetTypeOfObjects(), dataSource);
         }
 
+        /// <exception cref="KeyNotFoundException">When the type isn't known yet</exception>
         public static IDataGridSource GetSource(Type type)
         {
-            return KnownSources[type] ?? throw new InvalidOperationException($"{type.Name} is not registered yet");
+            return KnownSources[type];
         }
 
         public static IDataGridSource GetSource<T>()
         {
             return GetSource(typeof(T));
         }
+
     }
 }

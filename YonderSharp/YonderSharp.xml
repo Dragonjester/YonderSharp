@@ -150,14 +150,25 @@
             Add multiple items to the list
             </summary>
         </member>
-        <member name="M:YonderSharp.FileSources.ItemSource`1.GetGenericType">
+        <member name="M:YonderSharp.FileSources.ItemSource`1.GetAll">
+            <summary>
+            Get All known Elements
+            </summary>
+        </member>
+        <member name="P:YonderSharp.FileSources.ItemSourceContainer.Cache">
+            <summary>
+            READ ONLY
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:YonderSharp.FileSources.ItemSourceForLists" -->
+        <member name="M:YonderSharp.FileSources.ItemSourceForLists.GetGenericType">
             <summary>
             Helper Method for reflection purposes
             </summary>
         </member>
-        <member name="M:YonderSharp.FileSources.ItemSource`1.GetAll">
+        <member name="M:YonderSharp.FileSources.ItemSourceForLists.GetTitles">
             <summary>
-            Get All known Elements
+            Return the shown titles for the known entries
             </summary>
         </member>
         <member name="M:YonderSharp.Geocaching.EhemaligerLandkreisWaldeck.CoordReplace(System.String,System.String,System.Int32)">
