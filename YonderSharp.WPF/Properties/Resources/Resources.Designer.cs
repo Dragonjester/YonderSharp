@@ -104,5 +104,32 @@ namespace YonderSharp.WPF.Properties.Resources {
                 return ResourceManager.GetString("SavedDialogTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new item.
+        /// </summary>
+        public static string StringListBoxContextMenuAdd {
+            get {
+                return ResourceManager.GetString("StringListBoxContextMenuAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string StringListBoxContextMenuEdit {
+            get {
+                return ResourceManager.GetString("StringListBoxContextMenuEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string StringListBoxContextMenuRemove {
+            get {
+                return ResourceManager.GetString("StringListBoxContextMenuRemove", resourceCulture);
+            }
+        }
     }
 }

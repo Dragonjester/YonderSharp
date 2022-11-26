@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:data="clr-namespace:YonderSharp.WPF.DataManagement;assembly=YonderSharp.WPF"
-        xmlns:local="clr-namespace:YonderSharp.WPF.Example"
+        xmlns:local="clr-namespace:YonderSharp.WPF.Example" xmlns:views="clr-namespace:YonderSharp.WPF.Views;assembly=YonderSharp.WPF"
         mc:Ignorable="d"
         Title="YonderSharp Examples" Height="1000" Width="1500">
     <DockPanel>
@@ -16,14 +16,25 @@
             </MenuItem>
         </Menu>
         <TabControl>
+            <TabItem Header="Custom Views">
+                <TabControl>
+                    <TabItem Header="StringListBox">
+                        <views:StringListBox/>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
             <TabItem Header="DataGrid">
-                <data:DataGrid Name="dataGrid"/>
-            </TabItem>
-            <TabItem Header="SourceGrid">
-                <data:DataGrid Name="SourceGrid"/>
-            </TabItem>
-            <TabItem Header="IFileSourceGrid">
-                <data:DataGrid Name="FileSourceGrid"/>
+                <TabControl>
+                    <TabItem Header="DataGrid">
+                        <data:DataGrid Name="dataGrid"/>
+                    </TabItem>
+                    <TabItem Header="SourceGrid">
+                        <data:DataGrid Name="SourceGrid"/>
+                    </TabItem>
+                    <TabItem Header="IFileSourceGrid">
+                        <data:DataGrid Name="FileSourceGrid"/>
+                    </TabItem>
+                </TabControl>
             </TabItem>
         </TabControl>
     </DockPanel>
