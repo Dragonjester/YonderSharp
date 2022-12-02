@@ -34,6 +34,11 @@ namespace YonderSharp.FileSources
 
         public void Remove(Type type)
         {
+            if(type == null)
+            {
+                return;
+            }
+
             _cache.Remove(type);
         }
 
