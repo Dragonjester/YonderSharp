@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -28,6 +29,26 @@ namespace YonderSharp.Attributes
         {
             TargetClass = targetClass ?? throw new ArgumentNullException(nameof(targetClass));
             TargetField = TargetClass.GetProperties().Where(x => x.Name == fieldName).First();
+        }
+
+        /// <summary>
+        /// Returns the types that are referenced as Foreign for the given type.
+        /// i.e. if the given type has foreign relations to the types "book" and "shop" it will return those
+        /// </summary>
+        public static Type[] GetAllForeignTables(Type type)
+        {
+            var result = new HashSet<Type>();
+
+            foreach(var property in type.GetProperties())
+            {
+                var fkAttribute = property.GetCustomAttribute<ForeignKey>();
+                if(fkAttribute != null)
+                {
+                    result.Add(fkAttribute.TargetClass);
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }

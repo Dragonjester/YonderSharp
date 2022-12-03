@@ -24,6 +24,12 @@
             <param name="fieldName">Property of this class, to where the FK points to</param>
             <exception cref="T:System.ArgumentNullException">For the params className and fieldName</exception>
         </member>
+        <member name="M:YonderSharp.Attributes.ForeignKey.GetAllForeignTables(System.Type)">
+            <summary>
+            Returns the types that are referenced as Foreign for the given type.
+            i.e. if the given type has foreign relations to the types "book" and "shop" it will return those
+            </summary>
+        </member>
         <member name="T:YonderSharp.Attributes.PrimaryKey">
             <summary>
             Identifies something as the unique primary key. Usually, but not necessarily a <see cref="T:System.Guid"/>
