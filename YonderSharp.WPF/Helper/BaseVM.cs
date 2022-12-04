@@ -2,11 +2,14 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace YonderSharp.WPF.Helper {
-    public abstract class BaseVM : INotifyPropertyChanged {
+namespace YonderSharp.WPF.Helper
+{
+    public abstract class BaseVM : IBaseVM
+    {
         protected CommandMap _commands;
 
-        public BaseVM() {
+        public BaseVM()
+        {
             _commands = new CommandMap();
 
             //usage:
@@ -18,8 +21,14 @@ namespace YonderSharp.WPF.Helper {
         /// <summary>
         /// Get the list of commands
         /// </summary>
-        public CommandMap Commands {
+        public CommandMap Commands
+        {
             get { return _commands; }
+            set
+            {
+                _commands = value;
+                OnSelectionChanged();
+            }
         }
 
         #region INotifyPropertyChanged
@@ -31,7 +40,8 @@ namespace YonderSharp.WPF.Helper {
         /// <param name="propertyName">Name of the property used to notify listeners.  This
         /// value is optional and can be provided automatically when invoked from compilers
         /// that support <see cref="CallerMemberNameAttribute"/>.</param>
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -40,9 +50,7 @@ namespace YonderSharp.WPF.Helper {
         /// </summary>
         public virtual void OnSelectionChanged()
         {
-            PropertyInfo[] myPropertyInfos = this.GetType().GetProperties();
-            
-            foreach(var propertyInfo in myPropertyInfos)
+            foreach (var propertyInfo in this.GetType().GetProperties())
             {
                 OnPropertyChanged(propertyInfo.Name);
             }
