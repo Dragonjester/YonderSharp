@@ -19,7 +19,10 @@ namespace YonderSharp.WPF.DataManagement
                 var source = KnownSources[sourceType];
                 foreach(var foreignType in ForeignKey.GetAllForeignTables(sourceType))
                 {
-                    //TODO: ????
+                    if(KnownSources.TryGetValue(foreignType, out IDataGridSource foreignSource))
+                    {
+                        //TODO: ????
+                    }
                 }
             }
         }

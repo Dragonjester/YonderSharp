@@ -83,9 +83,7 @@ namespace YonderSharp.FileSources
         /// <inheritdoc/>
         public void Add(object item)
         {
-            Type a = item.GetType();
-            Type b = typeof(T);
-            if (a == b)
+            if (item.GetType() == typeof(T))
             {
                 Add((T)item);
             }
