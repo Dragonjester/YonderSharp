@@ -10,9 +10,13 @@ namespace YonderSharp.WPF.DataManagement
     /// <summary>
     /// Sadly wpf doesn't support generics in their UI classes, so we can't use a generic here either #sadface
     /// </summary>
-    public interface IDataGridSource
+    public abstract class IDataGridSource
     {
-        public object[] GetAllItems();
+        protected IList<object> _items { get; set; } = new List<object>();
+        public object[] GetAllItems()
+        {
+            return _items.ToArray();
+        }
 
         /// <summary>
         /// Items shown in the ListView, respecting the search (if avaiable)
@@ -40,9 +44,19 @@ namespace YonderSharp.WPF.DataManagement
         /// Items that can be added to the shown list
         /// </summary>
         /// <returns></returns>
-        public object[] GetAddableItems(IList<object> notAddableItems);
+        public virtual object[] GetAddableItems(IList<object> notAddableItems)
+        {
+            if (GetConfiguration().GetAddableItemsReturnAll || notAddableItems == null || notAddableItems.Count == 0)
+            {
+                return _items.ToArray();
+            }
+            else
+            {
+                return _items.Where(x => !notAddableItems.Contains(x)).ToArray();
+            }
+        }
 
-        public Type GetTypeOfObjects();
+        public abstract Type GetTypeOfObjects();
 
 
         public PropertyInfo GetIDPropertyInfo()
@@ -91,7 +105,7 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// string shown in the listview
         /// </summary>
-        public string GetShownItemTitle(object item)
+        public virtual string GetShownItemTitle(object item)
         {
             var x = GetTitlePropertyInfo().GetValue(item);
             if (x == null)
@@ -117,7 +131,7 @@ namespace YonderSharp.WPF.DataManagement
         private static Dictionary<string, bool> _fieldPartOfListTexts = new Dictionary<string, bool>();
      
         /// <inheritdoc/>
-        public bool IsFieldPartOfListText(string fieldName)
+        public virtual bool IsFieldPartOfListText(string fieldName)
         {
             string cashKey = $"{GetTypeOfObjects().FullName} {fieldName}";
 
@@ -151,7 +165,10 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Add an item to the 
         /// </summary>
-        public void AddItem(object item);
+        public void AddItem(object item)
+        {
+            _items.Add(item);
+        }
 
         /// <summary>
         /// Can new items be added by the user at all?
@@ -166,39 +183,78 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         public virtual bool IsAllowedToCreateNewEntry()
         {
-            return true;
+            return GetConfiguration().IsAllowedToCreateNewEntry;
         }
 
         /// <summary>
         /// Can an item be added from GetAddableItems()?
         /// </summary>
-        public virtual bool IsAllowedToAddFromList()
+        public bool IsAllowedToAddFromList()
         {
-            return true;
+            return GetConfiguration().IsAllowedToIsAllowedToAddFromList;
+        }
+
+        private DataGridSourceConfiguration _config;
+        protected virtual DataGridSourceConfiguration GetConfiguration()
+        {
+            if(_config == null)
+            {
+                _config = new DataGridSourceConfiguration();
+                _config.IsAllowedToIsAllowedToAddFromList = true;
+                _config.IsAllowedToCreateNewEntry = true;
+                _config.IsAllowedToRemove = true;
+                _config.HasSearch = true;
+                _config.GetAddableItemsReturnAll = true;
+            }
+
+            return _config;
         }
 
         /// <summary>
         /// Creates a new Entry
         /// </summary>
-        void AddNewItem();
+        public void AddNewItem()
+        {
+            AddItem(CreateNewItem());
+        }
+
+        /// <summary>
+        /// Internal implementation on how to create a new Item
+        /// </summary>
+        protected virtual object CreateNewItem()
+        {
+            return Activator.CreateInstance(GetTypeOfObjects()); 
+        }
 
         /// <summary>
         /// Remove an item from the shown list
         /// </summary>
-        public void RemoveShownItem(object item);
+        public void RemoveShownItem(object item)
+        {
+            _items.Remove(item);
+        }
 
         /// <summary>
         /// Can shown items be removed by the user?
         /// </summary>
-        public virtual bool IsAllowedToRemove()
+        public bool IsAllowedToRemove()
         {
-            return true;
+            return GetConfiguration().IsAllowedToRemove;
         }
 
         /// <summary>
         /// Save the current list
         /// </summary>
-        public abstract void Save();
+        public void Save()
+        {
+            Save(_items);
+        }
+
+
+        /// <summary>
+        /// Implementation for how to save the list
+        /// </summary>
+        protected abstract void Save(IList<object> items);
         #endregion actions
 
         #region search
@@ -207,9 +263,9 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Show the search textbox?
         /// </summary>
-        public virtual bool HasSearch()
+        public bool HasSearch()
         {
-            return true;
+            return GetConfiguration().HasSearch;
         }
 
         /// <summary>
@@ -229,9 +285,9 @@ namespace YonderSharp.WPF.DataManagement
         /// <summary>
         /// Should the textbox for the primary field key be disabled?
         /// </summary>
-        public virtual bool IsPrimaryKeyDisabled()
+        public bool IsPrimaryKeyDisabled()
         {
-            return true;
+            return GetConfiguration().IsPrimaryKeyDisabled;
         }
         #endregion search
     }

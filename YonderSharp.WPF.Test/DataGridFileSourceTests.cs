@@ -109,14 +109,21 @@ namespace YonderSharp.WPF.Test
 
         internal class DataGridFileSourceTestImplementation : DataGridFileSource
         {
-            public override void AddNewItem()
-            {
-                AddItem(new ExampleDataItem());
-            }
 
-            public override object[] GetAddableItems(IList<object> notAddableItems)
+            private DataGridSourceConfiguration _config;
+            protected override DataGridSourceConfiguration GetConfiguration()
             {
-                throw new NotImplementedException();
+                if (_config == null)
+                {
+                    _config = new DataGridSourceConfiguration();
+                    _config.IsAllowedToIsAllowedToAddFromList = false;
+                    _config.IsAllowedToCreateNewEntry = true;
+                    _config.IsAllowedToRemove = true;
+                    _config.HasSearch = true;
+                    _config.GetAddableItemsReturnAll = true;
+                }
+
+                return _config;
             }
         }
 

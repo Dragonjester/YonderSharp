@@ -7,8 +7,6 @@ namespace YonderSharp.WPF.Configuration
 {
     public class ConfigurationDataGridSource : IDataGridSource
     {
-        private List<ConfigurationEntry> _entries { get; set; } = new List<ConfigurationEntry>();
-        public string _searchText { get; set; }
         private IConfigManager _dataSource { get; set; }
 
         public ConfigurationDataGridSource(IConfigManager dataSource)
@@ -16,74 +14,48 @@ namespace YonderSharp.WPF.Configuration
             _dataSource = dataSource;
             foreach (string key in dataSource.GetAllKeys())
             {
-                _entries.Add(new ConfigurationEntry(key, dataSource.GetValue(key)));
+                _items.Add(new ConfigurationEntry(key, dataSource.GetValue(key)));
             }
         }
 
         /// <inheritdoc/>
-        public void AddItem(object item)
-        {
-            _entries.Add((ConfigurationEntry)item);
-        }
-
-        /// <inheritdoc/>
-        public void AddNewItem()
-        {
-            _entries.Add(new ConfigurationEntry());
-        }
-
-        /// <inheritdoc/>
-        public object[] GetAddableItems(IList<object> notAddableItems)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public object[] GetAllItems()
-        {
-            return _entries.ToArray();
-        }
-
-
-        /// <inheritdoc/>
-        public string GetShownItemTitle(object item)
-        {
-            return ((ConfigurationEntry)item).Key;
-        }
-
-        /// <inheritdoc/>
-        public Type GetTypeOfObjects()
+        public override Type GetTypeOfObjects()
         {
             return typeof(ConfigurationEntry);
         }
 
         /// <inheritdoc/>
-        public bool IsFieldPartOfListText(string fieldName)
+        public override bool IsFieldPartOfListText(string fieldName)
         {
             return fieldName == "Key";
         }
 
-        /// <inheritdoc/>
-        public void RemoveShownItem(object item)
+
+        private DataGridSourceConfiguration _config;
+        protected virtual DataGridSourceConfiguration GetConfiguration()
         {
-            _entries.Remove((ConfigurationEntry)item);
+            if (_config == null)
+            {
+                _config = new DataGridSourceConfiguration();
+                _config.IsAllowedToIsAllowedToAddFromList = false;
+                _config.IsAllowedToCreateNewEntry = true;
+                _config.IsAllowedToRemove = true;
+                _config.HasSearch = true;
+                _config.GetAddableItemsReturnAll = true;
+            }
+
+            return _config;
         }
 
-        /// <inheritdoc/>
-        public void Save()
+
+        protected override void Save(IList<object> items)
         {
             _dataSource.Clear();
-            foreach (ConfigurationEntry entry in _entries)
+            foreach (ConfigurationEntry entry in items)
             {
                 _dataSource.SetValue(entry.Key, entry.Value);
             }
             _dataSource.Save();
-        }
-
-        /// <inheritdoc/>
-        public bool IsAllowedToAddFromList()
-        {
-            return false;
         }
     }
 }

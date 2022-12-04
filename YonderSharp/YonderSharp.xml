@@ -117,6 +117,15 @@
         <member name="M:YonderSharp.FileSources.IFileSource`1.Add(`0)">
             <inheritdoc/>
         </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Add(`0[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Add(System.Collections.Generic.IList{System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Add(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="M:YonderSharp.FileSources.IFileSource`1.Add(System.Collections.Generic.IList{`0})">
             <inheritdoc/>
         </member>
@@ -156,6 +165,21 @@
             Add multiple items to the list
             </summary>
         </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.Add(System.Collections.Generic.IList{System.Object})">
+            <summary>
+            WPF doesn't support generics, so some sources might want to add items of type object
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.Add(System.Object)">
+            <summary>
+            WPF doesn't support generics, so some sources might want to add items of type object
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.Add(`0[])">
+            <summary>
+            Add multiple items to the list
+            </summary>
+        </member>
         <member name="M:YonderSharp.FileSources.ItemSource`1.GetAll">
             <summary>
             Get All known Elements
@@ -176,6 +200,11 @@
             <summary>
             Return the shown titles for the known entries
             </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSourceForLists.Clear">
+            <summary>
+             Empties the list
+             </summary>
         </member>
         <member name="M:YonderSharp.Geocaching.EhemaligerLandkreisWaldeck.CoordReplace(System.String,System.String,System.Int32)">
             <summary>

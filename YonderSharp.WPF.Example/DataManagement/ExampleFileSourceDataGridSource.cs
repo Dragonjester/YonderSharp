@@ -15,22 +15,21 @@ namespace YonderSharp.WPF.Example.DataManagement
             SetFileSource(new ExampleFileSource());
         }
 
-        public override void AddNewItem()
-        {
-            var item = new ExampleDataItem2();
-            item.SomeString = "New Item";
-            AddItem(item);
-        }
 
-        /// <inheritdoc/>
-        public virtual bool IsAllowedToAddFromList()
+        private DataGridSourceConfiguration _config;
+        protected override DataGridSourceConfiguration GetConfiguration()
         {
-            return false;
-        }
+            if (_config == null)
+            {
+                _config = new DataGridSourceConfiguration();
+                _config.IsAllowedToIsAllowedToAddFromList = false;
+                _config.IsAllowedToCreateNewEntry = true;
+                _config.IsAllowedToRemove = true;
+                _config.HasSearch = true;
+                _config.GetAddableItemsReturnAll = true;
+            }
 
-        public override object[] GetAddableItems(IList<object> notAddableItems)
-        {
-            throw new NotImplementedException();
+            return _config;
         }
 
         internal class ExampleFileSource : IFileSource<ExampleDataItem2>

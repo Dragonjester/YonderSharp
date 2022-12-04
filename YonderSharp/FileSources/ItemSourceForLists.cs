@@ -17,5 +17,10 @@ namespace YonderSharp.FileSources
         /// Return the shown titles for the known entries
         /// </summary>
         public string[] GetTitles();
+
+        ///<summary>
+        /// Empties the list
+        /// </summary>
+        public void Clear();
     }
 }

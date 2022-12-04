@@ -6,10 +6,7 @@ namespace YonderSharp.WPF.DataManagement.Example
     public class ExampleDataGridSource : IDataGridSource
     {
 
-        List<ExampleDataItem> _items = new List<ExampleDataItem>();
         private string _prefix;
-        public string _searchText { get; set; }
-
         public ExampleDataGridSource(string prefix = "Item")
         {
             _prefix = prefix;
@@ -33,55 +30,15 @@ namespace YonderSharp.WPF.DataManagement.Example
             return item;
         }
 
-        public void AddItem(object item)
-        {
-            _items.Add((ExampleDataItem)item);
-        }
-
-        public object[] GetAddableItems(IList<object> notAddableItems)
-        {
-            List<object> addable = new List<object>();
-            for (int i = _items.Count + 1; i < 200; i++)
-            {
-                addable.Add(CreateItem(_prefix, i));
-            }
-
-            return addable.ToArray();
-        }
-
-        //public string GetShownItemTitle(object item)
-        //{
-        //    return ((ExampleDataItem)item).SomeString;
-        //}
-
-        public Type GetTypeOfObjects()
+        /// <inheritdoc/>
+        public override Type GetTypeOfObjects()
         {
             return typeof(ExampleDataItem);
         }
 
-        public bool IsFieldPartOfListText(string fieldName)
+        protected override void Save(IList<object> items)
         {
-            return fieldName == "SomeString";
-        }
-
-        public void RemoveShownItem(object item)
-        {
-            _items.Remove((ExampleDataItem)item);
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object[] GetAllItems()
-        {
-            return _items.ToArray();
-        }
-
-        public void AddNewItem()
-        {
-            _items.Add(new ExampleDataItem());
+            //Do nothing
         }
     }
 }

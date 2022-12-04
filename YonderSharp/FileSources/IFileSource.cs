@@ -43,11 +43,51 @@ namespace YonderSharp.FileSources
             RaiseChangedEvent();
         }
 
+
+        /// <inheritdoc/>
+        public void Add(T[] array)
+        {
+            if (array == null || array.Length == null)
+            {
+                return;
+            }
+
+            foreach (var item in array)
+            {
+                Add(item);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Add(IList<object> list)
+        {
+            if (list == null || list.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in list)
+            {
+                Add(item);
+            }
+        }
+
         private void RaiseChangedEvent()
         {
             if (EntriesHaveChangedEvent != null)
             {
                 EntriesHaveChangedEvent.Invoke();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Add(object item)
+        {
+            Type a = item.GetType();
+            Type b = typeof(T);
+            if (a == b)
+            {
+                Add((T)item);
             }
         }
 
@@ -153,6 +193,12 @@ namespace YonderSharp.FileSources
 
             return result.ToArray();
 
+        }
+
+        public void Clear()
+        {
+            _list.Clear();
+            RaiseChangedEvent();
         }
     }
 }

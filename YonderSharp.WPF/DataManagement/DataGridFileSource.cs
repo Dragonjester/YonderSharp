@@ -13,89 +13,32 @@ namespace YonderSharp.WPF.DataManagement
         public void SetFileSource(dynamic fileSource)
         {
             _fileSource = fileSource ?? throw new ArgumentNullException(nameof(fileSource));
-
             _fileSourceType = fileSource.GetType();
-
 
             if (!_fileSourceType.BaseType.Name.Contains("IFileSource"))
             {
                 throw new ArgumentException($"{_fileSourceType.FullName} doesn't implement IFileSource");
             }
-        }
 
-        public string _searchText { get; set; }
-
-        private MethodInfo _addMethod;
-        /// <inheritdoc/>
-        public void AddItem(object item)
-        {
-            if (_addMethod == null)
+            foreach(var item in _fileSource.GetAll())
             {
-                var methods = _fileSourceType.GetMethods();
-                foreach (var method in methods)
-                {
-                    if (method.Name.Contains("Add"))
-                    {
-                        var parameters = method.GetParameters();
-                        if(parameters[0].Name == "obj")
-                        {
-                            _addMethod = method;
-                            break;
-                        }
-                    }
-                }
+                _items.Add(item);
             }
-
-            _addMethod.Invoke(_fileSource, new[] { item });
         }
 
-        private MethodInfo _removeMethod;
-        /// <inheritdoc/>
-        public void RemoveShownItem(object item)
+        protected override void Save(IList<object> items)
         {
-            if (_removeMethod == null)
+            _fileSource.Clear();
+            foreach(var item in items)
             {
-                var methods = _fileSourceType.GetMethods();
-                foreach (var method in methods)
-                {
-                    if (method.Name.Contains("Remove"))
-                    {
-                        var parameters = method.GetParameters();
-                        if (parameters[0].Name == "obj")
-                        {
-                            _removeMethod = method;
-                            break;
-                        }
-                    }
-                }
+                _fileSource.Add(item);
             }
-
-            _removeMethod.Invoke(_fileSource, new[] { item });
+            _fileSource.Save();
         }
-
         /// <inheritdoc/>
-        public abstract void AddNewItem();
-
-        /// <inheritdoc/>
-        public abstract object[] GetAddableItems(IList<object> notAddableItems);
-
-        /// <inheritdoc/>
-        public object[] GetAllItems()
-        {
-            return _fileSource.GetAll();
-        }
-
-     
-        /// <inheritdoc/>
-        public Type GetTypeOfObjects()
+        public override Type GetTypeOfObjects()
         {
             return _fileSource.GetGenericType();
-        }
-
-        /// <inheritdoc/>
-        public void Save()
-        {
-            _fileSource.Save();
         }
     }
 }

@@ -6,14 +6,10 @@ namespace YonderSharp.WPF.DataManagement.Example
 {
     public class SourceDataGridSource : IDataGridSource
     {
-        private List<SourceDataItem> _items = new List<SourceDataItem>();
-        private string _prefix;
-
         public string _searchText { get; set; }
 
         public SourceDataGridSource(string prefix = "Item")
         {
-            _prefix = prefix;
             for (int i = 0; i < 100; i++)
             {
                 _items.Add(CreateItem(prefix, i));
@@ -27,84 +23,30 @@ namespace YonderSharp.WPF.DataManagement.Example
             return item;
         }
 
-
-
-        #region add items
-        public void AddItem(object item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddNewItem()
-        {
-            _items.Add(CreateItem(_prefix, _items.Count));
-        }
-
-        public object[] GetAddableItems(IList<object> notAddableItems)
-        {
-            if (notAddableItems == null || notAddableItems.Count == 0)
-            {
-                return GetAllItems();
-            }
-
-            return GetAllItems().Where(x => !notAddableItems.Contains(x)).ToArray();
-        }
-
-        public bool IsAllowedToAddNew()
-        {
-            return true;
-        }
-        #endregion add items
-        public object[] GetAllItems()
-        {
-            return _items.ToArray();
-        }
-
-        public Type GetTypeOfObjects()
+        public override Type GetTypeOfObjects()
         {
             return typeof(SourceDataItem);
         }
-        /// <inheritdoc/>
-        public bool IsFieldPartOfListText(string fieldName)
+
+        private DataGridSourceConfiguration _config;
+        protected override DataGridSourceConfiguration GetConfiguration()
         {
-            return fieldName == "Title";
-        }
-        /// <inheritdoc/>
-        public void RemoveShownItem(object item)
-        {
-            _items.Remove((SourceDataItem)item);
+            if (_config == null)
+            {
+                _config = new DataGridSourceConfiguration();
+                _config.IsAllowedToIsAllowedToAddFromList = false;
+                _config.IsAllowedToCreateNewEntry = true;
+                _config.IsAllowedToRemove = false;
+                _config.HasSearch = false;
+                _config.GetAddableItemsReturnAll = true;
+            }
+
+            return _config;
         }
 
-        public void Save()
+        protected override void Save(IList<object> items)
         {
-        }
-
-        /// <inheritdoc/>
-        public virtual bool IsAllowedToCreateNewEntry()
-        {
-            return true;
-        }
-
-        /// <inheritdoc/>
-        public virtual bool IsAllowedToAddFromList()
-        {
-            return false;
-        }
-
-        /// <inheritdoc/>
-        public bool IsAllowedToRemove()
-        {
-            return false;
-        }
-        /// <inheritdoc/>
-        public bool HasSearch()
-        {
-            return false;
-        }
-        /// <inheritdoc/>
-        public string GetNameOfIdProperty()
-        {
-            return "ID";
+            //Do nothing
         }
     }
 }
