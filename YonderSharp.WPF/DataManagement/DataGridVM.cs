@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using YonderSharp.Attributes;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
 
 namespace YonderSharp.WPF.DataManagement
 {
-    public class DataGridVM : BaseVM
+    public class DataGridVM : BaseVM, IForeignKeyListChangedListener
     {
         public IDataGridSource DataSource { get; private set; }
 
@@ -30,6 +31,12 @@ namespace YonderSharp.WPF.DataManagement
             _canSave = canSave;
 
             UpdateList();
+
+            //register ForeignKey Update Listener
+            foreach (var foreignType in ForeignKey.GetAllForeignTables(dataSource.GetTypeOfObjects()))
+            {
+                DataGridSourceManager.RegisterToForeignKeyUpdates(this, foreignType);
+            }
         }
 
         private void AddNewEntry()
@@ -183,8 +190,13 @@ namespace YonderSharp.WPF.DataManagement
 
         private void Save()
         {
-
             DataSource.Save();
+
+            //A change might be depending on a new (unsaved) foreign entry
+            foreach (var foreignType in ForeignKey.GetAllForeignTables(DataSource.GetType()))
+            {
+                DataGridSourceManager.GetSource(foreignType)?.Save();
+            }
 
             string messageBoxText = Properties.Resources.Resources.SavedDialogMessage;
             string caption = Properties.Resources.Resources.SavedDialogTitle;
@@ -192,6 +204,7 @@ namespace YonderSharp.WPF.DataManagement
             MessageBoxImage icon = MessageBoxImage.Information;
 
             MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
         }
 
         /// <summary>
@@ -246,6 +259,12 @@ namespace YonderSharp.WPF.DataManagement
                     }
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public void OnForeignKeyListChanged(Type type)
+        {
+            OnSelectionChanged();
         }
     }
 }

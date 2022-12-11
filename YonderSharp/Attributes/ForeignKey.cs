@@ -35,20 +35,17 @@ namespace YonderSharp.Attributes
         /// Returns the types that are referenced as Foreign for the given type.
         /// i.e. if the given type has foreign relations to the types "book" and "shop" it will return those
         /// </summary>
-        public static Type[] GetAllForeignTables(Type type)
+        public static IEnumerable<Type> GetAllForeignTables(Type type)
         {
-            var result = new HashSet<Type>();
-
+            HashSet<Type> knownResults = new HashSet<Type>();
             foreach(var property in type.GetProperties())
             {
                 var fkAttribute = property.GetCustomAttribute<ForeignKey>();
-                if(fkAttribute != null)
+                if(fkAttribute != null && knownResults.Add(fkAttribute.TargetClass))
                 {
-                    result.Add(fkAttribute.TargetClass);
+                   yield return fkAttribute.TargetClass;
                 }
             }
-
-            return result.ToArray();
         }
     }
 }

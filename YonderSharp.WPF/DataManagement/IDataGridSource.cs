@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -55,6 +57,7 @@ namespace YonderSharp.WPF.DataManagement
                 catch (Exception exc)
                 {
                     //TODO: Logging
+                    Debugger.Break();
                 }
             }
         }
@@ -336,6 +339,14 @@ namespace YonderSharp.WPF.DataManagement
         public bool IsPrimaryKeyDisabled()
         {
             return GetConfiguration().IsPrimaryKeyDisabled;
+        }
+
+        /// <summary>
+        /// be carefull using this. It is the source list of this DataGrid and not just a copy!
+        /// </summary>
+        public ObservableCollection<object> GetObservable()
+        {
+            return _items;
         }
 
         #endregion search

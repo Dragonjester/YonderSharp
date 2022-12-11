@@ -10,7 +10,7 @@ namespace YonderSharp.WPF.DataManagement.Example
 
         public SourceDataGridSource(string prefix = "Item")
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 _items.Add(CreateItem(prefix, i));
             }

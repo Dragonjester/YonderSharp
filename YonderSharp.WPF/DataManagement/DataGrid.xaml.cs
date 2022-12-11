@@ -2,14 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Navigation;
 using YonderSharp.Attributes;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
@@ -128,7 +125,7 @@ namespace YonderSharp.WPF.DataManagement
             //DataGrid subGrid = new DataGrid(subItemGridSource);
             //subGrid.Margin = margin;
             //expander.Content = subGrid;
-            
+
         }
 
 
@@ -315,6 +312,9 @@ namespace YonderSharp.WPF.DataManagement
                 else
                 {
                     TextBox box = new TextBox();
+
+                    box.AcceptsReturn = true;
+
                     box.VerticalContentAlignment = VerticalAlignment.Center;
                     Binding bind = new Binding(bindingPath);
                     bind.Source = _vm;
@@ -337,7 +337,9 @@ namespace YonderSharp.WPF.DataManagement
                 //TODO: Update on new FK Source change (new item, removed item)
                 ComboBox cBox = new ComboBox();
 
-                cBox.ItemsSource = DataGridSourceManager.GetSource(currentPropertyFkAttribute.TargetClass).GetAllItems();
+                cBox.ItemsSource = DataGridSourceManager.GetSource(currentPropertyFkAttribute.TargetClass).GetObservable();
+
+              
 
                 #region binding
                 PropertyInfo fkTitleProperty = currentPropertyFkAttribute.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);

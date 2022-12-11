@@ -435,6 +435,9 @@
             <param name="urlOfIndex">Url to the json File </param>
             <returns>true if there is an update avaible. false if everything is up to date</returns>
         </member>
+        <member name="M:YonderSharp.WPF.DataManagement.IForeignKeyListChangedListener.OnForeignKeyListChanged(System.Type)">
+            <param name="type">The type of the list that changed</param>
+        </member>
         <member name="T:YonderSharp.WSG84.Area">
             <summary>
             Represents an rectacle, using the WSG84 floating point notation
