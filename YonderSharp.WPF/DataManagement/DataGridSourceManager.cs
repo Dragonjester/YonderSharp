@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using YonderSharp.Attributes;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -11,20 +10,6 @@ namespace YonderSharp.WPF.DataManagement
         public static void RegisterDataSource(IDataGridSource dataSource)
         {
             KnownSources.Add(dataSource.GetTypeOfObjects(), dataSource);
-
-            //Register "new entry is known in foreign table
-            //so that i.e. dropdowns can know that a new entry is avaiable
-            foreach(var sourceType in KnownSources.Keys)
-            {
-                var source = KnownSources[sourceType];
-                foreach(var foreignType in ForeignKey.GetAllForeignTables(sourceType))
-                {
-                    if(KnownSources.TryGetValue(foreignType, out IDataGridSource foreignSource))
-                    {
-                        //TODO: ????
-                    }
-                }
-            }
         }
 
         /// <exception cref="KeyNotFoundException">When the type isn't known yet</exception>
@@ -38,5 +23,30 @@ namespace YonderSharp.WPF.DataManagement
             return GetSource(typeof(T));
         }
 
+        public static void RegisterToForeignKeyUpdates(IForeignKeyListChangedListener listener, Type type)
+        {
+            if (listener == null || type == null)
+            {
+                return;
+            }
+
+            if (KnownSources.TryGetValue(type, out IDataGridSource source))
+            {
+                source.RegisterUpdateReceiver(listener);
+            }
+        }
+
+        public static void UnregisterFromForeignKeyUpdates(IForeignKeyListChangedListener listener)
+        {
+            if (listener == null)
+            {
+                return;
+            }
+
+            foreach(var source in KnownSources.Values)
+            {
+                source.UnregisterUpdateReceiver(listener);
+            }
+        }
     }
 }

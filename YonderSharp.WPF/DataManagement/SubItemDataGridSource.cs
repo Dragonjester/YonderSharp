@@ -11,7 +11,16 @@ namespace YonderSharp.WPF.DataManagement
 
         public SubItemDataGridSource(IList<object> items)
         {
-            _items = items ?? throw new ArgumentNullException(nameof(items));
+            if(items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+            _items.Clear();
+            foreach(var item in items)
+            {
+                _items.Add(item);
+            }
+
             itemType = items.GetType().GenericTypeArguments[0];
         }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -12,7 +14,53 @@ namespace YonderSharp.WPF.DataManagement
     /// </summary>
     public abstract class IDataGridSource
     {
-        protected IList<object> _items { get; set; } = new List<object>();
+        public IDataGridSource()
+        {
+            _items.CollectionChanged += OnItemListChangedEvent;
+        }
+        protected ObservableCollection<object> _items { get; set; } = new ObservableCollection<object>();
+
+        #region foreignKey update listener
+
+        private HashSet<IForeignKeyListChangedListener> _updateReceivers = new HashSet<IForeignKeyListChangedListener>();
+
+        public void UnregisterUpdateReceiver(IForeignKeyListChangedListener listener)
+        {
+            if (listener == null)
+            {
+                return;
+            }
+
+            _updateReceivers.Remove(listener);
+        }
+
+        public void RegisterUpdateReceiver(IForeignKeyListChangedListener eventListener)
+        {
+            if (eventListener == null)
+            {
+                return;
+            }
+
+            _updateReceivers.Add(eventListener);
+        }
+
+        private void OnItemListChangedEvent(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            foreach (var receiver in _updateReceivers)
+            {
+                try
+                {
+                    receiver.OnForeignKeyListChanged(GetTypeOfObjects());
+                }
+                catch (Exception exc)
+                {
+                    //TODO: Logging
+                }
+            }
+        }
+
+        #endregion foreignKey update listener
+
         public object[] GetAllItems()
         {
             return _items.ToArray();
@@ -129,7 +177,7 @@ namespace YonderSharp.WPF.DataManagement
         /// Is the field part of the ItemTitle generation? If yes this will result in an update of the list on change of the fieldvalue
         /// </summary>
         private static Dictionary<string, bool> _fieldPartOfListTexts = new Dictionary<string, bool>();
-     
+
         /// <inheritdoc/>
         public virtual bool IsFieldPartOfListText(string fieldName)
         {
@@ -197,7 +245,7 @@ namespace YonderSharp.WPF.DataManagement
         private DataGridSourceConfiguration _config;
         protected virtual DataGridSourceConfiguration GetConfiguration()
         {
-            if(_config == null)
+            if (_config == null)
             {
                 _config = new DataGridSourceConfiguration();
                 _config.IsAllowedToIsAllowedToAddFromList = true;
@@ -223,7 +271,7 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         protected virtual object CreateNewItem()
         {
-            return Activator.CreateInstance(GetTypeOfObjects()); 
+            return Activator.CreateInstance(GetTypeOfObjects());
         }
 
         /// <summary>
@@ -289,6 +337,7 @@ namespace YonderSharp.WPF.DataManagement
         {
             return GetConfiguration().IsPrimaryKeyDisabled;
         }
+
         #endregion search
     }
 }
