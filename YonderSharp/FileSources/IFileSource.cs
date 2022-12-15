@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,6 +23,9 @@ namespace YonderSharp.FileSources
         private IList<T> _list = new List<T>();
         private bool isInitialized;
         private ObservableCollection<string> _titles = new ObservableCollection<string>();
+
+        private PropertyInfo _titlePropertyInfo;
+        private PropertyInfo _primaryKeyPropertyInfo;
 
         /// <summary>
         /// Raised when the list of known entries has changed
@@ -189,7 +193,6 @@ namespace YonderSharp.FileSources
             }
         }
 
-        private PropertyInfo _titlePropertyInfo;
         /// <inheritdoc/>
         public string GetTitle(object obj)
         {
@@ -219,6 +222,7 @@ namespace YonderSharp.FileSources
         /// <inheritdoc/>
         public ObservableCollection<string> GetTitles()
         {
+            Load();
             return _titles;
         }
 
@@ -228,6 +232,37 @@ namespace YonderSharp.FileSources
             _list.Clear();
             _titles.Clear();
             RaiseChangedEvent();
+        }
+
+        /// <inheritdoc/>
+        public T GetByPrimaryKey(object obj)
+        {
+            if(_primaryKeyPropertyInfo == null)
+            {
+                _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
+            }
+
+            if (_primaryKeyPropertyInfo == null)
+            {
+                Debugger.Break();
+            }
+
+            return _list.First(x => _primaryKeyPropertyInfo.GetValue(x) == obj);
+        }
+
+        public T GetByPrimaryKey(Guid id)
+        {
+            if (_primaryKeyPropertyInfo == null)
+            {
+                _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
+            }
+
+            if (_primaryKeyPropertyInfo == null)
+            {
+                Debugger.Break();
+            }
+
+            return _list.First(x => ((Guid)_primaryKeyPropertyInfo.GetValue(x)) == id);
         }
     }
 }

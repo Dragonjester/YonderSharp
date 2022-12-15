@@ -43,5 +43,10 @@ namespace YonderSharp.FileSources
         /// </summary>
         public T[] GetAll();
 
+        /// <summary>
+        /// Returns the element identified by the PK
+        /// </summary>
+        public T GetByPrimaryKey(object obj);
+
     }
 }

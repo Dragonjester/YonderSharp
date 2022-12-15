@@ -154,6 +154,9 @@
         <member name="M:YonderSharp.FileSources.IFileSource`1.Clear">
             <inheritdoc/>
         </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetByPrimaryKey(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="T:YonderSharp.FileSources.ItemSource`1">
             <summary>
             A source for items. 
@@ -192,6 +195,11 @@
         <member name="M:YonderSharp.FileSources.ItemSource`1.GetAll">
             <summary>
             Get All known Elements
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.GetByPrimaryKey(System.Object)">
+            <summary>
+            Returns the element identified by the PK
             </summary>
         </member>
         <member name="P:YonderSharp.FileSources.ItemSourceContainer.Cache">
