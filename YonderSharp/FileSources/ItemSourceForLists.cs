@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace YonderSharp.FileSources
 {
@@ -10,13 +12,19 @@ namespace YonderSharp.FileSources
     {
         /// <summary>
         /// Helper Method for reflection purposes
+        /// Also: WPF doesn't support generics :(
         /// </summary>
         public Type GetGenericType();
 
         /// <summary>
         /// Return the shown titles for the known entries
         /// </summary>
-        public string[] GetTitles();
+        public ObservableCollection<string> GetTitles();
+
+        /// <summary>
+        /// Generates the title for the given object, if it is of the type declared via GetGenericType()
+        /// </summary>
+        public string GetTitle(object obj);
 
         ///<summary>
         /// Empties the list

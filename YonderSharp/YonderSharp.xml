@@ -145,6 +145,15 @@
             Stores all the objects into the file
             </summary>
         </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetTitle(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetTitles">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.Clear">
+            <inheritdoc/>
+        </member>
         <member name="T:YonderSharp.FileSources.ItemSource`1">
             <summary>
             A source for items. 
@@ -194,11 +203,17 @@
         <member name="M:YonderSharp.FileSources.ItemSourceForLists.GetGenericType">
             <summary>
             Helper Method for reflection purposes
+            Also: WPF doesn't support generics :(
             </summary>
         </member>
         <member name="M:YonderSharp.FileSources.ItemSourceForLists.GetTitles">
             <summary>
             Return the shown titles for the known entries
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSourceForLists.GetTitle(System.Object)">
+            <summary>
+            Generates the title for the given object, if it is of the type declared via GetGenericType()
             </summary>
         </member>
         <member name="M:YonderSharp.FileSources.ItemSourceForLists.Clear">

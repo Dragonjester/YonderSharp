@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,9 +19,9 @@ namespace YonderSharp.FileSources
         /// </summary>
         public abstract string GetPathToJsonFile();
 
-        private HashSet<T> _list = new HashSet<T>();
+        private IList<T> _list = new List<T>();
         private bool isInitialized;
-
+        private ObservableCollection<string> _titles = new ObservableCollection<string>();
 
         /// <summary>
         /// Raised when the list of known entries has changed
@@ -31,15 +32,30 @@ namespace YonderSharp.FileSources
         public void Remove(T obj)
         {
             Load();
+
+            var index = _list.IndexOf(obj);
+            if (index == -1)
+            {
+                return;
+            }
+
             _list.Remove(obj);
+            _titles.RemoveAt(index);
+
             RaiseChangedEvent();
         }
 
         /// <inheritdoc/>
         public void Add(T obj)
         {
+            if (_list.Contains(obj))
+            {
+                return;
+            }
+
             Load();
             _list.Add(obj);
+            _titles.Add(GetTitle(obj));
             RaiseChangedEvent();
         }
 
@@ -74,10 +90,7 @@ namespace YonderSharp.FileSources
 
         private void RaiseChangedEvent()
         {
-            if (EntriesHaveChangedEvent != null)
-            {
-                EntriesHaveChangedEvent.Invoke();
-            }
+            EntriesHaveChangedEvent?.Invoke();
         }
 
         /// <inheritdoc/>
@@ -132,13 +145,18 @@ namespace YonderSharp.FileSources
                 isInitialized = true;
             }
 
-            _list = new HashSet<T>();
+            _list = new List<T>();
 
             if (File.Exists(GetPathToJsonFile()))
             {
                 try
                 {
-                    _list = JsonConvert.DeserializeObject<HashSet<T>>(File.ReadAllText(GetPathToJsonFile()));
+                    _list = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(GetPathToJsonFile()));
+                    _titles.Clear();
+                    foreach (var entry in _list)
+                    {
+                        _titles.Add(GetTitle(entry));
+                    }
                 }
                 catch
                 {
@@ -171,31 +189,44 @@ namespace YonderSharp.FileSources
             }
         }
 
-        public string[] GetTitles()
+        private PropertyInfo _titlePropertyInfo;
+        /// <inheritdoc/>
+        public string GetTitle(object obj)
         {
-            var allItems = GetAll();
-            if (allItems == null)
+            if (obj == null)
             {
-                return null;
+                return "Object is null";
             }
 
-            var propertyInfoOfTitle = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(Title)));
-
-            var result = new List<string>();
-            foreach (var item in allItems)
+            T objCasted;
+            try
             {
-                var title = (propertyInfoOfTitle.GetValue(item) ?? string.Empty).ToString();
-                result.Add(title);
-
+                objCasted = (T)obj;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
             }
 
-            return result.ToArray();
+            if (_titlePropertyInfo == null)
+            {
+                _titlePropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(Title)));
+            }
 
+            return (_titlePropertyInfo.GetValue(objCasted) ?? string.Empty).ToString();
         }
 
+        /// <inheritdoc/>
+        public ObservableCollection<string> GetTitles()
+        {
+            return _titles;
+        }
+
+        /// <inheritdoc/>
         public void Clear()
         {
             _list.Clear();
+            _titles.Clear();
             RaiseChangedEvent();
         }
     }
