@@ -256,6 +256,7 @@ namespace YonderSharp.WPF.DataManagement
                 _config.IsAllowedToRemove = true;
                 _config.HasSearch = true;
                 _config.GetAddableItemsReturnAll = true;
+                _config.IsPrimaryKeyDisabled = true;
             }
 
             return _config;
