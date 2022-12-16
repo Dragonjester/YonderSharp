@@ -40,6 +40,21 @@
             used to mark the member that is shown in the UI for FKs
             </summary>
         </member>
+        <member name="M:YonderSharp.Attributes.Title.GetTitel(System.Object)">
+            <summary>
+            Returns the titel value for the given object
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Attributes.Title.TypeHasTitelAttribute(System.Object)">
+            <summary>
+            Does the Type of the given object contain a property that is declared [Title]
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Attributes.Title.TypeHasTitelAttribute(System.Type)">
+            <summary>
+            Does the Type contain a property that is declared [Title]
+            </summary>
+        </member>
         <member name="M:YonderSharp.Config.ConfigManager.GetAllKeys">
             <inheritdoc/>
         </member>

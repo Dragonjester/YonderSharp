@@ -70,6 +70,42 @@ namespace YonderSharp.WPF.Properties.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string DataGridSaveButton {
+            get {
+                return ResourceManager.GetString("DataGridSaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new item.
+        /// </summary>
+        public static string DetailListBoxContextMenuAdd {
+            get {
+                return ResourceManager.GetString("DetailListBoxContextMenuAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string DetailListBoxContextMenuEdit {
+            get {
+                return ResourceManager.GetString("DetailListBoxContextMenuEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string DetailListBoxContextMenuRemove {
+            get {
+                return ResourceManager.GetString("DetailListBoxContextMenuRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
@@ -102,6 +138,15 @@ namespace YonderSharp.WPF.Properties.Resources {
         public static string SavedDialogTitle {
             get {
                 return ResourceManager.GetString("SavedDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string SelectionDialogDataGridSelectButton {
+            get {
+                return ResourceManager.GetString("SelectionDialogDataGridSelectButton", resourceCulture);
             }
         }
         

@@ -201,22 +201,7 @@ namespace YonderSharp.FileSources
                 return "Object is null";
             }
 
-            T objCasted;
-            try
-            {
-                objCasted = (T)obj;
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-
-            if (_titlePropertyInfo == null)
-            {
-                _titlePropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(Title)));
-            }
-
-            return (_titlePropertyInfo.GetValue(objCasted) ?? string.Empty).ToString();
+            return Title.GetTitel(obj);
         }
 
         /// <inheritdoc/>

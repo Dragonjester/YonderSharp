@@ -34,7 +34,7 @@
             </ListBox.ContextMenu>
         </ListBox>
 
-        <Button Content="Save" Grid.Column="0" Grid.Row="2" Command="{Binding Commands.Save}" Visibility="{Binding CanSave}" Margin="2,2,2,2"/>
+        <Button Content="{Binding SaveButtonLabel}" Grid.Column="0" Grid.Row="2" Command="{Binding Commands.Save}" Visibility="{Binding CanSave}" Margin="2,2,2,2"/>
 
         <ScrollViewer Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Name="ContentScroller">
             <Grid Name="ContentGrid">

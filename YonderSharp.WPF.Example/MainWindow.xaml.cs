@@ -1,9 +1,13 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Documents;
 using YonderSharp.Config;
 using YonderSharp.WPF.Configuration;
 using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.DataManagement.Example;
 using YonderSharp.WPF.Helper.CustomDialogs;
+using YonderSharp.WPF.Views.DetailList;
 
 namespace YonderSharp.WPF.Example
 {
@@ -17,6 +21,7 @@ namespace YonderSharp.WPF.Example
         {
             InitializeComponent();
 
+            #region DataGrid
             var source = new SourceDataGridSource("Source");
             var entries = new ExampleDataGridSource("Entry");
             var fileSourceEntries = new DataManagement.ExampleFileSourceDataGridSource();
@@ -28,8 +33,22 @@ namespace YonderSharp.WPF.Example
             SourceGrid.SetSource(source);
             dataGrid.SetSource(entries);
             FileSourceGrid.SetSource(fileSourceEntries);
+            #endregion DataGrid
 
-            _configManager = new ConfigManager();
+            #region DetaillistBox
+
+            var selectableItems = entries.GetAllItems().ToList();
+            ObservableCollection<object> selectedItems = new ObservableCollection<object>();
+            for(int i = 0; i < 5; i++)
+            {
+                selectedItems.Add(selectableItems[i]);
+            }
+
+            ADetailListBox.SetSources(selectedItems, selectableItems);
+
+
+            #endregion DetailListBox
+             _configManager = new ConfigManager();
             _configManager.Load();
         }
 

@@ -8,8 +8,7 @@ namespace YonderSharp.Attributes
     /// <summary>
     /// A Foreign-Key that points to some <see cref="PrimaryKey"/>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property,
-                   AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public class ForeignKey : Attribute
     {
         /// <summary>

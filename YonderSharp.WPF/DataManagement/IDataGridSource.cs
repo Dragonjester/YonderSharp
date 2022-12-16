@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -245,8 +244,8 @@ namespace YonderSharp.WPF.DataManagement
             return GetConfiguration().IsAllowedToIsAllowedToAddFromList;
         }
 
-        private DataGridSourceConfiguration _config;
-        protected virtual DataGridSourceConfiguration GetConfiguration()
+        protected DataGridSourceConfiguration _config;
+        public virtual DataGridSourceConfiguration GetConfiguration()
         {
             if (_config == null)
             {
@@ -257,6 +256,8 @@ namespace YonderSharp.WPF.DataManagement
                 _config.HasSearch = true;
                 _config.GetAddableItemsReturnAll = true;
                 _config.IsPrimaryKeyDisabled = true;
+                _config.ShowSaveDialog = true;
+                _config.IsReadOnlyMode = false;
             }
 
             return _config;
@@ -293,6 +294,11 @@ namespace YonderSharp.WPF.DataManagement
         {
             return GetConfiguration().IsAllowedToRemove;
         }
+
+        /// <summary>
+        /// The item currently selected in the DataGrid-UI
+        /// </summary>
+        public object SelectedItem { get; set; }
 
         /// <summary>
         /// Save the current list

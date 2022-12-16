@@ -440,6 +440,9 @@ namespace YonderSharp.WPF.DataManagement
                 throw new Exception("You somehow forgot to set the current element Ü");
             }
 
+            contentElement.IsEnabled &= !_vm.IsReadOnlyMode;
+
+
             Grid.SetRow(contentElement, row);
             Grid.SetColumn(contentElement, 1);
 
@@ -475,18 +478,29 @@ namespace YonderSharp.WPF.DataManagement
             _vm.UpdateList();
         }
 
-        public void SetSource(IDataGridSource source)
+        public void SetSource(DataGridVM vm)
         {
-            _vm = new DataGridVM(source, ScrollToChangedEntry);
+            _vm = vm ?? throw new ArgumentNullException(nameof(vm));
             DataContext = _vm;
+
             GenerateFields(ContentGrid, _vm.DataSource.GetTypeOfObjects(), _vm.GetFields(), "SelectedItem");
 
             //verify that the ID is avaiable
-            var id = source.GetIDPropertyInfo();
+            var id = vm.DataSource.GetIDPropertyInfo();
             if (id == null)
             {
                 throw new Exception("ID not identified!");
             }
+        }
+
+        public void SetSource(IDataGridSource source, string saveButtonLabel = "")
+        {
+            var vm = new DataGridVM(source, ScrollToChangedEntry);
+            if (!string.IsNullOrEmpty(saveButtonLabel)) {
+                vm.SaveButtonLabel = saveButtonLabel;
+            }
+
+            SetSource(vm);
         }
 
         private void ScrollToChangedEntry()

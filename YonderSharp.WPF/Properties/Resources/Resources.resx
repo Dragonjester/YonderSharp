@@ -120,6 +120,18 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="DataGridSaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="DetailListBoxContextMenuAdd" xml:space="preserve">
+    <value>Add new item</value>
+  </data>
+  <data name="DetailListBoxContextMenuEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="DetailListBoxContextMenuRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
@@ -131,6 +143,9 @@
   </data>
   <data name="SavedDialogTitle" xml:space="preserve">
     <value>YonderSharp DataGrid</value>
+  </data>
+  <data name="SelectionDialogDataGridSelectButton" xml:space="preserve">
+    <value>Select</value>
   </data>
   <data name="StringListBoxContextMenuAdd" xml:space="preserve">
     <value>Add new item</value>

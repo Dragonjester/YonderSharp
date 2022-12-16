@@ -32,5 +32,17 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         [DataMember]
         public bool GetAddableItemsReturnAll { get; set; }
+
+        /// <summary>
+        /// Show the save dialog on successfull save?
+        /// </summary>
+        [DataMember]
+        public bool ShowSaveDialog { get; set; }
+
+        /// <summary>
+        /// Disables all controlls
+        /// </summary>
+        [DataMember]
+        public bool IsReadOnlyMode { get; set; }
     }
 }

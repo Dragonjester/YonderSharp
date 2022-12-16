@@ -15,7 +15,7 @@ namespace YonderSharp.WPF.Example.DataManagement
 
 
         private DataGridSourceConfiguration _config;
-        protected override DataGridSourceConfiguration GetConfiguration()
+        public override DataGridSourceConfiguration GetConfiguration()
         {
             if (_config == null)
             {

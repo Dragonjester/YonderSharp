@@ -8,6 +8,7 @@ using System.Windows;
 using YonderSharp.Attributes;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
+using YonderSharp.WPF.Properties.Resources;
 
 namespace YonderSharp.WPF.DataManagement
 {
@@ -129,6 +130,7 @@ namespace YonderSharp.WPF.DataManagement
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedItem));
                 _scrollContentIntoNewPositions?.Invoke();
+                DataSource.SelectedItem = SelectedItem;
             }
         }
 
@@ -188,6 +190,22 @@ namespace YonderSharp.WPF.DataManagement
             }
         }
 
+        /// <summary>
+        /// Label that is used on the save button
+        /// </summary>
+        private string _saveButtonLabel = Resources.DataGridSaveButton;
+        public string SaveButtonLabel
+        {
+            get => _saveButtonLabel;
+            set
+            {
+                _saveButtonLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsReadOnlyMode => DataSource.GetConfiguration().IsReadOnlyMode;
+
         private void Save()
         {
             DataSource.Save();
@@ -203,7 +221,10 @@ namespace YonderSharp.WPF.DataManagement
             MessageBoxButton button = MessageBoxButton.OK;
             MessageBoxImage icon = MessageBoxImage.Information;
 
-            MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (DataSource.GetConfiguration().ShowSaveDialog)
+            {
+                MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            }
 
         }
 

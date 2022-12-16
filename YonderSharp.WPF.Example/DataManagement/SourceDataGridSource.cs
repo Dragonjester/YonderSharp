@@ -29,7 +29,7 @@ namespace YonderSharp.WPF.DataManagement.Example
         }
 
         private DataGridSourceConfiguration _config;
-        protected override DataGridSourceConfiguration GetConfiguration()
+        public override DataGridSourceConfiguration GetConfiguration()
         {
             if (_config == null)
             {
@@ -39,6 +39,7 @@ namespace YonderSharp.WPF.DataManagement.Example
                 _config.IsAllowedToRemove = false;
                 _config.HasSearch = false;
                 _config.GetAddableItemsReturnAll = true;
+                _config.IsReadOnlyMode = true;
             }
 
             return _config;

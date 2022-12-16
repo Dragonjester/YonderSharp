@@ -19,7 +19,6 @@
         <ListBox.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="{x:Static resx:Resources.StringListBoxContextMenuAdd}" Visibility="{Binding ShowAdd}" Command="{Binding Commands.AddEntry}"/>
-                <MenuItem Header="{x:Static resx:Resources.StringListBoxContextMenuEdit}" Visibility="{Binding ShowEdit}" Command="{Binding Commands.EditEntry}"/>
                 <MenuItem Header="{x:Static resx:Resources.StringListBoxContextMenuRemove}" Visibility="{Binding ShowRemove}" Command="{Binding Commands.RemoveEntry}" />
             </ContextMenu>
         </ListBox.ContextMenu>

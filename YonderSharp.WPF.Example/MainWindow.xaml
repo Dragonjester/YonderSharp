@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:data="clr-namespace:YonderSharp.WPF.DataManagement;assembly=YonderSharp.WPF"
-        xmlns:local="clr-namespace:YonderSharp.WPF.Example" xmlns:views="clr-namespace:YonderSharp.WPF.Views;assembly=YonderSharp.WPF"
+        xmlns:local="clr-namespace:YonderSharp.WPF.Example" xmlns:views="clr-namespace:YonderSharp.WPF.Views;assembly=YonderSharp.WPF" xmlns:detaillist="clr-namespace:YonderSharp.WPF.Views.DetailList;assembly=YonderSharp.WPF"
         mc:Ignorable="d"
         Title="YonderSharp Examples" Height="1000" Width="1500">
     <DockPanel>
@@ -20,6 +20,9 @@
                 <TabControl>
                     <TabItem Header="StringListBox">
                         <views:StringListBox/>
+                    </TabItem>
+                    <TabItem Header="DetailListBox">
+                        <detaillist:DetailListBox Name="ADetailListBox"/>
                     </TabItem>
                 </TabControl>
             </TabItem>
