@@ -8,11 +8,19 @@ namespace YonderSharp.WPF.Views.DetailList.SelectionDialog
     /// </summary>
     public partial class SelectionDialogWindow : Window
     {
-        public SelectionDialogWindow(IList<object> knownItems)
+        private SelectionDialogDataGridSource source;
+        public SelectionDialogWindow(IList<object> knownItems, object selectedItem = null)
         {
             InitializeComponent();
-            
-            SelectionGrid.SetSource(new SelectionDialogDataGridSource(knownItems, SelectItemAction), Properties.Resources.Resources.SelectionDialogDataGridSelectButton );
+
+            source = new SelectionDialogDataGridSource(knownItems, SelectItemAction);
+            SelectionGrid.SetSource(source, Properties.Resources.Resources.SelectionDialogDataGridSelectButton);
+
+            if(selectedItem != null)
+            {
+                source.GetConfiguration().ShowSaveButton = false;
+                SelectionGrid.SelectItem(selectedItem);
+            }
         }
 
         private void SelectItemAction(object selectedItem)
@@ -22,7 +30,5 @@ namespace YonderSharp.WPF.Views.DetailList.SelectionDialog
         }
 
         public object SelectedItem { get; private set; }
-
-    
     }
 }

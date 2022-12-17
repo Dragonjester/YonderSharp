@@ -117,8 +117,13 @@ namespace YonderSharp.WPF.Views.DetailList
             }
 
             var selectedItem = _chosenItems[SelectedIndex];
-            Debugger.Break();
-            //TODO: Show Details....
+            if(selectedItem == null)
+            {
+                return;
+            }
+
+            SelectionDialogWindow dialog = new SelectionDialogWindow(_knownItems, selectedItem);
+            var dialogResult = dialog.ShowDialog();
         }
 
         #endregion selection

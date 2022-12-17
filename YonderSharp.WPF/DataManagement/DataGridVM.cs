@@ -18,18 +18,16 @@ namespace YonderSharp.WPF.DataManagement
 
         private Action _scrollContentIntoNewPositions;
 
-        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection, bool canSave = true)
+        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection)
         {
             DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
-
+                      
             _commands.AddCommand("AddEntryFromList", x => AddEntryFromList());
             _commands.AddCommand("AddNew", x => AddNewEntry());
             _commands.AddCommand("RemoveEntry", x => RemoveEntry());
             _commands.AddCommand("Save", x => Save());
 
             _scrollContentIntoNewPositions = scrollContentToNewSelection;
-
-            _canSave = canSave;
 
             UpdateList();
 
@@ -118,6 +116,27 @@ namespace YonderSharp.WPF.DataManagement
 
                 return null;
             }
+            set
+            {
+                if(value == null)
+                {
+                    SelectedIndex = -1;
+                    return;
+                }
+
+                var items = DataSource.GetShownItems();
+                if (items.Contains(value))
+                {
+                    for(int i = 0; i < items.Length; i++)
+                    {
+                        if (items[i] == value)
+                        {
+                            SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private int _selectedIndex;
@@ -165,10 +184,9 @@ namespace YonderSharp.WPF.DataManagement
             get { return DataSource.IsAllowedToAddFromList() && DataSource.IsAllowedToAddNew() ? Visibility.Visible : Visibility.Collapsed; }
         }
 
-        private bool _canSave = true;
         public Visibility CanSave
         {
-            get { return _canSave ? Visibility.Visible : Visibility.Collapsed; }
+            get { return DataSource.GetConfiguration().ShowSaveButton ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         public Visibility CanSearch

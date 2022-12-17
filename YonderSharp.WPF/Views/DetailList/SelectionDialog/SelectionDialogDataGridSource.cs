@@ -45,6 +45,7 @@ namespace YonderSharp.WPF.Views.DetailList.SelectionDialog
                 _config.IsPrimaryKeyDisabled = true;
                 _config.ShowSaveDialog = false;
                 _config.IsReadOnlyMode = true;
+                _config.ShowSaveButton = true;
             }
 
             return _config;

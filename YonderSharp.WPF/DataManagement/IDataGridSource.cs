@@ -258,6 +258,7 @@ namespace YonderSharp.WPF.DataManagement
                 _config.IsPrimaryKeyDisabled = true;
                 _config.ShowSaveDialog = true;
                 _config.IsReadOnlyMode = false;
+                _config.ShowSaveButton = true;
             }
 
             return _config;
@@ -294,6 +295,7 @@ namespace YonderSharp.WPF.DataManagement
         {
             return GetConfiguration().IsAllowedToRemove;
         }
+
 
         /// <summary>
         /// The item currently selected in the DataGrid-UI

@@ -339,7 +339,7 @@ namespace YonderSharp.WPF.DataManagement
 
                 cBox.ItemsSource = DataGridSourceManager.GetSource(currentPropertyFkAttribute.TargetClass).GetObservable();
 
-              
+
 
                 #region binding
                 PropertyInfo fkTitleProperty = currentPropertyFkAttribute.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
@@ -496,11 +496,17 @@ namespace YonderSharp.WPF.DataManagement
         public void SetSource(IDataGridSource source, string saveButtonLabel = "")
         {
             var vm = new DataGridVM(source, ScrollToChangedEntry);
-            if (!string.IsNullOrEmpty(saveButtonLabel)) {
+            if (!string.IsNullOrEmpty(saveButtonLabel))
+            {
                 vm.SaveButtonLabel = saveButtonLabel;
             }
 
             SetSource(vm);
+        }
+
+        public void SelectItem(object item)
+        {
+            _vm.SelectedItem = item;
         }
 
         private void ScrollToChangedEntry()

@@ -44,5 +44,11 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         [DataMember]
         public bool IsReadOnlyMode { get; set; }
+
+        /// <summary>
+        /// Controlls wether the Save button is shown
+        /// </summary>
+        [DataMember]
+        public bool ShowSaveButton { get; set; }
     }
 }
