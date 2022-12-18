@@ -114,7 +114,7 @@ namespace YonderSharp.WPF.DataManagement
             BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
             return GetTypeOfObjects().GetProperties(instancePublic)
                          .Where(x => Attribute.IsDefined(x, typeof(DataMemberAttribute))
-                                 && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).First(x => x.Name == GetNameOfIdProperty());
+                                 && !Attribute.IsDefined(x, typeof(NonSerializedAttribute))).FirstOrDefault(x => x.Name == GetNameOfIdProperty());
         }
 
 
@@ -217,7 +217,10 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         public void AddItem(object item)
         {
-            _items.Add(item);
+            if (!_items.Contains(item))
+            {
+                _items.Add(item);
+            }
         }
 
         /// <summary>
@@ -259,6 +262,7 @@ namespace YonderSharp.WPF.DataManagement
                 _config.ShowSaveDialog = true;
                 _config.IsReadOnlyMode = false;
                 _config.ShowSaveButton = true;
+                _config.IsPrimaryKeyRequired = true;
             }
 
             return _config;

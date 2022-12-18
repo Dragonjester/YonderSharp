@@ -111,7 +111,7 @@ namespace YonderSharp.WPF.Test
         {
 
             private DataGridSourceConfiguration _config;
-            protected override DataGridSourceConfiguration GetConfiguration()
+            public override DataGridSourceConfiguration GetConfiguration()
             {
                 if (_config == null)
                 {

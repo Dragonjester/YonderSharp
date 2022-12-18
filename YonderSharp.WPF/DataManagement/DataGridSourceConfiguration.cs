@@ -50,5 +50,11 @@ namespace YonderSharp.WPF.DataManagement
         /// </summary>
         [DataMember]
         public bool ShowSaveButton { get; set; }
+
+        /// <summary>
+        /// Check if the [PrimaryKey] attribute is set on a property of the data class?
+        /// </summary>
+        [DataMember]
+        public bool IsPrimaryKeyRequired { get; set; }
     }
 }
