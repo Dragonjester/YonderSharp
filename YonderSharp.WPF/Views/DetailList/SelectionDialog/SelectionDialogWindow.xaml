@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YonderSharp.WPF.Views.DetailList.SelectionDialog" xmlns:data="clr-namespace:YonderSharp.WPF.DataManagement"
         mc:Ignorable="d"
-        Title="SelectionDialogWindow" Height="450" Width="800">
+        Title="SelectionDialogWindow" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

@@ -314,6 +314,7 @@ namespace YonderSharp.WPF.DataManagement
                     TextBox box = new TextBox();
 
                     box.AcceptsReturn = true;
+                    box.TextWrapping= TextWrapping.Wrap;
 
                     box.VerticalContentAlignment = VerticalAlignment.Center;
                     Binding bind = new Binding(bindingPath);
