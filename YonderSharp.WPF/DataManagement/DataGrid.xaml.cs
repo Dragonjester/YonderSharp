@@ -35,6 +35,12 @@ namespace YonderSharp.WPF.DataManagement
 
         private void GenerateFields(Grid grid, Type itemType, Tuple<string, Type>[] items, string baseBindingPath)
         {
+
+            if(itemType == typeof(Type))
+            {
+                return;
+            }
+
             //Maybe TODO: V2.0: Config objects that tell how to generate a line for even more flexibility....
             grid.RowDefinitions.Clear();
             grid.Children.Clear();
@@ -96,6 +102,11 @@ namespace YonderSharp.WPF.DataManagement
 
         private void GenerateComplexList(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string itemBindingPath)
         {
+            if(itemType == typeof(Type))
+            {
+                return;
+            }
+
             var margin = new Thickness(2, 2, 2, 2);
             parentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
@@ -115,22 +126,16 @@ namespace YonderSharp.WPF.DataManagement
             Grid.SetRow(expander, parentRow);
             Grid.SetColumn(expander, 1);
             parentGrid.Children.Add(expander);
-
-            //create SubGrid
-            //TODO: map to the itemList insetad of dummy
-            //List<object> dummyItems = new List<object>();
-
-
-            //SubItemDataGridSource subItemGridSource = new SubItemDataGridSource(dummyItems);
-            //DataGrid subGrid = new DataGrid(subItemGridSource);
-            //subGrid.Margin = margin;
-            //expander.Content = subGrid;
-
         }
 
 
         private void GenerateComplexRow(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string bindingPath)
         {
+            if(itemType == typeof(Type) || tuple.Item2 == typeof(Type))
+            {
+                return;
+            }
+
             var margin = new Thickness(2, 2, 2, 2);
             parentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
@@ -187,6 +192,11 @@ namespace YonderSharp.WPF.DataManagement
         /// <param name="row">0 based index of row to create</param>
         private void GenerateRow(Grid grid, Type itemType, Tuple<string, Type> item, string bindingPath)
         {
+            if(itemType == typeof(Type))
+            {
+                return;
+            }
+
             var margin = new Thickness(2, 2, 2, 2);
             grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
@@ -488,7 +498,7 @@ namespace YonderSharp.WPF.DataManagement
 
             //verify that the ID is avaiable
             var id = vm.DataSource.GetIDPropertyInfo();
-            if (id == null)
+            if (id == null && _vm.DataSource.GetConfiguration().IsPrimaryKeyRequired)
             {
                 throw new Exception("ID not identified!");
             }

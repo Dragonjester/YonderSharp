@@ -86,7 +86,7 @@ namespace YonderSharp.WPF.Views.DetailList
             set
             {
                 _selectedIndex = value;
-                OnPropertyChanged();
+                OnSelectionChanged();
             }
         }
 
@@ -168,9 +168,10 @@ namespace YonderSharp.WPF.Views.DetailList
         {
             SelectionDialogWindow dialog = new SelectionDialogWindow(_knownItems);
             var dialogResult = dialog.ShowDialog();
-            if(dialogResult.HasValue && dialogResult.Value)
+            if(dialogResult.HasValue && dialogResult.Value && !_chosenItems.Contains(dialog.SelectedItem))
             {
                 _chosenItems.Add(dialog.SelectedItem);
+                SelectedIndex = _chosenItems.Count - 1;
             }
         }
         #endregion Add Item
