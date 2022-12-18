@@ -222,6 +222,14 @@ namespace YonderSharp.FileSources
         /// <inheritdoc/>
         public T GetByPrimaryKey(object obj)
         {
+
+            Guid castedToGuid = (Guid)obj;
+            if(castedToGuid != null)
+            {
+                return GetByPrimaryKey(castedToGuid);
+            }
+
+            Load();
             if(_primaryKeyPropertyInfo == null)
             {
                 _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
@@ -237,6 +245,7 @@ namespace YonderSharp.FileSources
 
         public T GetByPrimaryKey(Guid id)
         {
+            Load();
             if (_primaryKeyPropertyInfo == null)
             {
                 _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
