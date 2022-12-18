@@ -24,6 +24,11 @@ namespace YonderSharp.WPF.Views.DetailList
 
         private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if(_vm == null && DataContext != null)
+            {
+                _vm = (DetailListBoxVM)DataContext;
+            }
+
             _vm.ShowSelectedItemDetails();
         }
     }
