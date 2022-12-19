@@ -6,8 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace YonderSharp
 {
-
-
     /// <summary>
     /// EO: 2016-04-14
     /// Generator of all permutations of an array of anything.

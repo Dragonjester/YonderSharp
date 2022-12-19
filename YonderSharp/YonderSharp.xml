@@ -87,6 +87,8 @@
             Deletes all Entries
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "T:YonderSharp.DataTypes.TupleStringInt" -->
+        <!-- Badly formed XML comment ignored for member "T:YonderSharp.DataTypes.TupleStringString" -->
         <member name="M:YonderSharp.Downloads.IUrlDownloader.LoadFromUrl(System.String)">
             <summary>
             Download the string content of the url
