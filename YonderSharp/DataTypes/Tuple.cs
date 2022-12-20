@@ -2,16 +2,17 @@
 
 namespace YonderSharp.DataTypes
 {
+    
     /// <summary>
-    /// Tuple<string, int> but can be used within WPF UI
+    /// System.Tuple is ReadOnly...
     /// </summary>
     [DataContract]
-    public class TupleStringInt
+    public class Tuple<X, Y>
     {
         [DataMember]
-        public string Item1 { get; set; } = string.Empty;
+        public X Item1 { get; set; }
 
         [DataMember]
-        public int Item2 { get; set; }
+        public Y Item2 { get; set; }
     }
 }

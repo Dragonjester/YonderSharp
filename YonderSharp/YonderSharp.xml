@@ -87,8 +87,11 @@
             Deletes all Entries
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:YonderSharp.DataTypes.TupleStringInt" -->
-        <!-- Badly formed XML comment ignored for member "T:YonderSharp.DataTypes.TupleStringString" -->
+        <member name="T:YonderSharp.DataTypes.Tuple`2">
+            <summary>
+            System.Tuple is ReadOnly...
+            </summary>
+        </member>
         <member name="M:YonderSharp.Downloads.IUrlDownloader.LoadFromUrl(System.String)">
             <summary>
             Download the string content of the url
@@ -174,6 +177,16 @@
         <member name="M:YonderSharp.FileSources.IFileSource`1.GetByPrimaryKey(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.ElementAt(System.Int32)">
+            <inheritdoc/>
+            <exception cref="T:System.ArgumentOutOfRangeException"/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetIndexOf(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.FileSources.IFileSource`1.GetIndexOf(`0)">
+            <inheritdoc/>
+        </member>
         <member name="T:YonderSharp.FileSources.ItemSource`1">
             <summary>
             A source for items. 
@@ -214,9 +227,19 @@
             Get All known Elements
             </summary>
         </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.ElementAt(System.Int32)">
+            <summary>
+            returns the nth element of the list (0 based)
+            </summary>
+        </member>
         <member name="M:YonderSharp.FileSources.ItemSource`1.GetByPrimaryKey(System.Object)">
             <summary>
             Returns the element identified by the PK
+            </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSource`1.GetIndexOf(`0)">
+            <summary>
+            Returns the index of the given object in the list
             </summary>
         </member>
         <member name="P:YonderSharp.FileSources.ItemSourceContainer.Cache">
@@ -245,6 +268,11 @@
             <summary>
              Empties the list
              </summary>
+        </member>
+        <member name="M:YonderSharp.FileSources.ItemSourceForLists.GetIndexOf(System.Object)">
+            <summary>
+            Determines the index of the given object
+            </summary>
         </member>
         <member name="M:YonderSharp.Geocaching.EhemaligerLandkreisWaldeck.CoordReplace(System.String,System.String,System.Int32)">
             <summary>

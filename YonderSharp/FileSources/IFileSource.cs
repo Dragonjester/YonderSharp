@@ -258,5 +258,24 @@ namespace YonderSharp.FileSources
 
             return _list.First(x => ((Guid)_primaryKeyPropertyInfo.GetValue(x)) == id);
         }
+
+        /// <inheritdoc/>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        public T ElementAt(int index)
+        {
+            return _list.ElementAt(index);
+        }
+
+        /// <inheritdoc/>
+        public int GetIndexOf(object obj)
+        {
+            return GetIndexOf((T)obj);
+        }
+
+        /// <inheritdoc/>
+        public int GetIndexOf(T obj)
+        {
+            return _list.IndexOf(obj);
+        }
     }
 }

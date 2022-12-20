@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
@@ -8,6 +9,7 @@ using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.DataManagement.Example;
 using YonderSharp.WPF.Helper.CustomDialogs;
 using YonderSharp.WPF.Views.DetailList;
+using YonderSharp.WPF.Views.ItemSourceComboBox;
 
 namespace YonderSharp.WPF.Example
 {
@@ -48,8 +50,24 @@ namespace YonderSharp.WPF.Example
 
 
             #endregion DetailListBox
-             _configManager = new ConfigManager();
+
+            ItemsourceCBox.DataContext = new ItemsourceComboBoxVM(new ItemSourceForItemsourceCombobox(), ItemsourceCBoxChangeEvent);
+
+            _configManager = new ConfigManager();
             _configManager.Load();
+        }
+
+        private void ItemsourceCBoxChangeEvent(object obj)
+        {
+            if(obj == null)
+            {
+                return;
+            }
+
+            if(obj is ExampleDataItem item)
+            {
+                MessageBox.Show($"Selected item: {item.SomeString}");
+            }
         }
 
         private void OpenConfiguration(object sender, RoutedEventArgs e)

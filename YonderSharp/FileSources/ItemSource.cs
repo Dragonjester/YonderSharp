@@ -44,9 +44,18 @@ namespace YonderSharp.FileSources
         public T[] GetAll();
 
         /// <summary>
+        /// returns the nth element of the list (0 based)
+        /// </summary>
+        public T ElementAt(int index);
+
+        /// <summary>
         /// Returns the element identified by the PK
         /// </summary>
         public T GetByPrimaryKey(object obj);
 
+        /// <summary>
+        /// Returns the index of the given object in the list
+        /// </summary>
+        public int GetIndexOf(T obj);
     }
 }

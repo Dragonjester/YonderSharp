@@ -29,5 +29,10 @@ namespace YonderSharp.FileSources
         /// Empties the list
         /// </summary>
         public void Clear();
+
+        /// <summary>
+        /// Determines the index of the given object
+        /// </summary>
+        public int GetIndexOf(object obj);
     }
 }

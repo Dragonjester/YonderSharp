@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:data="clr-namespace:YonderSharp.WPF.DataManagement;assembly=YonderSharp.WPF"
-        xmlns:local="clr-namespace:YonderSharp.WPF.Example" xmlns:views="clr-namespace:YonderSharp.WPF.Views;assembly=YonderSharp.WPF" xmlns:detaillist="clr-namespace:YonderSharp.WPF.Views.DetailList;assembly=YonderSharp.WPF"
+        xmlns:local="clr-namespace:YonderSharp.WPF.Example" xmlns:views="clr-namespace:YonderSharp.WPF.Views;assembly=YonderSharp.WPF" xmlns:detaillist="clr-namespace:YonderSharp.WPF.Views.DetailList;assembly=YonderSharp.WPF" xmlns:itemsourcecombobox="clr-namespace:YonderSharp.WPF.Views.ItemSourceComboBox;assembly=YonderSharp.WPF"
         mc:Ignorable="d"
         Title="YonderSharp Examples" Height="1000" Width="1500">
     <DockPanel>
@@ -23,6 +23,20 @@
                     </TabItem>
                     <TabItem Header="DetailListBox">
                         <detaillist:DetailListBox Name="ADetailListBox"/>
+                    </TabItem>
+                    <TabItem Header="ItemsourceComboBox">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Value:" Grid.Row="0" Grid.Column="0"/>
+                            <itemsourcecombobox:ItemSourceComboBox Grid.Row="0" Grid.Column="1" Name="ItemsourceCBox" MinWidth="150"/>
+
+                        </Grid>
                     </TabItem>
                 </TabControl>
             </TabItem>
