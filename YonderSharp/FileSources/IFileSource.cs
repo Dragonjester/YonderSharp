@@ -224,13 +224,13 @@ namespace YonderSharp.FileSources
         {
 
             Guid castedToGuid = (Guid)obj;
-            if(castedToGuid != null)
+            if (castedToGuid != null)
             {
                 return GetByPrimaryKey(castedToGuid);
             }
 
             Load();
-            if(_primaryKeyPropertyInfo == null)
+            if (_primaryKeyPropertyInfo == null)
             {
                 _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
             }
@@ -256,7 +256,7 @@ namespace YonderSharp.FileSources
                 Debugger.Break();
             }
 
-            return _list.First(x => ((Guid)_primaryKeyPropertyInfo.GetValue(x)) == id);
+            return _list.FirstOrDefault(x => ((Guid)_primaryKeyPropertyInfo.GetValue(x)) == id);
         }
 
         /// <inheritdoc/>
@@ -269,7 +269,14 @@ namespace YonderSharp.FileSources
         /// <inheritdoc/>
         public int GetIndexOf(object obj)
         {
-            return GetIndexOf((T)obj);
+            try
+            {
+                return GetIndexOf((T)obj);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
         }
 
         /// <inheritdoc/>

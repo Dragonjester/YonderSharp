@@ -51,7 +51,8 @@ namespace YonderSharp.WPF.Example
 
             #endregion DetailListBox
 
-            ItemsourceCBox.DataContext = new ItemsourceComboBoxVM(new ItemSourceForItemsourceCombobox(), ItemsourceCBoxChangeEvent);
+            var icbSource = new ItemSourceForItemsourceCombobox();
+            ItemsourceCBox.DataContext = new ItemsourceComboBoxVM(icbSource, ItemsourceCBoxChangeEvent, icbSource.GetAll()[5]);
 
             _configManager = new ConfigManager();
             _configManager.Load();
