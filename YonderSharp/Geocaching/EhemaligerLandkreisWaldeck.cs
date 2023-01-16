@@ -31,7 +31,7 @@ namespace YonderSharp.Geocaching
             if (text == textStart && (text.Contains("XX")))
             {
                 //N LI° XXV. CCCXIV O IX° III.DCLVIII
-                var fields = text.Split(new[] { "N", " ", "°", ".", "O" }, StringSplitOptions.RemoveEmptyEntries).Select(x => GetRomanNumber(x)).ToArray();
+                var fields = text.Split(new[] { "N", " ", "°", ".", "O", "E" }, StringSplitOptions.RemoveEmptyEntries).Select(x => GetRomanNumber(x)).ToArray();
                 if (fields.All(x => x > 0))
                 {
                     text = $"N {fields[0]}° {fields[1]}.{fields[2]} E {fields[3]}° {fields[4]}.{fields[5]}";
@@ -96,6 +96,7 @@ namespace YonderSharp.Geocaching
                 entries.Add(new Tuple<string, string>("abcdg", "3"));
                 entries.Add(new Tuple<string, string>("bcfg", "4"));
                 entries.Add(new Tuple<string, string>("acdfg", "5"));
+                entries.Add(new Tuple<string, string>("afedcg", "6"));
                 entries.Add(new Tuple<string, string>("fedcg", "6"));
                 entries.Add(new Tuple<string, string>("abc", "7"));
                 entries.Add(new Tuple<string, string>("abcdefg", "8"));
@@ -121,11 +122,27 @@ namespace YonderSharp.Geocaching
                     text = CoordReplace(text, tuple.Item1, tuple.Item2);
                 }
 
-                text = text.Replace(" ", "");
+
+                if (text != textStart)
+                {
+                    text = text.Replace(" ", "");
+                }
             }
             #endregion 7 segment puzzles
 
+            #region missing number
 
+            if (text == textStart)
+            {
+                var splitted = text.Split(new[] { ".", "\r", "\n", " ", "°" }, StringSplitOptions.RemoveEmptyEntries);
+                if (splitted.Length == 16)
+                {
+                    text = string.Join("", splitted.Select(x => FindMissingNumber(x)));
+                    text = text.Substring(0, 3) + "° " + text.Substring(3, 2) + "." + text.Substring(5, 3) + " " + text.Substring(8, 3) + "° " + text.Substring(11, 2) + "." + text.Substring(13);
+                }
+            }
+
+            #endregion missing number
 
             text = text.Replace("O", "E");
 
@@ -142,7 +159,41 @@ namespace YonderSharp.Geocaching
             return text;
         }
 
-      
+        Dictionary<string, string> FindMissingNumberCache = new Dictionary<string, string>();
+        private string FindMissingNumber(string x)
+        {
+            if (FindMissingNumberCache.TryGetValue(x, out string result))
+            {
+                return result;
+            }
+
+            string[] whatever = { "N", "E", "O", "", string.Empty };
+            if(whatever.Any(wv => string.Equals(wv, x, StringComparison.OrdinalIgnoreCase)))
+            {
+                FindMissingNumberCache.Add(x, x);
+                return x;
+            }
+
+            var splitted = x.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            if (splitted.Length != 9)
+            {
+                //wrong format
+                Debugger.Break();
+                return x;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (!splitted.Any(y => i.ToString() == y))
+                {
+                    FindMissingNumberCache.Add(x, i.ToString());
+                    return i.ToString();
+                }
+            }
+
+            return x;
+        }
+
         private string CoordReplace(string text, string a, string b)
         {
             for (int i = 0; i < 3; i++)
