@@ -21,7 +21,7 @@ namespace YonderSharp.WPF.Test.DataTypes
 
         [DataMember]
         [Title]
-        public string SomeString { get; set; }
+        public string SomeString { get; set; } = string.Empty;
 
 
         [DataMember]
