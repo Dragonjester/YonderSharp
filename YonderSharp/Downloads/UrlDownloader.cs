@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 
@@ -9,13 +10,29 @@ namespace YonderSharp.Downloads
     public class UrlDownloader : IUrlDownloader
     {
         string path { get; set; }
+        bool doZip { get; set; }
 
-        public UrlDownloader(string pathToCacheIn)
+        public UrlDownloader(string pathToCacheIn, long maxAgeOfCacheInMs = 30l * 24l * 60l * 60l * 1000l)
         {
             path = pathToCacheIn;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
+            }
+            else
+            {
+                foreach (var file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
+                {
+                    var fileInfo = new FileInfo(file);
+                    if (fileInfo.Exists)
+                    {
+                        var age = DateTime.UtcNow - fileInfo.CreationTimeUtc;
+                        if (age.TotalMilliseconds > maxAgeOfCacheInMs)
+                        {
+                            fileInfo.Delete();
+                        }
+                    }
+                }
             }
         }
         /// <summary>
@@ -41,7 +58,7 @@ namespace YonderSharp.Downloads
             stopWatch.Start();
             string result;
 
-            var hash = GetUrlHash(url);
+            var hash = GetFileName(url);
 
             var fullPath = path + hash;
             if (!forceDownload)
@@ -50,9 +67,16 @@ namespace YonderSharp.Downloads
                 {
                     try
                     {
-                        return Zipper.Unzip(File.ReadAllBytes(fullPath));
+                        if (doZip)
+                        {
+                            return Zipper.Unzip(File.ReadAllBytes(fullPath));
+                        }
+                        else
+                        {
+                            return File.ReadAllText(fullPath);
+                        }
                     }
-                    catch
+                    catch(Exception e)
                     {
                         Debugger.Break();
                     }
@@ -72,7 +96,16 @@ namespace YonderSharp.Downloads
 
                 try
                 {
-                    File.WriteAllBytes(fullPath, Zipper.Zip(result));
+                    if (doZip)
+                    {
+                        File.WriteAllBytes(fullPath + ".zip", Zipper.Zip(result));
+
+                    }
+                    else
+                    {
+                        File.WriteAllText(fullPath, result);
+                    }
+
                 }
                 catch
                 {
@@ -85,15 +118,15 @@ namespace YonderSharp.Downloads
                 Thread.Sleep(25 + rnd.Next(1, 50));
                 return result;
             }
-            catch 
+            catch
             {
                 return "";
             }
         }
 
-        private string GetUrlHash(string url)
+        private string GetFileName(string url)
         {
-            return url.Replace("/", " ").Replace("_", " ").Replace("\\", " ").Replace(":", " ").Replace(".", " ").Replace("-", " ").Replace("  ", " ") + ".zip";
+            return url.Split("/", StringSplitOptions.RemoveEmptyEntries).Last();
         }
     }
 }

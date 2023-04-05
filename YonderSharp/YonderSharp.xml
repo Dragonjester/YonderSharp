@@ -286,6 +286,14 @@
             <param name="currentStep">Which step was just finish?</param>
             <param name="totalStepCount">Total steps to finish</param>
         </member>
+        <member name="M:YonderSharp.LevenshteinDistanceCalculator.CalculateLevenshteinDistance(System.String,System.String)">
+            <summary>
+            Calculates the Levenshtein distance between two strings--the number of changes that need to be made for the first string to become the second.
+            </summary>
+            <param name="first">The first string, used as a source.</param>
+            <param name="second">The second string, used as a target.</param>
+            <returns>The number of changes that need to be made to convert the first string to the second.</returns>
+        </member>
         <member name="T:YonderSharp.MicrosoftIdentityPlattform">
             <summary>
             Helper-class for the Microsoft identity Plattform
