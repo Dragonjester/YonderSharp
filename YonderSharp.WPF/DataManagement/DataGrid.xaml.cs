@@ -36,7 +36,7 @@ namespace YonderSharp.WPF.DataManagement
         private void GenerateFields(Grid grid, Type itemType, Tuple<string, Type>[] items, string baseBindingPath)
         {
 
-            if(itemType == typeof(Type))
+            if (itemType == typeof(Type))
             {
                 return;
             }
@@ -102,7 +102,7 @@ namespace YonderSharp.WPF.DataManagement
 
         private void GenerateComplexList(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string itemBindingPath)
         {
-            if(itemType == typeof(Type))
+            if (itemType == typeof(Type))
             {
                 return;
             }
@@ -131,7 +131,7 @@ namespace YonderSharp.WPF.DataManagement
 
         private void GenerateComplexRow(Grid parentGrid, Type itemType, Tuple<string, Type> tuple, string bindingPath)
         {
-            if(itemType == typeof(Type) || tuple.Item2 == typeof(Type))
+            if (itemType == typeof(Type) || tuple.Item2 == typeof(Type))
             {
                 return;
             }
@@ -192,7 +192,7 @@ namespace YonderSharp.WPF.DataManagement
         /// <param name="row">0 based index of row to create</param>
         private void GenerateRow(Grid grid, Type itemType, Tuple<string, Type> item, string bindingPath)
         {
-            if(itemType == typeof(Type))
+            if (itemType == typeof(Type))
             {
                 return;
             }
@@ -319,12 +319,75 @@ namespace YonderSharp.WPF.DataManagement
 
                     contentElement = box;
                 }
+                else if (IsList(currentPropertyInfo))
+                {
+                    ListView lView = new ListView();
+                    lView.Margin = margin;
+                    lView.Height = 150;
+
+
+                    #region binding
+
+                    Binding bind = new Binding(bindingPath);
+                    bind.Mode = BindingMode.TwoWay;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    bind.Source = _vm;
+
+                    lView.SetBinding(ListView.ItemsSourceProperty, bind);
+                    #endregion binding
+
+                    #region contextmenu
+                    ContextMenu contextMenu = new ContextMenu();
+
+                    MenuItem addNewItem = new MenuItem();
+                    addNewItem.Header = Properties.Resources.Resources.Add;
+                    addNewItem.Command = new RelayCommand(param =>
+                    {
+                        var inputBoxDialog = new InputBoxDialog("MasterData", "Wert:");
+                        inputBoxDialog.ShowDialog();
+                        if (!(inputBoxDialog.DialogResult.HasValue && inputBoxDialog.DialogResult.Value))
+                        {
+                            return;
+                        }
+
+                        dynamic entryList = _vm.SelectedItem.GetType().GetProperty(item.Item1).GetValue(_vm.SelectedItem, null);
+
+                        MethodInfo method = entryList.GetType().GetMethod("Add");
+                        object result = method.Invoke(entryList, new object[] { inputBoxDialog.Answer });
+
+                        RefreshItemList(lView, item);
+                    });
+
+                    MenuItem removeItem = new MenuItem();
+                    removeItem.Header = Properties.Resources.Resources.Remove;
+                    removeItem.Command = new RelayCommand(param =>
+                    {
+                        if (lView.SelectedIndex == -1)
+                        {
+                            return;
+                        }
+
+                        //dynamic is expected to be IList<?>
+                        dynamic entryList = currentPropertyInfo.GetValue(_vm.SelectedItem);
+                        MethodInfo method = entryList.GetType().GetMethod("Remove");
+                        method.Invoke(entryList, new object[] { lView.SelectedItem });
+
+                        RefreshItemList(lView, item);
+                    });
+
+                    contextMenu.Items.Add(addNewItem);
+                    contextMenu.Items.Add(removeItem);
+
+                    lView.ContextMenu = contextMenu;
+                    #endregion contextmenu
+                    contentElement = lView;
+                }
                 else
                 {
                     TextBox box = new TextBox();
 
                     box.AcceptsReturn = true;
-                    box.TextWrapping= TextWrapping.Wrap;
+                    box.TextWrapping = TextWrapping.Wrap;
 
                     box.VerticalContentAlignment = VerticalAlignment.Center;
                     Binding bind = new Binding(bindingPath);
@@ -479,9 +542,10 @@ namespace YonderSharp.WPF.DataManagement
             return type.Name.Contains("Hashset", StringComparison.OrdinalIgnoreCase) && type?.GenericTypeArguments?.Length == 1 && type.GenericTypeArguments[0].IsEnum;
         }
 
+        private Type[] listTypes = new[] { typeof(List<>), typeof(IList<>) };
         private bool IsList(PropertyInfo fkPropertyInfo)
         {
-            return fkPropertyInfo.PropertyType.IsGenericType && (fkPropertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(List<>));
+            return fkPropertyInfo.PropertyType.IsGenericType && listTypes.Any(x => listTypes.Contains(x));
         }
 
         private void RefreshList(object sender, RoutedEventArgs e)

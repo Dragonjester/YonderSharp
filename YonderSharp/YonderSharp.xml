@@ -286,7 +286,7 @@
             <param name="currentStep">Which step was just finish?</param>
             <param name="totalStepCount">Total steps to finish</param>
         </member>
-        <member name="M:YonderSharp.LevenshteinDistanceCalculator.CalculateLevenshteinDistance(System.String,System.String)">
+        <member name="M:YonderSharp.ILevenshteinDistanceCalculator.CalculateLevenshteinDistance(System.String,System.String)">
             <summary>
             Calculates the Levenshtein distance between two strings
             </summary>
@@ -294,13 +294,19 @@
             <param name="second">The second string</param>
             <returns>The number of changes that need to be made to convert the first string to the second.</returns>
         </member>
-        <member name="M:YonderSharp.LevenshteinDistanceCalculator.CalculateLevenshteinDistanceIgnoringCase(System.String,System.String)">
+        <member name="M:YonderSharp.ILevenshteinDistanceCalculator.CalculateLevenshteinDistanceIgnoringCase(System.String,System.String)">
             <summary>
             Calculates the Levenshtein distance between two strings, without being case sensitive
             </summary>
             <param name="first">The first string</param>
             <param name="second">The second string</param>
             <returns>The number of changes that need to be made to convert the first string to the second.</returns>
+        </member>
+        <member name="M:YonderSharp.LevenshteinDistanceCalculator.CalculateLevenshteinDistance(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YonderSharp.LevenshteinDistanceCalculator.CalculateLevenshteinDistanceIgnoringCase(System.String,System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:YonderSharp.MicrosoftIdentityPlattform">
             <summary>

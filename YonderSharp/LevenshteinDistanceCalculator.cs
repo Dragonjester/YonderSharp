@@ -3,7 +3,8 @@ using YonderSharp.Extensions;
 
 namespace YonderSharp
 {
-    public class LevenshteinDistanceCalculator
+
+    public interface ILevenshteinDistanceCalculator
     {
         /// <summary>
         /// Calculates the Levenshtein distance between two strings
@@ -11,6 +12,20 @@ namespace YonderSharp
         /// <param name="first">The first string</param>
         /// <param name="second">The second string</param>
         /// <returns>The number of changes that need to be made to convert the first string to the second.</returns>
+        public int CalculateLevenshteinDistance(string first, string second);
+
+        /// <summary>
+        /// Calculates the Levenshtein distance between two strings, without being case sensitive
+        /// </summary>
+        /// <param name="first">The first string</param>
+        /// <param name="second">The second string</param>
+        /// <returns>The number of changes that need to be made to convert the first string to the second.</returns>
+        public int CalculateLevenshteinDistanceIgnoringCase(string first, string second);
+    }
+
+    public class LevenshteinDistanceCalculator : ILevenshteinDistanceCalculator
+    {
+        /// <inheritdoc/>
         public int CalculateLevenshteinDistance(string first, string second)
         {
             if (!first.HasContent() && !second.HasContent())
@@ -55,12 +70,7 @@ namespace YonderSharp
 
 
 
-        /// <summary>
-        /// Calculates the Levenshtein distance between two strings, without being case sensitive
-        /// </summary>
-        /// <param name="first">The first string</param>
-        /// <param name="second">The second string</param>
-        /// <returns>The number of changes that need to be made to convert the first string to the second.</returns>
+        /// <inheritdoc/>
         public int CalculateLevenshteinDistanceIgnoringCase(string first, string second)
         {
             if (!first.HasContent() && !second.HasContent())

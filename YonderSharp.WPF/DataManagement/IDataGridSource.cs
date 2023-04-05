@@ -68,6 +68,9 @@ namespace YonderSharp.WPF.DataManagement
             return _items.ToArray();
         }
 
+
+        private object[] shownItemsCache;
+        private string lastSearch;
         /// <summary>
         /// Items shown in the ListView, respecting the search (if avaiable)
         /// </summary>
@@ -76,7 +79,13 @@ namespace YonderSharp.WPF.DataManagement
         {
             if (HasSearch() && !string.IsNullOrEmpty(GetSearchText()))
             {
-                return GetAllItems().Where(x => string.IsNullOrEmpty(GetShownItemTitle(x)) || GetShownItemTitle(x).Contains(GetSearchText(), StringComparison.OrdinalIgnoreCase)).ToArray();
+                if(GetSearchText() != lastSearch)
+                {
+                    shownItemsCache = GetAllItems().Where(x => string.IsNullOrEmpty(GetShownItemTitle(x)) || GetShownItemTitle(x).Contains(GetSearchText(), StringComparison.OrdinalIgnoreCase)).ToArray();
+                    lastSearch = GetSearchText();
+                }
+
+                return shownItemsCache;
             }
             else
             {

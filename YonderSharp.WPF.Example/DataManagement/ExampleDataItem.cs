@@ -58,5 +58,8 @@ namespace YonderSharp.WPF.DataManagement.Example
 
         [DataMember]
         public IList<SourceDataItem> SomeSubItemList { get; set; } = new List<SourceDataItem>();
+
+        [DataMember]
+        public IList<string> SomeStringItems { get; set; } = new List<string>();
     }
 }
