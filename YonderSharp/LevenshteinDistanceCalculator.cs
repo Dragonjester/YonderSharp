@@ -26,31 +26,22 @@ namespace YonderSharp
             if (!second.HasContent())
             {
                 return first.Length;
-            }          
+            }
 
-            if(string.Equals(first, second, StringComparison.InvariantCulture))
+            if (string.Equals(first, second, StringComparison.InvariantCulture))
             {
                 return 0;
             }
 
             int n = first.Length;
             int m = second.Length;
-            var d = new int[n + 1, m + 1]; // matrix
-
-            for (int i = 0; i <= n; d[i, 0] = i++)
-            {
-            }
-
-            for (int j = 0; j <= m; d[0, j] = j++)
-            {
-            }
+            var d = new int[n + 1, m + 1];
 
             for (int i = 1; i <= n; i++)
             {
-
                 for (int j = 1; j <= m; j++)
                 {
-                    int cost = (second.Substring(j - 1, 1) == first.Substring(i - 1, 1) ? 0 : 1); // cost
+                    int cost = (second.Substring(j - 1, 1) == first.Substring(i - 1, 1) ? 0 : 1);
                     d[i, j] = Math.Min(
                         Math.Min(
                             d[i - 1, j] + 1,
