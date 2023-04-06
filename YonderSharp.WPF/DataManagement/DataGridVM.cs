@@ -234,8 +234,8 @@ namespace YonderSharp.WPF.DataManagement
                 DataGridSourceManager.GetSource(foreignType)?.Save();
             }
 
-            string messageBoxText = Properties.Resources.Resources.SavedDialogMessage;
-            string caption = Properties.Resources.Resources.SavedDialogTitle;
+            string messageBoxText = Resources.SavedDialogMessage;
+            string caption = Resources.SavedDialogTitle;
             MessageBoxButton button = MessageBoxButton.OK;
             MessageBoxImage icon = MessageBoxImage.Information;
 

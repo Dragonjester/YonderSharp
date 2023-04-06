@@ -576,6 +576,8 @@ namespace YonderSharp.WPF.DataManagement
                 vm.SaveButtonLabel = saveButtonLabel;
             }
 
+            DataGridSourceManager.RegisterDataSource(source);
+
             SetSource(vm);
         }
 
