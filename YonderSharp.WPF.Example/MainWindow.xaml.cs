@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using YonderSharp.Config;
 using YonderSharp.WPF.Configuration;
-using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.DataManagement.Example;
 using YonderSharp.WPF.Helper.CustomDialogs;
-using YonderSharp.WPF.Views.DetailList;
 using YonderSharp.WPF.Views.ItemSourceComboBox;
 
 namespace YonderSharp.WPF.Example
