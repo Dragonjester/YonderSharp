@@ -27,6 +27,24 @@ namespace YonderSharp.FileSources
         private PropertyInfo _titlePropertyInfo;
         private PropertyInfo _primaryKeyPropertyInfo;
 
+        public IFileSource()
+        {
+            if (_primaryKeyPropertyInfo == null)
+            {
+                _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
+            }
+
+            if (_titlePropertyInfo == null)
+            {
+                _titlePropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(Title)));
+            }
+
+            if (_titlePropertyInfo == null)
+            {
+                Debugger.Break();
+            }
+        }
+
         /// <summary>
         /// Raised when the list of known entries has changed
         /// </summary>
@@ -155,7 +173,7 @@ namespace YonderSharp.FileSources
             {
                 try
                 {
-                    _list = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(GetPathToJsonFile()));
+                    _list = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(GetPathToJsonFile())).OrderBy(x => _titlePropertyInfo.GetValue(x)).ToList();
                     _titles.Clear();
                     foreach (var entry in _list)
                     {
@@ -230,15 +248,6 @@ namespace YonderSharp.FileSources
             }
 
             Load();
-            if (_primaryKeyPropertyInfo == null)
-            {
-                _primaryKeyPropertyInfo = GetGenericType().GetProperties().FirstOrDefault(x => x.CanRead && x.GetCustomAttributes().Any(y => y.GetType() == typeof(PrimaryKey)));
-            }
-
-            if (_primaryKeyPropertyInfo == null)
-            {
-                Debugger.Break();
-            }
 
             return _list.First(x => _primaryKeyPropertyInfo.GetValue(x) == obj);
         }
