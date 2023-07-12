@@ -393,7 +393,7 @@ namespace YonderSharp.WPF.DataManagement
                     Binding bind = new Binding(bindingPath);
                     bind.Source = _vm;
                     bind.Mode = BindingMode.TwoWay;
-                    bind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    bind.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
                     box.SetBinding(TextBox.TextProperty, bind);
 
                     box.Margin = margin;
