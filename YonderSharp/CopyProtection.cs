@@ -9,7 +9,21 @@ namespace YonderSharp
     {
         public static bool IsDeveloperMachine()
         {
-            return Environment.MachineName.Equals("DESKTOP-VBKF9PE");
+
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.Win32NT:
+                case PlatformID.WinCE:
+                    return Environment.MachineName.Equals("DESKTOP-VBKF9PE");
+                default:
+                    //TODO: check for android phone/tablet
+                    //Android, Linux, Mac, etc.
+                    return true;
+            }
+
+
         }
 
     }
