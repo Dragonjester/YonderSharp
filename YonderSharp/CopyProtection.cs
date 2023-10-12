@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace YonderSharp
 {
@@ -7,23 +10,33 @@ namespace YonderSharp
     /// </summary>
     public class CopyProtection
     {
-        public static bool IsDeveloperMachine()
+        private static string[] developerIds = new[] { "0781607453387f55" , "DESKTOP-VBKF9PE", "be6abc1efa0463e7" };
+        private static bool hasDeveloperMachineRun;
+        private static bool isDeveloperMachine;
+        
+        public static bool IsDeveloperMachine(IDevice device)
         {
-
-            switch (Environment.OSVersion.Platform)
+            if (device == null)
             {
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                case PlatformID.Win32NT:
-                case PlatformID.WinCE:
-                    return Environment.MachineName.Equals("DESKTOP-VBKF9PE");
-                default:
-                    //TODO: check for android phone/tablet
-                    //Android, Linux, Mac, etc.
-                    return true;
+                return false;
             }
 
+            if (hasDeveloperMachineRun)
+            {
+                return isDeveloperMachine;
+            }
 
+            var identifier = device.GetUniqueDeviceIdentifier();
+
+            isDeveloperMachine = developerIds.Any(x => string.Equals(x, identifier, StringComparison.OrdinalIgnoreCase));
+            hasDeveloperMachineRun = true;
+
+            if (!isDeveloperMachine)
+            {
+                Debugger.Break();
+            }
+
+            return isDeveloperMachine;
         }
 
     }
