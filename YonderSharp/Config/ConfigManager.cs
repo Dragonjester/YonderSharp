@@ -52,7 +52,7 @@ namespace YonderSharp.Config
         }
 
         /// <inheritdoc/>
-        public void Load()
+        public virtual void Load()
         {
             lock (_locker)
             {
