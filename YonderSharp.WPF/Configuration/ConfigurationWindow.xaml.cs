@@ -13,6 +13,7 @@ namespace YonderSharp.WPF.Configuration
         {
             InitializeComponent();
             _manager = manager;
+            //TODO: CONFIG WIRD NICHT BERÜCKSICHTIGT!!!
             dataGrid.SetSource(new ConfigurationDataGridSource(manager));
         }
     }

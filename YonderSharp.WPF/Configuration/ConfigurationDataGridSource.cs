@@ -12,6 +12,11 @@ namespace YonderSharp.WPF.Configuration
         public ConfigurationDataGridSource(IConfigManager dataSource)
         {
             _dataSource = dataSource;
+            if(_dataSource.GetAllKeys().Length == 0)
+            {
+                _dataSource.Load();
+            }
+
             foreach (string key in dataSource.GetAllKeys())
             {
                 _items.Add(new ConfigurationEntry(key, dataSource.GetValue(key)));
@@ -32,7 +37,7 @@ namespace YonderSharp.WPF.Configuration
 
 
         private DataGridSourceConfiguration _config;
-        protected virtual DataGridSourceConfiguration GetConfiguration()
+        public override DataGridSourceConfiguration GetConfiguration()
         {
             if (_config == null)
             {
@@ -40,8 +45,10 @@ namespace YonderSharp.WPF.Configuration
                 _config.IsAllowedToIsAllowedToAddFromList = false;
                 _config.IsAllowedToCreateNewEntry = true;
                 _config.IsAllowedToRemove = true;
-                _config.HasSearch = true;
+                _config.HasSearch = false;
+                _config.IsPrimaryKeyDisabled = false;
                 _config.GetAddableItemsReturnAll = true;
+                _config.ShowSaveButton = true;
             }
 
             return _config;

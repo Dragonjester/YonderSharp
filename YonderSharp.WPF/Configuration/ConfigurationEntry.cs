@@ -19,6 +19,7 @@ namespace YonderSharp.WPF.Configuration
 
         [DataMember]
         [PrimaryKey]
+        [Title]
         public string Key { get; set; }
 
         [DataMember]
