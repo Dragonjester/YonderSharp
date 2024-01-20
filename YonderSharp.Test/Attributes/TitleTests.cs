@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.Test.Attributes
 {

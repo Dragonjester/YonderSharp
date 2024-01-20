@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
 
@@ -214,6 +214,8 @@ namespace YonderSharp.WPF.DataManagement
             UIElement contentElement = null;
             PropertyInfo currentPropertyInfo = itemType.GetProperties().Where(x => x.Name == item.Item1).First();
             ForeignKey currentPropertyFkAttribute = (ForeignKey)currentPropertyInfo.GetCustomAttribute(typeof(ForeignKey));
+            Disabled disabledAttribute = (Disabled)currentPropertyInfo.GetCustomAttribute(typeof(Disabled));
+
             if (currentPropertyFkAttribute == null)
             {
                 //Add content element
@@ -413,8 +415,6 @@ namespace YonderSharp.WPF.DataManagement
 
                 cBox.ItemsSource = DataGridSourceManager.GetSource(currentPropertyFkAttribute.TargetClass).GetObservable();
 
-
-
                 #region binding
                 PropertyInfo fkTitleProperty = currentPropertyFkAttribute.TargetClass.GetProperties().First(x => x.GetCustomAttribute<Title>() != null);
                 cBox.DisplayMemberPath = fkTitleProperty.Name;
@@ -514,6 +514,7 @@ namespace YonderSharp.WPF.DataManagement
                 throw new Exception("You somehow forgot to set the current element Ü");
             }
 
+            contentElement.IsEnabled &= (disabledAttribute == null);
             contentElement.IsEnabled &= !_vm.IsReadOnlyMode;
 
 

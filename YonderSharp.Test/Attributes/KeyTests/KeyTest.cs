@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.Test.Attributes.KeyTests
 {

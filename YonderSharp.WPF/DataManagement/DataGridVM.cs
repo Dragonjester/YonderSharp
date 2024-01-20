@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
 using YonderSharp.WPF.Properties.Resources;

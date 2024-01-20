@@ -4,53 +4,58 @@
         <name>YonderSharp</name>
     </assembly>
     <members>
-        <member name="T:YonderSharp.Attributes.ForeignKey">
+        <member name="T:YonderSharp.Attributes.DataManagement.Disabled">
             <summary>
-            A Foreign-Key that points to some <see cref="T:YonderSharp.Attributes.PrimaryKey"/>
+            Field is disabled in UI 
             </summary>
         </member>
-        <member name="P:YonderSharp.Attributes.ForeignKey.TargetClass">
+        <member name="T:YonderSharp.Attributes.DataManagement.ForeignKey">
+            <summary>
+            A Foreign-Key that points to some <see cref="T:YonderSharp.Attributes.DataManagement.PrimaryKey"/>
+            </summary>
+        </member>
+        <member name="P:YonderSharp.Attributes.DataManagement.ForeignKey.TargetClass">
             <summary>
             Type to which this ForeignKey points to
             </summary>
         </member>
-        <member name="P:YonderSharp.Attributes.ForeignKey.TargetField">
+        <member name="P:YonderSharp.Attributes.DataManagement.ForeignKey.TargetField">
             <summary>
             Field of the TargetClass to which the ForeignKey points to
             </summary>
         </member>
-        <member name="M:YonderSharp.Attributes.ForeignKey.#ctor(System.Type,System.String)">
+        <member name="M:YonderSharp.Attributes.DataManagement.ForeignKey.#ctor(System.Type,System.String)">
             <param name="targetClass">Class to which this FK points to</param>
             <param name="fieldName">Property of this class, to where the FK points to</param>
             <exception cref="T:System.ArgumentNullException">For the params className and fieldName</exception>
         </member>
-        <member name="M:YonderSharp.Attributes.ForeignKey.GetAllForeignTables(System.Type)">
+        <member name="M:YonderSharp.Attributes.DataManagement.ForeignKey.GetAllForeignTables(System.Type)">
             <summary>
             Returns the types that are referenced as Foreign for the given type.
             i.e. if the given type has foreign relations to the types "book" and "shop" it will return those
             </summary>
         </member>
-        <member name="T:YonderSharp.Attributes.PrimaryKey">
+        <member name="T:YonderSharp.Attributes.DataManagement.PrimaryKey">
             <summary>
             Identifies something as the unique primary key. Usually, but not necessarily a <see cref="T:System.Guid"/>
             </summary>
         </member>
-        <member name="T:YonderSharp.Attributes.Title">
+        <member name="T:YonderSharp.Attributes.DataManagement.Title">
             <summary>
             used to mark the member that is shown in the UI for FKs
             </summary>
         </member>
-        <member name="M:YonderSharp.Attributes.Title.GetTitel(System.Object)">
+        <member name="M:YonderSharp.Attributes.DataManagement.Title.GetTitel(System.Object)">
             <summary>
             Returns the titel value for the given object
             </summary>
         </member>
-        <member name="M:YonderSharp.Attributes.Title.TypeHasTitelAttribute(System.Object)">
+        <member name="M:YonderSharp.Attributes.DataManagement.Title.TypeHasTitelAttribute(System.Object)">
             <summary>
             Does the Type of the given object contain a property that is declared [Title]
             </summary>
         </member>
-        <member name="M:YonderSharp.Attributes.Title.TypeHasTitelAttribute(System.Type)">
+        <member name="M:YonderSharp.Attributes.DataManagement.Title.TypeHasTitelAttribute(System.Type)">
             <summary>
             Does the Type contain a property that is declared [Title]
             </summary>

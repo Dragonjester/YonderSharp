@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace YonderSharp.Attributes
+namespace YonderSharp.Attributes.DataManagement
 {
     /// <summary>
     /// used to mark the member that is shown in the UI for FKs
@@ -57,7 +57,7 @@ namespace YonderSharp.Attributes
             }
 
             //In case your property isn't checked: onyl those with a getter and setter are found
-           return type.GetProperties().Any(x => x.GetCustomAttribute<Title>() != null);
+            return type.GetProperties().Any(x => x.GetCustomAttribute<Title>() != null);
         }
     }
 }

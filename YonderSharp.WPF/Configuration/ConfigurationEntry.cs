@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.WPF.Configuration
 {

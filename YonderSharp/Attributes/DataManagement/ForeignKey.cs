@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace YonderSharp.Attributes
+namespace YonderSharp.Attributes.DataManagement
 {
     /// <summary>
     /// A Foreign-Key that points to some <see cref="PrimaryKey"/>
@@ -37,12 +37,12 @@ namespace YonderSharp.Attributes
         public static IEnumerable<Type> GetAllForeignTables(Type type)
         {
             HashSet<Type> knownResults = new HashSet<Type>();
-            foreach(var property in type.GetProperties())
+            foreach (var property in type.GetProperties())
             {
                 var fkAttribute = property.GetCustomAttribute<ForeignKey>();
-                if(fkAttribute != null && knownResults.Add(fkAttribute.TargetClass))
+                if (fkAttribute != null && knownResults.Add(fkAttribute.TargetClass))
                 {
-                   yield return fkAttribute.TargetClass;
+                    yield return fkAttribute.TargetClass;
                 }
             }
         }

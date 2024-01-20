@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.FileSources
 {
@@ -165,27 +165,28 @@ namespace YonderSharp.FileSources
                     return;
                 }
                 isInitialized = true;
-            }
 
-            _list = new List<T>();
 
-            if (File.Exists(GetPathToJsonFile()))
-            {
-                try
+                _list = new List<T>();
+
+                if (File.Exists(GetPathToJsonFile()))
                 {
-                    _list = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(GetPathToJsonFile())).OrderBy(x => _titlePropertyInfo.GetValue(x)).ToList();
-                    _titles.Clear();
-                    foreach (var entry in _list)
+                    try
                     {
-                        _titles.Add(GetTitle(entry));
+                        _list = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(GetPathToJsonFile())).OrderBy(x => _titlePropertyInfo.GetValue(x)).ToList();
+                        _titles.Clear();
+                        foreach (var entry in _list)
+                        {
+                            _titles.Add(GetTitle(entry));
+                        }
                     }
-                }
-                catch
-                {
-                    //TODO: LOGGING
-                }
+                    catch
+                    {
+                        //TODO: LOGGING
+                    }
 
-                RaiseChangedEvent();
+                    RaiseChangedEvent();
+                }
             }
         }
 

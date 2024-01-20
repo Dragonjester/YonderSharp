@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.ProceduralGeneration.Model.OSM
 {

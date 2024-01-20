@@ -1,5 +1,5 @@
 ﻿using System;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.Test.Attributes.KeyTests
 {

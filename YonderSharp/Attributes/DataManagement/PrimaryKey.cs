@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YonderSharp.Attributes
+namespace YonderSharp.Attributes.DataManagement
 {
     /// <summary>
     /// Identifies something as the unique primary key. Usually, but not necessarily a <see cref="Guid"/>

@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
 using YonderSharp.WPF.Views.DetailList.SelectionDialog;

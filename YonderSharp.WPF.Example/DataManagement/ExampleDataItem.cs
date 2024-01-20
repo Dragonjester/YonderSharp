@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using YonderSharp.Attributes;
+using YonderSharp.Attributes.DataManagement;
 using YonderSharp.WPF.Example.DataManagement;
 
 namespace YonderSharp.WPF.DataManagement.Example

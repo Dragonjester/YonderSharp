@@ -9,7 +9,7 @@ namespace YonderSharp.WPF.DataManagement
 
         public static void RegisterDataSource(IDataGridSource dataSource)
         {
-            KnownSources.Add(dataSource.GetTypeOfObjects(), dataSource);
+            KnownSources.TryAdd(dataSource.GetTypeOfObjects(), dataSource);
         }
 
         /// <exception cref="KeyNotFoundException">When the type isn't known yet</exception>
