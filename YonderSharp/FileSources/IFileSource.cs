@@ -180,8 +180,9 @@ namespace YonderSharp.FileSources
                             _titles.Add(GetTitle(entry));
                         }
                     }
-                    catch
+                    catch(Exception e)
                     {
+                        Debugger.Break();
                         //TODO: LOGGING
                     }
 
