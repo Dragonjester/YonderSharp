@@ -589,8 +589,10 @@ namespace YonderSharp.WPF.DataManagement
 
         private void ScrollToChangedEntry()
         {
-            ContentScroller.ScrollToTop();
-            EntryList.ScrollIntoView(EntryList.SelectedItem);
+            //doesn't behave as expected
+       //     ContentScroller.ScrollToTop();
+       //     EntryList.ScrollIntoView(EntryList.SelectedItem);
+       //TODO: When adding a new element, scroll down to the new element
         }
     }
 }
