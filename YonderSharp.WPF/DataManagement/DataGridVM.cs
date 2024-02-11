@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -17,17 +18,19 @@ namespace YonderSharp.WPF.DataManagement
         public IDataGridSource DataSource { get; private set; }
 
         private Action _scrollContentIntoNewPositions;
+        private Action _scrollToBottomOfList;
 
-        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection)
+        public DataGridVM(IDataGridSource dataSource, Action scrollContentToNewSelection, Action scrollToBottomOfList)
         {
             DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
-                      
+
             _commands.AddCommand("AddEntryFromList", x => AddEntryFromList());
             _commands.AddCommand("AddNew", x => AddNewEntry());
             _commands.AddCommand("RemoveEntry", x => RemoveEntry());
             _commands.AddCommand("Save", x => Save());
 
             _scrollContentIntoNewPositions = scrollContentToNewSelection;
+            _scrollToBottomOfList = scrollToBottomOfList;
 
             UpdateList();
 
@@ -36,6 +39,16 @@ namespace YonderSharp.WPF.DataManagement
             {
                 DataGridSourceManager.RegisterToForeignKeyUpdates(this, foreignType);
             }
+
+            ListEntries.CollectionChanged += this.OnListChanged;
+        }
+
+        private void OnListChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems?.Count < e.NewItems?.Count)
+            {
+                _scrollToBottomOfList?.Invoke();
+            }
         }
 
         private void AddNewEntry()
@@ -43,6 +56,7 @@ namespace YonderSharp.WPF.DataManagement
             DataSource.AddNewItem();
             UpdateList();
             SelectedIndex = ListEntries.Count - 1;
+            _scrollToBottomOfList?.Invoke();
         }
 
         public Tuple<string, Type>[] GetFields(Type type)
@@ -118,7 +132,7 @@ namespace YonderSharp.WPF.DataManagement
             }
             set
             {
-                if(value == null)
+                if (value == null)
                 {
                     SelectedIndex = -1;
                     return;
@@ -127,7 +141,7 @@ namespace YonderSharp.WPF.DataManagement
                 var items = DataSource.GetShownItems();
                 if (items.Contains(value))
                 {
-                    for(int i = 0; i < items.Length; i++)
+                    for (int i = 0; i < items.Length; i++)
                     {
                         if (items[i] == value)
                         {

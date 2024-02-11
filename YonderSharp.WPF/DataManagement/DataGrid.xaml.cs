@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using YonderSharp.Attributes.DataManagement;
 using YonderSharp.WPF.Helper;
 using YonderSharp.WPF.Helper.CustomDialogs;
@@ -358,6 +359,7 @@ namespace YonderSharp.WPF.DataManagement
                         object result = method.Invoke(entryList, new object[] { inputBoxDialog.Answer });
 
                         RefreshItemList(lView, item);
+                        ScrollListToBottom();
                     });
 
                     MenuItem removeItem = new MenuItem();
@@ -537,6 +539,16 @@ namespace YonderSharp.WPF.DataManagement
             view.Refresh();
         }
 
+        private void ScrollListToBottom()
+        {
+            if (VisualTreeHelper.GetChildrenCount(EntryList) > 0)
+            {
+                Decorator border = VisualTreeHelper.GetChild(EntryList, 0) as Decorator;
+                ScrollViewer scrollViewer = border.Child as ScrollViewer;
+                scrollViewer.ScrollToBottom();
+            }
+        }
+
 
         private bool IsHashsetEnum(Type type)
         {
@@ -571,7 +583,7 @@ namespace YonderSharp.WPF.DataManagement
 
         public void SetSource(IDataGridSource source, string saveButtonLabel = "")
         {
-            var vm = new DataGridVM(source, ScrollToChangedEntry);
+            var vm = new DataGridVM(source, ScrollToChangedEntry, ScrollListToBottom);
             if (!string.IsNullOrEmpty(saveButtonLabel))
             {
                 vm.SaveButtonLabel = saveButtonLabel;
@@ -590,9 +602,9 @@ namespace YonderSharp.WPF.DataManagement
         private void ScrollToChangedEntry()
         {
             //doesn't behave as expected
-       //     ContentScroller.ScrollToTop();
-       //     EntryList.ScrollIntoView(EntryList.SelectedItem);
-       //TODO: When adding a new element, scroll down to the new element
+            //     ContentScroller.ScrollToTop();
+            //     EntryList.ScrollIntoView(EntryList.SelectedItem);
+            //TODO: When adding a new element, scroll down to the new element
         }
     }
 }
