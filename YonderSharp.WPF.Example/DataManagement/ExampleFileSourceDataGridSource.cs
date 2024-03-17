@@ -3,10 +3,11 @@ using System.Runtime.Serialization;
 using YonderSharp.FileSources;
 using YonderSharp.WPF.DataManagement;
 using YonderSharp.WPF.DataManagement.Example;
+using static YonderSharp.WPF.Example.DataManagement.ExampleFileSourceDataGridSource;
 
 namespace YonderSharp.WPF.Example.DataManagement
 {
-    public class ExampleFileSourceDataGridSource : DataGridFileSource
+    public class ExampleFileSourceDataGridSource : DataGridFileSource<ExampleFileSourceDataGridSource.ExampleDataItem>
     {
         public ExampleFileSourceDataGridSource()
         {
@@ -30,7 +31,7 @@ namespace YonderSharp.WPF.Example.DataManagement
             return _config;
         }
 
-        internal class ExampleFileSource : IFileSource<ExampleDataItem2>
+        internal class ExampleFileSource : IFileSource<ExampleDataItem>
         {
             public override string GetPathToJsonFile()
             {
@@ -39,7 +40,7 @@ namespace YonderSharp.WPF.Example.DataManagement
         }
 
         [DataContract]
-        public class ExampleDataItem2 : ExampleDataItem
+        public class ExampleDataItem : WPF.DataManagement.Example.ExampleDataItem
         {
 
             [DataMember]
