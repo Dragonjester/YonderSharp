@@ -10,7 +10,7 @@ namespace YonderSharp
     /// </summary>
     public class CopyProtection
     {
-        private static string[] developerIds = new[] { "0781607453387f55" , "DESKTOP-VBKF9PE", "be6abc1efa0463e7" };
+        private static string[] developerIds = new[] { "0781607453387f55" , "DESKTOP-VBKF9PE", "be6abc1efa0463e7", "8e6e644b116b2354" };
         private static bool hasDeveloperMachineRun;
         private static bool isDeveloperMachine;
 
