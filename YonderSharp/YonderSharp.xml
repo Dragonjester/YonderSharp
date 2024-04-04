@@ -97,6 +97,11 @@
             The Goal of this isn't to create 100% security. The goal is to prohibit that {stuff} can spread to the wild uncontrolled forever
             </summary>
         </member>
+        <member name="M:YonderSharp.CopyProtection.CopyProtection.LastAllowedDay">
+            <summary>
+            Returns the date of the last day an application is allowed to run
+            </summary>
+        </member>
         <member name="M:YonderSharp.CopyProtection.CopyProtection.GetCompileDate">
             <summary>
             Gets the date of the last compilation.

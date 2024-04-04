@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.NetworkInformation;
 
 namespace YonderSharp.CopyProtection
 {
@@ -15,6 +14,9 @@ namespace YonderSharp.CopyProtection
         private static bool isDeveloperMachine;
 
 
+        /// <summary>
+        /// Returns the date of the last day an application is allowed to run
+        /// </summary>
         public static DateTime LastAllowedDay()
         {
             return GetCompileDate().AddDays(365);
@@ -37,7 +39,6 @@ namespace YonderSharp.CopyProtection
                 return isDeveloperMachine;
             }
 
-
             var name = System.Net.Dns.GetHostName();
 
             isDeveloperMachine = developerIds.Contains(name);
@@ -47,14 +48,14 @@ namespace YonderSharp.CopyProtection
 
         public static bool IsDeveloperMachine(IDevice device)
         {
-            if (device == null)
-            {
-                return false;
-            }
-
             if (hasDeveloperMachineRun)
             {
                 return isDeveloperMachine;
+            }
+
+            if (device == null)
+            {
+                return false;
             }
 
             var identifier = device.GetUniqueDeviceIdentifier();
@@ -69,6 +70,5 @@ namespace YonderSharp.CopyProtection
 
             return isDeveloperMachine;
         }
-
     }
 }
