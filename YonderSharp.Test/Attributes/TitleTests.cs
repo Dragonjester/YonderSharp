@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using YonderSharp.Attributes.DataManagement;
 
 namespace YonderSharp.Test.Attributes
@@ -9,7 +10,7 @@ namespace YonderSharp.Test.Attributes
         [Test]
         public void GetTitleTest()
         {
-            Assert.AreEqual("Ente", Title.GetTitel(new TitleTestClass()));
+            ClassicAssert.AreEqual("Ente", Title.GetTitel(new TitleTestClass()));
         }
     }
 

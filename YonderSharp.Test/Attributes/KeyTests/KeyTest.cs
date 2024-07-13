@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,12 @@ namespace YonderSharp.Test.Attributes.KeyTests
         public void PrimaryKeysCanBeInitialized()
         {
             PrimaryClass primary = new PrimaryClass();
-            Assert.IsNotNull(primary);
+            ClassicAssert.IsNotNull(primary);
 
             var properties = typeof(PrimaryClass).GetProperties().Where(prop => prop.IsDefined(typeof(PrimaryKey), false)).ToList();
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(1, properties.Count);
-            Assert.AreEqual("ID", properties[0].Name);
+            ClassicAssert.IsNotNull(properties);
+            ClassicAssert.AreEqual(1, properties.Count);
+            ClassicAssert.AreEqual("ID", properties[0].Name);
         }
 
         [Test]
@@ -32,13 +33,13 @@ namespace YonderSharp.Test.Attributes.KeyTests
             PropertyInfo fkProperty = typeof(ForeignClass).GetProperties().Where(prop => prop.IsDefined(typeof(ForeignKey), false)).First();
             ForeignKey fkAttribute = (ForeignKey)fkProperty.GetCustomAttributes(typeof(ForeignKey), false).First();
 
-            Assert.AreEqual(typeof(PrimaryClass), fkAttribute.TargetClass);
-            Assert.AreEqual("ID", fkAttribute.TargetField.Name);
+            ClassicAssert.AreEqual(typeof(PrimaryClass), fkAttribute.TargetClass);
+            ClassicAssert.AreEqual("ID", fkAttribute.TargetField.Name);
 
             PropertyInfo pkPropertyOfPrimary = fkAttribute.TargetClass.GetProperties().Where(x => x == fkAttribute.TargetField).First();
 
             PrimaryClass primaryEntry = primaryTable.Where(x => (Guid)pkPropertyOfPrimary.GetValue(x) == foreign.RefId).First();
-            Assert.IsNotNull(primaryEntry);
+            ClassicAssert.IsNotNull(primaryEntry);
         }
     }
 }

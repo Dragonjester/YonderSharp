@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using YonderSharp.WSG84;
+using NUnit.Framework.Legacy;
 
 namespace YonderSharp.Test.WSG84Tests
 {
@@ -19,7 +20,7 @@ namespace YonderSharp.Test.WSG84Tests
             foreach (var entry in meterEntries)
             {
                 double distanceInMeters = WSG84Math.GetDistanceInMeters(entry.Item1, entry.Item2, entry.Item3, entry.Item4);
-                Assert.AreEqual((int)distanceInMeters, entry.Item5);
+                ClassicAssert.AreEqual((int)distanceInMeters, entry.Item5);
             }
         }
 
@@ -34,7 +35,7 @@ namespace YonderSharp.Test.WSG84Tests
             foreach (var entry in testEntries)
             {
                 double distanceInKilometers = WSG84Math.GetDistanceInKilometers(entry.Item1, entry.Item2, entry.Item3, entry.Item4);
-                Assert.AreEqual((int)distanceInKilometers, entry.Item5);
+                ClassicAssert.AreEqual((int)distanceInKilometers, entry.Item5);
             }
         }
 
@@ -46,8 +47,8 @@ namespace YonderSharp.Test.WSG84Tests
             var latitudeError = Math.Abs(movedPoint.Latitude - 1);
             var longitudeError = Math.Abs(movedPoint.Longitude - 1);
 
-            Assert.IsTrue(latitudeError < 0.002);
-            Assert.IsTrue(longitudeError < 0.002);
+            ClassicAssert.IsTrue(latitudeError < 0.002);
+            ClassicAssert.IsTrue(longitudeError < 0.002);
         }
 
         [Test]
@@ -68,9 +69,9 @@ namespace YonderSharp.Test.WSG84Tests
             //calculating with WSG84 is messy since we aren't living on an euclidean-2D-plane
             var epsilon = 10;
 
-            Assert.IsTrue(distanceBottomRightToCenter - expectedDistance < epsilon);
-            Assert.IsTrue(distanceTopLeftToCenter - expectedDistance < epsilon);
-            Assert.IsTrue(distanceTopLeftToBorromRight - 2 * expectedDistance < epsilon);
+            ClassicAssert.IsTrue(distanceBottomRightToCenter - expectedDistance < epsilon);
+            ClassicAssert.IsTrue(distanceTopLeftToCenter - expectedDistance < epsilon);
+            ClassicAssert.IsTrue(distanceTopLeftToBorromRight - 2 * expectedDistance < epsilon);
         }
 
         [Test]
@@ -79,19 +80,19 @@ namespace YonderSharp.Test.WSG84Tests
             Area area = WSG84Math.GetAreaFor(0, 0, 100000);
 
             PointLatLng center = new PointLatLng(0, 0);
-            Assert.IsTrue(WSG84Math.IsPointWithinArea(area, center));
+            ClassicAssert.IsTrue(WSG84Math.IsPointWithinArea(area, center));
 
             PointLatLng toLeft = new PointLatLng(0, -1);
-            Assert.IsFalse(WSG84Math.IsPointWithinArea(area, toLeft));
+            ClassicAssert.IsFalse(WSG84Math.IsPointWithinArea(area, toLeft));
 
             PointLatLng toRight = new PointLatLng(0, 1);
-            Assert.IsFalse(WSG84Math.IsPointWithinArea(area, toRight));
+            ClassicAssert.IsFalse(WSG84Math.IsPointWithinArea(area, toRight));
 
             PointLatLng above = new PointLatLng(1, 0);
-            Assert.IsFalse(WSG84Math.IsPointWithinArea(area, above));
+            ClassicAssert.IsFalse(WSG84Math.IsPointWithinArea(area, above));
 
             PointLatLng below = new PointLatLng(-1, -1);
-            Assert.IsFalse(WSG84Math.IsPointWithinArea(area, below));
+            ClassicAssert.IsFalse(WSG84Math.IsPointWithinArea(area, below));
         }
 
 

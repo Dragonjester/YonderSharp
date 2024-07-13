@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YonderSharp.ProceduralGeneration.Model.OSM;
 using YonderSharp.WSG84;
 using KeyValuePair = YonderSharp.ProceduralGeneration.Model.OSM.KeyValuePair;
@@ -60,18 +59,18 @@ namespace YonderSharp.Test.WSG84Tests
 
             var sortedPoints = GeoSorter.SortByDistance(nodes, point);
 
-            Assert.AreEqual(sortedPoints[0], nodes[2]);
-            Assert.AreEqual(sortedPoints[1], nodes[3]);
-            Assert.AreEqual(sortedPoints[2], nodes[1]);
-            Assert.AreEqual(sortedPoints[3], nodes[0]);
+            ClassicAssert.AreEqual(sortedPoints[0], nodes[2]);
+            ClassicAssert.AreEqual(sortedPoints[1], nodes[3]);
+            ClassicAssert.AreEqual(sortedPoints[2], nodes[1]);
+            ClassicAssert.AreEqual(sortedPoints[3], nodes[0]);
 
 
             sortedPoints = GeoSorter.SortByDistance(nodes, point, false);
 
-            Assert.AreEqual(sortedPoints[3], nodes[2]);
-            Assert.AreEqual(sortedPoints[2], nodes[3]);
-            Assert.AreEqual(sortedPoints[1], nodes[1]);
-            Assert.AreEqual(sortedPoints[0], nodes[0]);
+            ClassicAssert.AreEqual(sortedPoints[3], nodes[2]);
+            ClassicAssert.AreEqual(sortedPoints[2], nodes[3]);
+            ClassicAssert.AreEqual(sortedPoints[1], nodes[1]);
+            ClassicAssert.AreEqual(sortedPoints[0], nodes[0]);
         }
 
         [Test]
@@ -81,10 +80,10 @@ namespace YonderSharp.Test.WSG84Tests
             var point = new PointLatLng(3, 3);
 
             var uniquedPoints = GeoSorter.MakeKeyValueUniqueToClosest(nodes, point, "place");
-            Assert.AreEqual(2, uniquedPoints.Length);
+            ClassicAssert.AreEqual(2, uniquedPoints.Length);
 
-            Assert.IsTrue(uniquedPoints.Contains(nodes[1]));
-            Assert.IsTrue(uniquedPoints.Contains(nodes[2]));
+            ClassicAssert.IsTrue(uniquedPoints.Contains(nodes[1]));
+            ClassicAssert.IsTrue(uniquedPoints.Contains(nodes[2]));
 
         }
     }

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace YonderSharp.Test
 {
@@ -29,7 +30,7 @@ namespace YonderSharp.Test
             var zipped = Zipper.Zip(testValue);
 
             var unzipped = Zipper.Unzip(zipped);
-            Assert.IsTrue(testValue == unzipped);
+            ClassicAssert.IsTrue(testValue == unzipped);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace YonderSharp.Test
             Zipper.Zip(original, pathToZip);
             ZipContent unziped = Zipper.Unzip<ZipContent>(pathToZip);
 
-            Assert.AreEqual(original, unziped);
+            ClassicAssert.AreEqual(original, unziped);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using YonderSharp.Geocaching;
 
 namespace YonderSharp.Test.Geocaching
@@ -28,7 +29,7 @@ namespace YonderSharp.Test.Geocaching
         [Test]
         public void ColorPuzzlesTest()
         {
-            Assert.AreEqual("N51° 29.362 E09° 00.479", solver.Solve("N  grün braun°  rot weiß.orange blau rot O  schwarz weiß°  schwarz schwarz.gelb violett weiß"));
+            ClassicAssert.AreEqual("N51° 29.362 E09° 00.479", solver.Solve("N  grün braun°  rot weiß.orange blau rot O  schwarz weiß°  schwarz schwarz.gelb violett weiß"));
 
         }
 
