@@ -12,7 +12,7 @@ namespace YonderSharp.CopyProtection
         /// Auto generated via T4
         /// </summary>
         public static DateTime GetCompileDate(){
-            return new DateTime(2024, 7, 13);
+            return new DateTime(2024, 8, 21);
         }
     }
 }
