@@ -21,14 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="CopyProtection\CopyProtectionGenerator.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CopyProtectionGenerator.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="CopyProtection\CopyProtectionGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CopyProtectionGenerator.cs</LastGenOutput>
