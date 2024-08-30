@@ -5,7 +5,7 @@ using System.Linq;
 namespace YonderSharp.CopyProtection
 {
     /// <summary>
-    /// The Goal of this isn't to create 100% security. The goal is to prohibit that {stuff} can spread to the wild uncontrolled forever
+    /// The Goal of this isn't to create 100% security. The goal is just to limit how far uncracked versions can spread to the wild uncontrolled.
     /// </summary>
     public partial class CopyProtection
     {
@@ -22,16 +22,21 @@ namespace YonderSharp.CopyProtection
             return GetCompileDate().AddDays(365);
         }
 
+        /// <returns>True if it is either a developer machine or the .exe is less than a year old</returns>
         public static bool IsAllowedToRun()
         {
             return IsDeveloperMachine() || DateTime.Now <= LastAllowedDay();
         }
 
+        /// <returns>True if it is either a developer machine or the .exe is less than a year old</returns>
         public static bool IsAllowedToRun(IDevice device)
         {
             return IsDeveloperMachine(device) || DateTime.Now <= LastAllowedDay();
         }
 
+        /// <summary>
+        /// Checks if the current device is owned by the author of this class
+        /// </summary>
         public static bool IsDeveloperMachine()
         {
             if (hasDeveloperMachineRun)
@@ -46,6 +51,9 @@ namespace YonderSharp.CopyProtection
             return isDeveloperMachine;
         }
 
+        /// <summary>
+        /// Checks if the current device is owned by the author of this class
+        /// </summary>
         public static bool IsDeveloperMachine(IDevice device)
         {
             if (hasDeveloperMachineRun)

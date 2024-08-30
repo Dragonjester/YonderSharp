@@ -137,6 +137,14 @@
             <param name="forceDownload">Doesnt try to read from the local cache if <b>TRUE</b></param>
             <returns>the string represenation of the htmlBody that has been downloaded</returns>
         </member>
+        <member name="T:YonderSharp.Extensions.AssemblyExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Reflection.Assembly"/>
+            </summary>
+        </member>
+        <member name="M:YonderSharp.Extensions.AssemblyExtensions.GetShortGidId(System.Reflection.Assembly)">
+            <returns>string.empty if the short gid id can't be determined</returns>
+        </member>
         <member name="T:YonderSharp.FileSources.IFileSource`1">
             <summary>
             simple Elementsource form hard disk
