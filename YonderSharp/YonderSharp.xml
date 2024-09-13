@@ -94,12 +94,28 @@
         </member>
         <member name="T:YonderSharp.CopyProtection.CopyProtection">
             <summary>
-            The Goal of this isn't to create 100% security. The goal is to prohibit that {stuff} can spread to the wild uncontrolled forever
+            The Goal of this isn't to create 100% security. The goal is just to limit how far uncracked versions can spread to the wild uncontrolled.
             </summary>
         </member>
         <member name="M:YonderSharp.CopyProtection.CopyProtection.LastAllowedDay">
             <summary>
             Returns the date of the last day an application is allowed to run
+            </summary>
+        </member>
+        <member name="M:YonderSharp.CopyProtection.CopyProtection.IsAllowedToRun">
+            <returns>True if it is either a developer machine or the .exe is less than a year old</returns>
+        </member>
+        <member name="M:YonderSharp.CopyProtection.CopyProtection.IsAllowedToRun(YonderSharp.IDevice)">
+            <returns>True if it is either a developer machine or the .exe is less than a year old</returns>
+        </member>
+        <member name="M:YonderSharp.CopyProtection.CopyProtection.IsDeveloperMachine">
+            <summary>
+            Checks if the current device is owned by the author of this class
+            </summary>
+        </member>
+        <member name="M:YonderSharp.CopyProtection.CopyProtection.IsDeveloperMachine(YonderSharp.IDevice)">
+            <summary>
+            Checks if the current device is owned by the author of this class
             </summary>
         </member>
         <member name="M:YonderSharp.CopyProtection.CopyProtection.GetCompileDate">
