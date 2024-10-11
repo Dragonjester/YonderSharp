@@ -20,6 +20,7 @@ namespace YonderSharp.Test
         [TestCase("AB", "ab", 2)]
         [TestCase("AB", "Ab", 1)]
         [TestCase("ABC", "Ab", 2)]
+        [TestCase("Brenne toter Stoff!", "Brenne, toter Stoff!", 1)]
         [TestCase(null, "a", 1)]
         [Test]
         public void TestNormalDistance(string first, string second, int expectation)
