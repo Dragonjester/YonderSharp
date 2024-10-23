@@ -2,6 +2,6 @@
 {
     public static class StringExtensions
     {
-        public static bool HasContent(this string str) => !string.IsNullOrEmpty(str);        
+        public static bool HasContent(this string str) => !string.IsNullOrEmpty(str);
     }
 }

@@ -53,6 +53,11 @@ namespace YonderSharp.FileSources
         /// <inheritdoc/>
         public void Remove(T obj)
         {
+            if (obj == null)
+            {
+                return;
+            }
+
             Load();
 
             var index = _list.IndexOf(obj);
@@ -180,7 +185,7 @@ namespace YonderSharp.FileSources
                             _titles.Add(GetTitle(entry));
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Debugger.Break();
                         //TODO: LOGGING
