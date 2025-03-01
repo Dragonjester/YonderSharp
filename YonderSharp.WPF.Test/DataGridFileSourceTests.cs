@@ -60,11 +60,11 @@ namespace YonderSharp.WPF.Test
         [Test]
         public void IsFieldPartOfListTextTest()
         {
-            Assert.IsTrue(((IDataGridSource)testObject).IsFieldPartOfListText("SomeString"));
-            Assert.IsFalse(((IDataGridSource)testObject).IsFieldPartOfListText("SomeLong"));
+            Assert.That(((IDataGridSource)testObject).IsFieldPartOfListText("SomeString"));
+            Assert.That(!((IDataGridSource)testObject).IsFieldPartOfListText("SomeLong"));
 
             //Some none-sense
-            Assert.IsFalse(((IDataGridSource)testObject).IsFieldPartOfListText("Ente"));
+            Assert.That(!((IDataGridSource)testObject).IsFieldPartOfListText("Ente"));
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace YonderSharp.WPF.Test
             testObject.AddItem(newItem);
             testObject.RemoveShownItem(newItem);
 
-            Assert.IsTrue(testObject.GetAllItems().All(x => ((ExampleDataItem)x).ID != newItem.ID));
+            Assert.That(testObject.GetAllItems().All(x => ((ExampleDataItem)x).ID != newItem.ID));
         }
 
 
@@ -107,7 +107,7 @@ namespace YonderSharp.WPF.Test
 
 
 
-        internal class DataGridFileSourceTestImplementation : DataGridFileSource
+        internal class DataGridFileSourceTestImplementation : DataGridFileSource<ExampleDataItem>
         {
 
             private DataGridSourceConfiguration _config;

@@ -18,11 +18,11 @@ namespace YonderSharp.ThirdPartyAPIs.Tests.OverPass
         {
             var client = new OverpassApi();
             var result = client.GetOsmNode(3657889771);
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Spiegel", result.Name);
-            Assert.AreEqual(1, result.Tags.Count);
-            Assert.AreEqual("amenity", result.Tags[0].Key);
-            Assert.AreEqual("bar", result.Tags[0].Value);
+            Assert.That(result != null);
+            Assert.That("Spiegel" == result.Name);
+            Assert.That(1 == result.Tags.Count);
+            Assert.That("amenity" == result.Tags[0].Key);
+            Assert.That("bar" == result.Tags[0].Value);
         }
 
         [Test]
@@ -43,8 +43,8 @@ namespace YonderSharp.ThirdPartyAPIs.Tests.OverPass
 
             string result = client.GetOverPassData(query);
 
-            Assert.IsTrue(result.Contains("51.4081597"));
-            Assert.IsTrue(result.Contains("9.4023531"));
+            Assert.That(result.Contains("51.4081597"));
+            Assert.That(result.Contains("9.4023531"));
         }
 
 

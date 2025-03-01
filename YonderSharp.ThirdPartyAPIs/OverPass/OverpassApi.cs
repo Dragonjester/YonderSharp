@@ -56,6 +56,11 @@ namespace YonderSharp.ThirdPartyAPIs.OverPass
             string resultString = GetOverPassData(query);
             OverPassApiResult result = JsonConvert.DeserializeObject<OverPassApiResult>(resultString);
 
+            if(result == null || result.Elements == null)
+            {
+                yield break;
+            }
+
             foreach (var element in result.Elements)
             {
                 if (element.Type.ToLower().Equals("node"))
