@@ -15,7 +15,9 @@ namespace YonderSharp.CopyProtection
              "CAA-LEGION",      //Laptop
             "be6abc1efa0463e7", //??
             "8e6e644b116b2354", //??
-            "2b6ceb3ab6718b73"  //my current smartphone
+            "2b6ceb3ab6718b73",  //my current smartphone
+            "7da7155cb5fc4711" //my amazon tablet
+
         };
 
         private static bool hasDeveloperMachineRun;
