@@ -26,8 +26,15 @@ namespace YonderSharp.Attributes.DataManagement
         /// <exception cref="ArgumentNullException">For the params className and fieldName</exception>
         public ForeignKey(Type targetClass, string fieldName)
         {
-            TargetClass = targetClass ?? throw new ArgumentNullException(nameof(targetClass));
-            TargetField = TargetClass.GetProperties().Where(x => x.Name == fieldName).First();
+            try
+            {
+                TargetClass = targetClass ?? throw new ArgumentNullException(nameof(targetClass));
+                TargetField = TargetClass.GetProperties().Where(x => x.Name == fieldName).First();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Missing {fieldName} in {targetClass.Name}", e);
+            }
         }
 
         /// <summary>
