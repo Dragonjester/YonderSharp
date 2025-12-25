@@ -353,16 +353,6 @@
         <member name="M:YonderSharp.LevenshteinDistanceCalculator.CalculateLevenshteinDistanceIgnoringCase(System.String,System.String)">
             <inheritdoc/>
         </member>
-        <member name="T:YonderSharp.MicrosoftIdentityPlattform">
-            <summary>
-            Helper-class for the Microsoft identity Plattform
-            https://docs.microsoft.com/de-de/azure/active-directory/develop/
-            </summary>
-        </member>
-        <member name="M:YonderSharp.MicrosoftIdentityPlattform.GetValidatedUserId(System.String)">
-            <param name="token">JWT that might or might not represent a valid user</param>
-            <returns>The Guid of the user. If the JWT is invalid: Guid.Empty</returns>
-        </member>
         <member name="M:YonderSharp.MyRandom.GetInt(System.Int32)">
             <param name="maxValue">max value that can be returned by this Method (excluding)</param>
             <returns></returns>
